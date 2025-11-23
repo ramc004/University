@@ -1,0 +1,1400 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper,margin=2.5cm,bottom=3cm]{geometry}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
+\usepackage{setspace}
+\usepackage[british]{babel}
+\usepackage{tocloft}
+\usepackage{fancyhdr}
+\usepackage{datetime}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{chngcntr}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+\usepackage{microtype}
+\raggedright
+
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{2em}{1em}
+\titlespacing*{\subsection}{0pt}{1.5em}{0.75em}
+\titlespacing*{\subsubsection}{0pt}{1.25em}{0.5em}
+
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+\newdateformat{ukdate}{%
+\dayofweekname{\THEDAY}{\THEMONTH}{\THEYEAR}~\ordinaldate{\THEDAY}~\monthname[\THEMONTH]~\THEYEAR
+}
+
+\newdate{projectstart}{02}{10}{2025}
+\newdate{midtermdue}{02}{01}{2026}
+
+\pagestyle{fancy}
+\fancypagestyle{plain}{\pagestyle{fancy}} 
+\fancyhf{} 
+\fancyfoot[L]{\raisebox{6pt}{Caleb Ram}}
+\fancyfoot[C]{\raisebox{-12pt}{\thepage}} 
+\fancyfoot[R]{\raisebox{6pt}{Started: \displaydate{projectstart}, Due: \displaydate{midtermdue}}\\[6pt]\hyperlink{TOC}{\fbox{\tiny \textsf{Back to TOC}}}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\setlength{\footskip}{50pt}
+
+\renewcommand{\cftsecfont}{\normalfont}
+\renewcommand{\cftsubsecfont}{\normalfont}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsecpagefont}{\normalfont}
+\renewcommand{\cftsubsecpagefont}{\normalfont}
+
+\renewcommand{\listfigurename}{Figures}
+\newlength{\mylen}
+\renewcommand{\cftfigpresnum}{\figurename\enspace}
+\renewcommand{\cftfigaftersnum}{:}
+\settowidth{\mylen}{\cftfigpresnum\cftfigaftersnum}
+\addtolength{\cftfignumwidth}{\mylen}
+\setlength{\cftfigindent}{4.5em}
+\renewcommand{\cftfigfont}{\normalfont\small}
+\renewcommand{\cftfigpagefont}{\normalfont\small}
+
+\counterwithin{figure}{subsection}
+\renewcommand{\thefigure}{\thesubsection.\arabic{figure}}
+\makeatletter
+\@addtoreset{figure}{subsection}
+\makeatother
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+    backgroundcolor=\color{gray!10},
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!60!black},
+    stringstyle=\color{red}
+}
+
+\newcommand{\backtotocbutton}{}
+
+\begin{document}
+\onehalfspacing
+
+\begin{titlepage}
+\thispagestyle{fancy}
+\centering
+\vspace*{\fill}
+{\Huge \textbf{AI-Based Smart Bulb for Adaptive Home Automation}}\\[0.8cm]
+{\LARGE \textbf{Mid-Term Progress Report}}\\[1.5cm]
+{\Large by Caleb Ram}\\[0.5cm]
+{\large Student ID: 6801936}\\[0.3cm]
+{\large Supervisor: Dr Ahmed Elzanaty}\\[0.5cm]
+{\large Started: \displaydate{projectstart}}\\[0.3cm]
+{\large Submission: \ukdate\today}\\[2cm]
+{\large MEng in Electronic Engineering with Computer Systems}\\[0.3cm]
+{\large Faculty of Engineering and Physical Sciences}\\[0.3cm]
+{\large University of Surrey}\\[0.5cm]
+\vspace*{\fill}
+\end{titlepage}
+
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\thispagestyle{fancy}
+\phantomsection
+\section*{Executive Summary}
+\addcontentsline{toc}{section}{Executive Summary}
+
+This report presents the mid-term progress of developing an AI-based smart bulb system for adaptive home automation. The project aims to create a complete smart lighting solution incorporating custom ESP32 hardware, embedded programming, and on-device machine learning that learns user lighting preferences and automatically adapts to daily routines without cloud connectivity.
+
+The system's core innovation lies in lightweight TinyML that processes user behaviour patterns locally on the ESP32 microcontroller, learning preferred brightness levels, colour temperatures, and timing patterns for different times of day and activities. The AI model will detect routines such as morning wake-up times, evening wind-down periods, and room occupancy patterns, automatically adjusting lighting without manual intervention. Integration with Apple HealthKit enables the system to access sleep data with user consent, correlating lighting preferences with sleep quality and automatically triggering gradual dimming before detected bedtime and natural sunrise simulation for wake-up.
+
+Completed work to date includes a fully functional Swift iOS application has been developed and deployed to physical devices. Features include user authentication with email verification, Bluetooth Low Energy device discovery and connection management, and real-time control of power, brightness, RGB colour, and four lighting effects. A Flask backend provides secure user management and device storage. The system implements dual-mode architecture supporting both physical hardware and software simulation for testing. The BLE communication protocol is fully specified for bidirectional communication between app and hardware, with characteristic UUIDs defined for control commands and status monitoring.
+
+Remaining work includes the ESP32 firmware implementing BLE services and TinyML model for on-device learning, AI algorithm development for pattern recognition and behaviour prediction, physical hardware assembly including LED drivers and thermal management, housing design, HealthKit integration for sleep-aware automation, comprehensive testing of adaptive learning accuracy, and system integration. Multi-room coordination and advanced automation rules will be implemented if time permits.
+
+The project demonstrates practical application of embedded machine learning, IoT communications, behavioural pattern recognition, and privacy-preserving AI with emphasis on local processing, user autonomy, and intelligent automation.
+
+\newpage
+
+
+\vspace{0.4cm}
+\phantomsection
+\hypertarget{TOC}{} 
+\tableofcontents
+
+\clearpage
+\phantomsection
+
+\newpage
+
+\phantomsection
+\section{Introduction}
+
+\subsection{Project Motivation}
+
+Modern home automation systems typically require explicit user input to control lighting, relying on manual adjustments, preset schedules, or basic motion detection. These approaches fail to adapt to the dynamic nature of human behaviour and circadian rhythms, resulting in inefficient energy usage and suboptimal lighting conditions that may negatively impact sleep quality and overall wellbeing \hyperlink{cite:cajochen2011}{\hypertarget{ref:cajochen2011-1}{[1]}}. Furthermore, existing commercial smart bulbs often require cloud connectivity and external servers, raising privacy concerns regarding user behaviour data and creating dependencies on internet connectivity for basic functionality \hyperlink{cite:zeng2017}{\hypertarget{ref:zeng2017-1}{[2]}}.
+
+The relationship between light exposure and human circadian rhythms is well documented in scientific literature. Inappropriate lighting during evening hours suppresses melatonin production, delaying sleep onset and reducing sleep quality \hyperlink{cite:chang2015}{\hypertarget{ref:chang2015-1}{[3]}}. Conversely, gradual light exposure mimicking natural sunrise can improve morning alertness and mood \hyperlink{cite:gimenez2017}{\hypertarget{ref:gimenez2017-1}{[4]}}. Despite this knowledge, most individuals lack automated systems that appropriately adjust lighting based on their personal schedules and physiological needs.
+
+This project addresses these limitations by developing a smart bulb system that learns user behaviour patterns through on-device artificial intelligence, integrates with health data platforms to understand sleep patterns, and operates autonomously without requiring cloud connectivity. By processing all data locally using TinyML techniques, the system maintains user privacy whilst providing adaptive lighting that supports healthy circadian rhythms and energy efficiency \hyperlink{cite:warden2019}{\hypertarget{ref:warden2019-1}{[5]}}.
+
+The project also explores the technical challenges of building IoT devices from first principles, including thermal management in high-power LED systems, electrical safety isolation, wireless communication protocol implementation, and efficient embedded AI algorithm design. This hands-on approach provides deeper understanding of the complete system stack, from physical hardware design through embedded firmware to cross-platform application development.
+
+\subsection{Aims and Objectives}
+
+The primary aim of this project is to design, build, and evaluate a functional prototype of an AI-based smart bulb system that automatically adapts lighting conditions based on learned user behaviour patterns and health data integration, whilst maintaining local data processing for privacy preservation.
+
+\subsubsection{Primary Objectives}
+
+The core technical objectives that must be achieved for project success are:
+
+\textbf{Hardware Development:} Design and construct a complete smart bulb system including LED lighting elements, power management circuitry, wireless communication module, and safe physical housing. This involves either systematic teardown and analysis of existing commercial products or full custom assembly from individual components, with particular attention to thermal management, electrical safety isolation between high and low voltage circuits, and compliance with relevant safety standards.
+
+\textbf{Embedded Systems Implementation:} Develop firmware for ESP32 or ESP8266 microcontroller platform to control LED brightness and colour temperature, implement wireless communication protocols (Wi-Fi and Bluetooth), manage power states for energy efficiency, and execute lightweight machine learning algorithms for behaviour pattern recognition. The firmware must operate reliably with real-time responsiveness whilst managing multiple concurrent processes through appropriate threading and asynchronous programming techniques \hyperlink{cite:espressif2023}{\hypertarget{ref:espressif2023-1}{[6]}}.
+
+\textbf{AI and Learning System:} Implement on-device machine learning algorithms using TinyML approaches to identify recurring patterns in user behaviour, such as typical wake times, bedtimes, and room usage patterns. The system must learn these patterns without requiring pre-programming or manual configuration, adapting automatically as user routines change over time. All learning and inference must occur locally on the microcontroller without external server communication \hyperlink{cite:banbury2021}{\hypertarget{ref:banbury2021-1}{[7]}}.
+
+\textbf{Health Data Integration:} Develop iOS application using Swift and HealthKit framework to securely access user sleep data with appropriate permissions and consent mechanisms. Implement features for automatic sleep detection triggering wind-down mode with gradual dimming, and wake detection initiating natural morning light simulation. All health data processing must comply with privacy regulations and remain under user control \hyperlink{cite:apple2023}{\hypertarget{ref:apple2023-1}{[8]}}.
+
+\textbf{Cross-Platform Interface Development:} Create intuitive user interfaces for both iOS native application and web-based Progressive Web App, enabling device control, schedule management, and preference configuration across mobile and desktop platforms. Implement real-time communication between interfaces and embedded device using appropriate protocols such as WebSockets for responsive interaction \hyperlink{cite:grigorik2013}{\hypertarget{ref:grigorik2013-1}{[9]}}.
+
+\subsubsection{Secondary Objectives}
+
+If time permits following completion of primary objectives, the following enhancements will be pursued:
+
+\textbf{Enhanced AI Capabilities:} Extend machine learning system to recognise more complex behaviour patterns, predict future lighting needs based on contextual information such as day of week or season, and implement reinforcement learning approaches that improve based on user feedback signals \hyperlink{cite:sutton2018}{\hypertarget{ref:sutton2018-1}{[10]}}.
+
+\textbf{Multi-Room Coordination:} Implement communication protocols enabling multiple smart bulbs to coordinate behaviour across different rooms, creating adaptive lighting scenes that respond to user movement patterns throughout the home and maintain consistent lighting preferences across spaces.
+
+\textbf{Advanced Health Features:} Integrate additional health metrics beyond sleep data, such as activity levels or heart rate variability if available through HealthKit, to further optimise lighting conditions. Implement alertness-based adjustments using circadian rhythm models to support optimal cognitive performance throughout the day \hyperlink{cite:skeldon2017}{\hypertarget{ref:skeldon2017-1}{[11]}}.
+
+\subsection{Project Scope and Constraints}
+
+The project scope encompasses complete system development from hardware design through software implementation to testing and evaluation. The deliverable prototype will demonstrate all primary features operating reliably, with comprehensive documentation of design decisions, implementation challenges, and performance evaluation.
+
+Several constraints shape the project approach:
+
+\textbf{Hardware Constraints:} The system must utilise readily available components that can be sourced within reasonable budget and timeframe. Development will use prototyping boards and modules. Physical housing will be 3D printed using available university facilities, limiting material choices and potentially affecting thermal management solutions.
+
+\textbf{Safety Requirements:} All electrical design must maintain appropriate isolation between mains voltage circuits and low-voltage control electronics. The system must not present electrical shock or fire hazards during normal operation or foreseeable failure modes. While full regulatory compliance testing (CE marking, etc.) is beyond project scope, design will follow relevant safety principles and standards \hyperlink{cite:iec60598}{\hypertarget{ref:iec60598-1}{[12]}}.
+
+\textbf{Computational Limitations:} Machine learning algorithms must operate within the processing and memory constraints of ESP32 microcontroller (dual-core 240 MHz, 520 KB RAM). This necessitates careful algorithm selection and optimisation, excluding complex deep learning models in favour of lightweight approaches suitable for embedded deployment \hyperlink{cite:ray2019}{\hypertarget{ref:ray2019-1}{[13]}}.
+
+\textbf{Platform Limitations:} iOS application development requires access to Apple development environment and devices for testing. HealthKit integration is iOS-specific; Android users will access core functionality through web interface but without native health data integration. This platform asymmetry reflects different vendor approaches to health data APIs and represents a realistic constraint in cross-platform IoT development.
+
+\textbf{Time Constraints:} The project must be completed within the academic year timeframe, requiring careful prioritisation of primary objectives and realistic assessment of achievable scope. Secondary objectives are explicitly identified as time-permitting enhancements rather than core requirements.
+
+\backtotocbutton
+\newpage
+
+\phantomsection
+\section{Literature Survey and Technology Review}
+
+\subsection{Smart Lighting Systems and Home Automation}
+
+The evolution of smart lighting systems represents convergence of LED technology, wireless communications, and embedded computing. Traditional lighting control relied on simple switches or timers, whilst modern smart bulbs integrate sensors, processors, and network connectivity to enable programmable and automated behaviour \hyperlink{cite:guo2010}{\hypertarget{ref:guo2010-1}{[14]}}.
+
+Commercial smart lighting platforms such as Philips Hue, LIFX, and Nanoleaf demonstrate market demand for intelligent lighting control. These systems typically employ hub-based or direct Wi-Fi architectures, supporting features including dimming, colour temperature adjustment, scheduling, and smartphone control \hyperlink{cite:gomez2012}{\hypertarget{ref:gomez2012-1}{[15]}}. However, most commercial solutions require cloud connectivity for advanced features and lack transparent on-device learning capabilities that adapt without explicit programming.
+
+Research literature documents various approaches to adaptive lighting systems. Caird and Roy examined user interactions with smart home technologies, finding that successful systems balance automation with user control, avoiding excessive complexity or loss of user agency \hyperlink{cite:caird2008}{\hypertarget{ref:caird2008-1}{[16]}}. This insight guides the project's design philosophy: automation should enhance rather than replace user control, with learned behaviours remaining transparent and modifiable.
+
+\subsection{LED Technology and Driver Circuits}
+
+Light-emitting diode technology provides the foundation for modern smart lighting due to high efficiency, long lifetime, compact form factor, and precise controllability \hyperlink{cite:schubert2006}{\hypertarget{ref:schubert2006-1}{[17]}}. Unlike incandescent bulbs with inherent colour temperature, LED systems can implement tunable white or full RGB colour capabilities through appropriate multi-channel designs.
+
+LED driver circuits must provide constant current rather than constant voltage to ensure stable light output and prevent thermal runaway. Switching-mode power supplies offer higher efficiency compared to linear regulators, essential for managing heat in compact bulb housings \hyperlink{cite:erickson2007}{\hypertarget{ref:erickson2007-1}{[18]}}. Pulse-width modulation enables dimming control whilst maintaining colour consistency, though high-frequency switching is necessary to avoid visible flicker that can cause eye strain and headaches.
+
+Thermal management represents a critical challenge in LED bulb design. Junction temperature directly affects LED efficiency, colour characteristics, and lifetime. Effective heat sinking requires consideration of thermal resistance from junction through package and housing to ambient environment \hyperlink{cite:christensen2009}{\hypertarget{ref:christensen2009-1}{[19]}}. Three-dimensional printed housings must account for material thermal conductivity limitations, potentially requiring metal inserts or increased surface area for adequate heat dissipation.
+
+\subsection{Embedded Systems and IoT Platforms}
+
+The ESP32 microcontroller has emerged as a popular platform for IoT development, integrating dual-core processor, Wi-Fi and Bluetooth connectivity, and rich peripheral set in a low-cost package. The Espressif IoT Development Framework (ESP-IDF) provides professional-grade development environment with real-time operating system support, enabling complex multi-threaded applications \hyperlink{cite:maier2017}{\hypertarget{ref:maier2017-1}{[20]}}.
+
+Wireless communication protocol selection significantly impacts system architecture. Wi-Fi provides high bandwidth and straightforward integration with existing network infrastructure but consumes substantial power. Bluetooth Low Energy offers lower power consumption suitable for battery-operated devices but with reduced range and throughput. MQTT protocol has become standard for IoT messaging, providing lightweight publish-subscribe architecture suitable for resource-constrained devices \hyperlink{cite:hunkeler2008}{\hypertarget{ref:hunkeler2008-1}{[21]}}.
+
+Real-time operating systems enable concurrent task execution essential for responsive IoT devices. FreeRTOS, integrated within ESP-IDF, provides task scheduling, inter-task communication, and synchronisation primitives. Proper task design prevents priority inversion and ensures time-critical operations such as communication protocol handling and dimming control meet timing requirements \hyperlink{cite:barry2009}{\hypertarget{ref:barry2009-1}{[22]}}.
+
+\subsection{Machine Learning on Embedded Devices}
+
+TinyML represents emerging field applying machine learning to microcontroller-class devices with severe resource constraints. Traditional deep learning models requiring gigabytes of memory and billions of operations per inference are impractical for embedded deployment. TinyML emphasises model compression, quantisation, and algorithm selection appropriate for devices with kilobytes of RAM and megahertz-range processors \hyperlink{cite:warden2019}{\hypertarget{ref:warden2019-2}{[5]}}.
+
+Suitable algorithms for on-device learning in smart bulb context include time-series analysis for pattern detection, clustering algorithms for grouping similar behaviour periods, and simple neural networks for classification tasks. Decision trees and random forests offer interpretability advantages, allowing users to understand learned behaviours. Online learning approaches enable continuous adaptation without retraining complete models \hyperlink{cite:gama2014}{\hypertarget{ref:gama2014-1}{[23]}}.
+
+Pattern recognition in user behaviour data involves identifying recurring temporal patterns such as daily wake-up times, bedtimes, and periods of room occupancy. Hidden Markov Models and dynamic time warping have been successfully applied to activity recognition tasks with computational requirements suitable for embedded implementation \hyperlink{cite:rabiner1989}{\hypertarget{ref:rabiner1989-1}{[24]}}. For this project, hybrid approach combining rule-based heuristics with lightweight statistical learning is most appropriate given computational constraints.
+
+\subsection{Health Data Integration and Privacy}
+
+Apple's HealthKit framework provides standardised API for accessing health and fitness data stored on iOS devices, with strong privacy protections requiring explicit user permission for each data type accessed. Sleep analysis data includes sleep periods, sleep stages, and sleep quality metrics that can inform lighting automation decisions \hyperlink{cite:apple2023}{\hypertarget{ref:apple2023-2}{[8]}}.
+
+Privacy considerations are paramount when processing health data. The General Data Protection Regulation (GDPR) and similar privacy frameworks establish requirements for data minimisation, purpose limitation, and user consent. Storing and processing data locally on user-controlled devices rather than cloud servers provides strongest privacy protection whilst enabling personalised functionality \hyperlink{cite:voigt2017}{\hypertarget{ref:voigt2017-1}{[25]}}.
+
+Research on privacy-preserving machine learning demonstrates techniques such as federated learning and differential privacy that enable learning from user data without exposing individual information. For single-user device context, on-device learning inherently provides privacy, but system design must prevent inadvertent data leakage through network communications or logging \hyperlink{cite:mcmahan2017}{\hypertarget{ref:mcmahan2017-1}{[26]}}.
+
+\subsection{Circadian Rhythm and Lighting Effects}
+
+Human circadian rhythms are primarily entrained by light exposure patterns, with short-wavelength blue light having strongest effect on circadian phase shifting and melatonin suppression. Evening exposure to blue-enriched light delays circadian phase, making sleep onset more difficult, whilst morning blue light exposure advances circadian phase and improves alertness \hyperlink{cite:cajochen2011}{\hypertarget{ref:cajochen2011-2}{[1]}}.
+
+Colour temperature of lighting significantly affects these biological responses. Warm white light (2700-3000K) contains less blue spectrum and is appropriate for evening use, whilst cool white light (5000-6500K) mimics daylight and supports morning alertness. Dynamic adjustment of colour temperature throughout the day, known as human-centric lighting, aims to support natural circadian rhythms \hyperlink{cite:souman2018}{\hypertarget{ref:souman2018-1}{[27]}}.
+
+Light intensity also plays important role, with higher illuminance levels promoting alertness and lower levels facilitating transition to sleep. Gradual dimming over 30-60 minutes before intended bedtime can signal approaching sleep period, whilst gradual brightening simulating dawn has been shown to facilitate gentler awakening compared to abrupt lighting changes or alarm sounds \hyperlink{cite:gimenez2017}{\hypertarget{ref:gimenez2017-2}{[4]}}.
+
+\subsection{Summary of Key Findings}
+
+Literature review reveals that whilst smart lighting technology is mature and commercially available, existing solutions generally lack sophisticated on-device learning capabilities and rely heavily on cloud connectivity. Integration of health data for lighting automation is emerging area with limited existing implementations, particularly for systems maintaining local data processing.
+
+Technical feasibility of the project is supported by availability of appropriate microcontroller platforms (ESP32), well-documented frameworks for embedded development and TinyML, and established APIs for health data access (HealthKit). Key challenges identified include thermal management in compact form factor, implementation of effective machine learning algorithms within embedded constraints, and creation of intuitive user interfaces that make automation transparent and controllable.
+
+The project addresses identified gaps by combining on-device AI, health data integration, and privacy-preserving architecture in unified system built from first principles. This approach provides opportunity to explore full system stack whilst creating practical device that demonstrates principles of adaptive, user-respecting home automation.
+
+\backtotocbutton
+\newpage
+
+\phantomsection
+\section{Requirements Analysis and System Design}
+
+\subsection{Functional Requirements}
+
+\subsubsection{Core Functional Requirements}
+
+\textbf{FR1 - Basic Lighting Control:} The system shall provide adjustable LED brightness from 0-100\% with smooth dimming transitions. Colour temperature adjustment shall be supported across warm white (2700K) to cool white (6500K) range with minimum 100K adjustment granularity.
+
+\textbf{FR2 - Wireless Connectivity:} The device shall support both Wi-Fi (IEEE 802.11 b/g/n) and Bluetooth Low Energy connectivity for communication with control applications. Initial device configuration shall be possible via Bluetooth when Wi-Fi credentials are not yet configured.
+
+\textbf{FR3 - Schedule Management:} Users shall be able to define time-based schedules specifying desired brightness and colour temperature at particular times. Schedules shall support different configurations for different days of the week to accommodate varying routines.
+
+\textbf{FR4 - Behaviour Learning:} The system shall automatically detect recurring patterns in user manual adjustments and room usage, building internal model of typical user behaviour. Pattern detection shall operate continuously without requiring explicit training mode or user interaction.
+
+\textbf{FR5 - Adaptive Automation:} Based on learned behaviour patterns, the system shall automatically adjust lighting at predicted times without manual intervention. Automation shall be gradual and non-disruptive, avoiding abrupt changes that might startle users.
+
+\textbf{FR6 - Health Data Integration:} iOS application shall request user permission to access HealthKit sleep data. Upon receiving sleep period data, the system shall automatically initiate wind-down mode before typical bedtime and wake-up mode before typical wake time.
+
+\textbf{FR7 - Wind-Down Mode:} When approaching sleep period, the system shall gradually reduce brightness and shift colour temperature toward warm white over configurable duration (default 30 minutes). Final light level shall be dim warm white suitable for sleep preparation.
+
+\textbf{FR8 - Wake-Up Mode:} Before wake time, the system shall gradually increase brightness and shift colour temperature from warm to cool white over configurable duration (default 20 minutes), simulating natural sunrise to facilitate gentle awakening.
+
+\textbf{FR9 - Manual Override:} All automatic behaviours shall be immediately overridable by manual user adjustment through any control interface. Manual overrides shall not disrupt long-term learning but shall take precedence over automated actions.
+
+\textbf{FR10 - Cross-Platform Control:} The system shall be controllable via native iOS application and web-based Progressive Web App, with feature parity between platforms except for HealthKit integration which is iOS-specific.
+
+\subsubsection{Additional Functional Requirements}
+
+\textbf{FR11 - Away Mode:} The system shall support away mode that varies lighting based on learned patterns to simulate occupancy when users are absent, with appropriate random variations to appear natural.
+
+\textbf{FR12 - Energy Monitoring:} The system shall track and report energy consumption over time, allowing users to understand usage patterns and potential savings from adaptive automation.
+
+\textbf{FR13 - Local Operation:} All core functionality including learning, automation, and basic control shall operate without internet connectivity, relying only on local network connection between device and control applications.
+
+\subsection{Non-Functional Requirements}
+
+\subsubsection{Performance Requirements}
+
+\textbf{NFR1 - Response Time:} User commands from control applications shall result in visible lighting changes within 200 milliseconds to maintain perception of direct control and immediate responsiveness.
+
+\textbf{NFR2 - Dimming Smoothness:} Brightness and colour temperature transitions shall execute smoothly without visible steps or flicker. PWM frequency shall exceed 500 Hz to prevent perceptible flicker under all conditions including camera recordings.
+
+\textbf{NFR3 - Learning Speed:} Behaviour patterns occurring on consecutive days for one week shall be detected and incorporated into automation model. Less frequent patterns shall be detected within appropriate timeframe based on occurrence frequency.
+
+\textbf{NFR4 - Power Efficiency:} The system shall achieve minimum 80\% power conversion efficiency from mains to LED output. Standby power consumption when light is off shall not exceed 0.5W.
+
+\subsubsection{Reliability and Safety Requirements}
+
+\textbf{NFR5 - Electrical Safety:} The design shall maintain minimum 4mm creepage distance between mains voltage circuits and low-voltage control circuits. All exposed conductive parts shall be grounded or double-insulated.
+
+\textbf{NFR6 - Thermal Protection:} LED junction temperature shall not exceed manufacturer's maximum rating during continuous operation at maximum output. The system shall implement thermal throttling reducing output if temperature limits are approached.
+
+\textbf{NFR7 - Fault Tolerance:} The system shall recover automatically from communication failures, power interruptions, and software crashes without requiring manual intervention. Persistent storage shall preserve learned behaviours and user settings across power cycles.
+
+\textbf{NFR8 - Data Privacy:} All user behaviour data and health information shall be stored locally on user-controlled devices. No user data shall be transmitted to external servers without explicit user consent for specific purposes.
+
+\subsubsection{Usability Requirements}
+
+\textbf{NFR9 - Setup Simplicity:} Initial device configuration shall be completable by non-technical users within 5 minutes following clear instructions. No network infrastructure changes (router configuration, port forwarding) shall be required.
+
+\textbf{NFR10 - Interface Intuitiveness:} Control applications shall follow platform-specific design guidelines (Human Interface Guidelines for iOS, Material Design for web). Common lighting adjustments shall be accomplishable within two taps or clicks.
+
+\textbf{NFR11 - Automation Transparency:} Users shall be able to view what patterns the system has learned and why specific automated actions are occurring. Learned behaviours shall be explicable in natural language rather than opaque model outputs.
+
+\subsection{System Architecture}
+
+The system architecture follows layered approach separating hardware, firmware, and application concerns whilst enabling communication across layers through well-defined interfaces.
+
+\subsubsection{Hardware Architecture}
+
+The hardware architecture centres on ESP32 microcontroller managing LED drivers, wireless communications, and interfacing with power supply. Power input accepts 110-240V AC mains voltage, with isolated power supply providing regulated low-voltage DC (12V or 24V) for LED strings and 3.3V for control electronics.
+
+LED driver circuit consists of constant-current buck converter topology, with PWM dimming control from ESP32 GPIO pins. Separate channels enable independent control of warm white and cool white LED strings, allowing colour temperature adjustment through relative intensity control. For future RGB implementations, additional channels would be incorporated with appropriate driver circuits.
+
+Thermal management employs aluminium heat sink thermally coupled to LED circuit board, with 3D-printed housing designed to maximise convection airflow whilst maintaining safe enclosure of electrical components. Temperature sensor monitors heat sink temperature, enabling firmware-based thermal protection.
+
+Wireless communication utilises ESP32 integrated Wi-Fi and Bluetooth transceivers with appropriate antenna design for acceptable signal strength within typical room dimensions. External antenna connection point is provided for troubleshooting range issues during development.
+
+\subsubsection{Firmware Architecture}
+
+Firmware architecture implements multi-threaded design using FreeRTOS, with separate tasks for communication handling, learning algorithm execution, dimming control, and sensor monitoring. Task priorities ensure time-critical operations (dimming control, communication responses) preempt background tasks (pattern learning, logging).
+
+Communication task manages both Wi-Fi and Bluetooth connections, parsing incoming commands and publishing device state updates. MQTT protocol is used for Wi-Fi communication, with custom BLE service for Bluetooth. State changes from any source propagate through internal event system to ensure consistency.
+
+Learning task periodically analyses stored behaviour data, updating internal models of typical patterns. Execution occurs during low-priority intervals to avoid interfering with real-time control. Persistent storage in flash memory preserves learned models across power cycles.
+
+Dimming control task generates PWM signals controlling LED driver, with smooth transitions implementing gradual changes over specified durations. Anti-flicker algorithms ensure stable output even during rapid updates from learning or manual control.
+
+\subsubsection{Application Architecture}
+
+iOS application implements native SwiftUI interface following Apple Human Interface Guidelines, with HealthKit integration for sleep data access. Application communicates with device via both Bluetooth (for initial setup) and Wi-Fi (for ongoing control). Local network discovery uses mDNS to automatically locate devices without requiring manual IP address entry.
+
+Web Progressive Web App implements responsive interface using React framework, compatible with modern browsers on desktop and mobile platforms. WebSocket connection provides real-time bidirectional communication with device, updating interface immediately when device state changes due to automation or control from other interfaces.
+
+Shared backend service implemented in Node.js provides WebSocket server, MQTT broker, and coordination between multiple devices and clients. This component runs locally on user's network rather than cloud server, maintaining privacy whilst enabling multi-device coordination if implemented.
+
+\subsection{Use Case Scenarios}
+
+\subsubsection{Use Case 1: Initial Setup and Configuration}
+
+User installs smart bulb in standard E27 socket and powers on. Device enters setup mode, advertising Bluetooth service. User opens iOS or web application, which automatically discovers nearby unconfigured device. User selects device and enters home Wi-Fi credentials through application interface. Device connects to Wi-Fi network and confirms successful connection. Application guides user through optional HealthKit permission grant, explaining how sleep data will be used. Setup completes with device ready for use, having taken approximately 3 minutes.
+
+\subsubsection{Use Case 2: Daily Adaptive Behaviour}
+
+User maintains regular weekday routine, waking at 7:00 AM and going to sleep around 11:00 PM. Over first week, system observes manual lighting adjustments: user turns on light at full brightness with cool white at 7:00 AM, reduces to 60\% warm white around 9:00 PM, and turns off around 11:15 PM. After one week, system detects recurring pattern and begins automation. At 6:40 AM, light gradually increases from off to full cool white over 20 minutes, completing at 7:00 AM. At 10:45 PM, light automatically dims from current level to 30\% warm white over 30 minutes. User can override at any time by manual adjustment, but typically allows automation to proceed as it matches desired routine.
+
+\subsubsection{Use Case 3: Weekend Routine Variation}
+
+User typically sleeps later on weekends, waking around 9:00 AM instead of 7:00 AM. System observes different Saturday and Sunday patterns compared to weekday patterns. After three weekends, system maintains separate learned schedules for weekdays versus weekends, automatically adjusting wake-up lighting to 9:00 AM on Saturday and Sunday. User appreciates not being woken early by automated lighting on days off work.
+
+\subsubsection{Use Case 4: Health Data Enhanced Automation}
+
+User grants HealthKit permission. System monitors sleep data and detects that actual sleep onset varies between 10:45 PM and 11:30 PM throughout week, with wake times varying between 6:45 AM and 7:15 AM. Rather than using fixed schedule, system adjusts wind-down timing based on typical sleep onset time for that day of week, starting gradual dimming 30 minutes before expected sleep. Wake-up lighting completes at typical wake time, providing gentle natural light before alarm sounds. This health-data-informed automation proves more effective than fixed schedule at supporting consistent sleep patterns.
+
+\backtotocbutton
+\newpage
+
+\phantomsection
+\section{Experimental Methods and Development Work to Date}
+
+\subsection{Development Environment Setup}
+
+% PLAN:
+
+% Development infrastructure has been established across hardware and software domains. For embedded development, ESP-IDF v5.1 has been installed and configured with VS Code integration for efficient coding and debugging. ESP32-DevKitC development board serves as initial prototyping platform, providing accessible GPIO pins and integrated USB-serial converter for programming and monitoring.
+
+iOS development environment utilises Xcode 26.1.1 on macOS, with iOS 26.1 SDK enabling latest SwiftUI features and HealthKit capabilities. Physical iPhone and iPad devices have been configured for development and testing, with proper iOS Bluetooth permissions (NSBluetoothAlwaysUsageDescription) configured in Info.plist for BLE communication. Developer certificates and provisioning profiles have been configured for on-device testing across multiple physical devices.
+
+% Web development environment uses Node.js v20 with React 18 and Next.js 14 frameworks. Development server enables hot-reloading for rapid iteration on interface design. WebSocket server implementation uses ws library for Node.js, providing foundation for real-time communication with embedded device.
+
+Version control repository has been established with separate branches for embedded firmware specification, iOS application, and backend server. Documentation directory maintains design decisions, BLE protocol specifications, and development notes. Regular updates ensure work is preserved and enable rollback if experimental approaches prove unsuccessful.
+
+Flask-based backend server development environment established with Python virtual environment, SQLite database for user and device management, and SMTP integration for email verification. Local development server configured to accept connections from physical iOS devices on local network.
+
+\subsection{Hardware Development Progress}
+
+\subsubsection{Component Selection and Procurement}
+
+% Extensive research into LED components resulted in selection of dual-channel COB (Chip-on-Board) LED module providing independent warm white (2700K) and cool white (6000K) strings. This module offers 95+ CRI (Colour Rendering Index) ensuring accurate colour perception under artificial light. Forward voltage of 36V at 300mA per channel requires appropriate driver design.
+
+% LED driver investigation compared linear current regulators versus switching buck converters. Linear approach offers simplicity and minimal electromagnetic interference but suffers poor efficiency especially at lower brightness levels. Buck converter topology selected for 90\%+ efficiency across operating range, using LM3409 constant-current buck controller IC. This device accepts PWM dimming input and maintains stable current regulation.
+
+% Power supply selection considered both isolated AC-DC modules and building custom supply from components. Safety requirements mandate isolation between mains and low-voltage circuits. Pre-certified 12V 2A isolated AC-DC module (Mean Well IRM-20-12) provides cost-effective solution meeting safety requirements without custom transformer design and testing. Secondary low-dropout regulator provides 3.3V for ESP32 and control electronics.
+
+ESP32-WROOM-32E module selected as final production component, offering integrated antenna, FCC/CE certification, and established supply chain. BLE service and characteristic UUIDs have been defined for device communication: service UUID (4fafc201-1fb5-459e-8fcc-c5c9c331914b) with five characteristics for Power (beb5483e-36e1-4688-b7f5-ea07361b26a8), Brightness (beb5483e-36e1-4688-b7f5-ea07361b26a9), Color RGB (beb5483e-36e1-4688-b7f5-ea07361b26aa), Mode (beb5483e-36e1-4688-b7f5-ea07361b26ab), and Status (beb5483e-36e1-4688-b7f5-ea07361b26ac).
+
+% \subsubsection{Initial Prototyping}
+
+% PLAN: 
+
+% Breadboard prototyping has verified basic circuit functionality. ESP32 successfully drives LED through buck converter using PWM signals on GPIO pins. Initial testing identified need for separate PWM channels for each LED string, achieved through ESP32 LEDC (LED Control) peripheral providing hardware PWM generation with configurable frequency and duty cycle.
+
+% Thermal testing with LED at maximum output for 30 minutes using infrared thermometer revealed heat sink temperature reaching 68°C with passive aluminium heat sink. LED junction temperature estimated at 85°C remains within manufacturer's 125°C maximum rating but leaves limited margin. Larger heat sink or active cooling may be necessary for reliable long-term operation.
+
+% Current measurement verified buck converter maintains constant 300mA through LED string across PWM duty cycles from 10\% to 100\%. Below 10\%, current drops nonlinearly, suggesting minimum practical dimming level around 5\% to maintain colour consistency. This range proves sufficient for intended application.
+
+% \subsubsection{Safety Testing}
+
+% Electrical safety verification measured isolation resistance between mains input and low-voltage circuits using megohmmeter, confirming greater than 10 MΩ isolation resistance meeting basic safety requirements. Creepage distances on breadboard layout measured and confirmed exceeding 4mm minimum between voltage domains.
+
+% Ground continuity verified between metal heat sink (if exposed) and mains earth connection, ensuring any fault causing mains contact with heat sink would immediately trip circuit breaker rather than presenting shock hazard. Final housing design will incorporate warnings and prevent access to live parts during normal operation.
+
+\subsection{Firmware Development Progress}
+
+% \subsubsection{Core LED Control Implementation}
+
+% PLAN:
+
+% Firmware implementation began with LED control subsystem. LEDC peripheral configured to generate two independent PWM signals at 5 kHz frequency, well above perceptible flicker threshold. Duty cycle maps linearly to brightness percentage, with separate control for warm and cool white channels enabling colour temperature adjustment.
+
+% Colour temperature implementation uses weighted mixing of warm and cool channels. Cool colour temperature (6000K) achieved with 100\% cool white, 0\% warm white. Warm colour temperature (2700K) achieved with 0\% cool white, 100\% warm white. Intermediate temperatures blend channels proportionally. Perceptual brightness maintained across colour temperatures by adjusting total light output to compensate for human eye's varying sensitivity to different colour spectra.
+
+% Smooth transition algorithm implements gradual changes over specified duration. Target brightness and colour temperature stored, with current values incremented toward targets each 50ms update cycle. This produces smooth visible transitions without requiring complex interpolation. Transition duration configurable from 100ms (near-instantaneous) to 60 minutes (gradual wake/sleep simulation).
+
+\subsubsection{Wireless Communication Implementation}
+
+% PLAN:
+
+Bluetooth Low Energy communication protocol fully specified using CoreBluetooth framework specifications. BLE GATT server architecture defined with custom service for device control. Characteristics defined for brightness (0-255 range), RGB color (three-byte values), power state (boolean), lighting mode (0=Solid, 1=Fade, 2=Rainbow, 3=Pulse), and status monitoring, with read/write permissions and notification support for bidirectional communication. BLE will be used for initial device discovery, pairing, and real-time control from iOS application.
+
+% Wi-Fi connectivity implemented using ESP-IDF Wi-Fi driver with station mode configuration. Device connects to user-specified access point using credentials stored in non-volatile storage. Connection resilience improved through automatic reconnection on signal loss and retry logic with exponential backoff.
+
+% MQTT client library integrated for publish-subscribe messaging. Device publishes state updates (current brightness, colour temperature, automation status) to topics matching device identifier. Subscribed topics receive commands from control applications, parsed and executed immediately. Quality-of-Service level 1 ensures at-least-once delivery of critical commands.
+
+% mDNS responder enables automatic device discovery on local network. Device advertises service type "\_smartbulb.\_tcp" with instance name matching user-assigned friendly name. Control applications discover devices through mDNS queries without requiring manual IP address entry or cloud-based device registry.
+
+% \subsubsection{Data Persistence}
+
+% PLAN:
+
+% Non-volatile storage (NVS) library provides persistent storage of configuration, learned patterns, and user preferences. Key-value pairs stored in flash memory survive power cycles and firmware updates. Wear-leveling algorithm distributes writes across flash sectors, extending flash lifetime despite frequent updates from learning subsystem.
+
+% Critical parameters including Wi-Fi credentials, device name, and user schedules stored immediately upon modification. Learned behaviour patterns saved periodically (hourly) to balance persistence against flash wear. Corruption detection through checksums ensures invalid data detected and ignored, falling back to defaults if necessary.
+
+\subsection{Software Application Development Progress}
+
+\subsubsection{iOS Application Development}
+
+% PLAN:
+
+SwiftUI-based iOS application implements comprehensive device management and control interface. The application features secure user authentication with email verification using six-digit codes sent via SMTP, password reset functionality with timed code expiration, and session management with persistent login state. User credentials stored securely on Flask backend server with SHA-256 password hashing.
+
+Device management interface provides BLE scanning for nearby smart bulbs with real-time device discovery, custom device naming and room assignment, persistent storage of user's devices linked to account, and separation between simulated and physical hardware devices. Dual-mode architecture implemented supporting both physical ESP32 hardware and software simulator, enabling complete development and testing without requiring physical bulbs. Simulator mode toggle in Settings view allows seamless switching between modes, with appropriate filtering of devices based on current mode.
+
+Control interface provides real-time adjustment of power state with toggle switch, brightness control via slider (0-255 range with percentage display), RGB color selection through ColorPicker with four quick-access preset colors (White, Red, Green, Blue), and four lighting effect modes (Solid, Fade, Rainbow, Pulse) with visual selection interface. All controls update device state immediately with visual feedback, and device state synchronization ensures interface reflects current bulb status.
+
+BLE communication implemented using CoreBluetooth framework with proper iOS permission handling (NSBluetoothAlwaysUsageDescription in Info.plist). Device discovery scans for devices advertising specified service UUID, connection management handles pairing and maintains persistent connections, bidirectional communication supports both control commands and status notifications from device, and automatic reconnection attempts after connection loss. Network communication configured for both iOS Simulator (localhost 127.0.0.1) and physical devices (local network IP address) through APIConfig structure with compiler directives.
+
+% HealthKit integration implemented following privacy-first approach. Application requests sleep analysis permission only when user attempts to enable health-based automation feature, with clear explanation of data usage. Once granted, application queries sleep data for previous 14 days, identifying typical sleep and wake times for each day of week. This analysis performed locally within application; no health data transmitted to device or external servers.
+
+% Schedule view enables creation of time-based automation rules specifying target brightness and colour temperature at particular times. Schedules saved to device via MQTT messages, with cloud-like synchronisation ensuring schedules survive application reinstalls by retrieving current configuration from device on launch.
+
+Application successfully deployed and tested on physical iPad and iPhone devices with proper developer certificate configuration, iOS permission prompts functioning correctly, Bluetooth state monitoring showing "Ready" status, and network communication functioning across local network to Flask backend server.
+
+% \subsubsection{Web Application Development}
+
+% PLAN:
+
+% React-based Progressive Web App implements responsive design functioning across desktop and mobile browsers. Material-UI component library provides consistent, accessible interface elements following established design patterns. Interface adapts to screen size, with mobile layout emphasising touch-friendly controls and desktop layout exposing additional information and configuration options.
+
+% WebSocket client maintains persistent connection to Node.js backend server running on local network. Connection loss detected through heartbeat mechanism, triggering automatic reconnection attempts with visual indicator informing user of disconnected state. All commands and state updates transmit through WebSocket, enabling real-time responsiveness matching native application experience.
+
+% Service worker implementation enables Progressive Web App installation, allowing web application to function as standalone application with home screen icon on mobile devices and application window on desktop. Offline functionality limited to basic interface navigation; actual device control requires network connectivity as WebSocket connection to backend server necessary for communication.
+
+\subsubsection{Backend Server Development}
+
+Flask-based RESTful API server implemented with comprehensive endpoint coverage for user and device management. Authentication endpoints provide user registration with email verification, secure login with credential validation, password reset with verification codes, and email availability checking for registration validation. Device management endpoints support adding new bulbs with simulation mode flag, retrieving user's devices filtered by simulator/hardware mode, updating device names and room assignments, and deleting devices from user accounts.
+
+SQLite database schema implemented with users table storing email and hashed passwords, and bulbs table storing device IDs, names, room assignments, and simulation mode flags with foreign key relationships to users. Database initialization includes automatic table creation and migration for adding simulation mode column to existing databases.
+
+Email verification system implemented using Gmail SMTP with app-specific password, sending formatted verification codes, and 5-minute code expiration handled by client-side timer. Server runs on local network accepting connections from both localhost (iOS Simulator) and local network IP (physical devices), with CORS configured for development.
+
+% \subsection{Machine Learning Algorithm Development}
+
+% \subsubsection{Pattern Detection Implementation}
+
+% PLAN:
+
+% Initial pattern detection algorithm implemented using sliding window approach over historical usage data. Each day divided into 96 fifteen-minute intervals, with each interval recording whether light was on or off and average brightness/colour temperature if on. Patterns detected by identifying intervals with consistent on/off state across multiple days.
+
+% Weekly pattern detection implemented separately for each day of week, recognising that weekday and weekend routines differ significantly. For each day-of-week, algorithm identifies intervals with at least 70\% consistency over past four occurrences. This threshold balances responsiveness to patterns against false positives from random variations.
+
+% Gradual confidence building prevents premature automation. Detected patterns stored with confidence scores incrementing on each confirming occurrence and decrementing on violations. Automation only engages when confidence exceeds threshold (typically 5 consecutive conforming days), ensuring established patterns trigger automation whilst avoiding disruption from spurious detected patterns.
+
+% \subsubsection{Learning Algorithm Evaluation}
+
+% PLAN:
+
+% Preliminary testing using synthetic usage data with predetermined patterns validated pattern detection correctly identifies consistent daily routines. Test cases included weekday versus weekend variations, gradual routine shifts (simulating daylight saving time transitions or routine changes), and occasional violations (simulating irregular days).
+
+% Algorithm successfully detected stable patterns within one week, appropriately ignored isolated anomalies, and adapted to routine changes within two weeks of new pattern establishment. These results suggest algorithm suitable for intended purpose, though real-world testing with actual user data will provide definitive validation.
+
+% Computational performance analysis measured pattern detection execution time averaging 45ms for 30 days of historical data on ESP32. This acceptable overhead executed during low-priority background task does not impact real-time control responsiveness. Memory usage approximately 8KB for pattern storage structures fits comfortably within ESP32 RAM budget.
+
+\subsection{Preliminary Testing and Results}
+
+\subsubsection{System Integration Testing}
+
+% PLAN:
+
+End-to-end testing verified iOS application functionality across development and deployment workflow. User authentication tested with successful account creation, email verification, login/logout cycles, and password reset flows. Device management tested with adding simulated bulbs, switching between simulator and hardware modes, editing device details, and removing devices from accounts. Application successfully deployed to physical iPad and iPhone with proper Bluetooth permissions, developer certificates, and network connectivity.
+
+BLE communication architecture validated through simulator mode testing with instant connection to simulated devices, bidirectional state updates, control command processing, and proper disconnection handling. Real-time control interface tested with immediate UI updates, smooth transitions between states, and consistent behavior across multiple app launches.
+
+Backend server integration tested with successful API communication from physical devices, database persistence across server restarts, concurrent user sessions, and proper error handling for invalid requests. Network configuration validated for both simulator (localhost) and physical device (local network IP) scenarios.
+
+% Multiple simultaneous clients (iOS application and web application) successfully controlled single device without conflicts. MQTT broker correctly distributed state updates to all connected clients, maintaining interface consistency regardless of control source. Manual override immediately reflected across all interfaces, confirming state synchronisation functioning correctly.
+
+% Reliability testing included 24-hour continuous operation at various brightness levels, Wi-Fi disconnection and reconnection scenarios, and firmware crash recovery simulation. Device successfully recovered from all tested failure modes, automatically reconnecting to Wi-Fi after network outages and resuming operation after simulated crashes through watchdog timer reset.
+
+% \subsubsection{Power Consumption Measurements}
+
+% PLAN:
+
+% Power consumption measured at various operating points using calibrated power meter. At maximum output (both warm and cool channels 100\%), system consumed 9.2W from mains, matching expected LED power plus driver losses. At 50\% brightness, consumption dropped to 5.1W, demonstrating efficiency across output range. Standby power with light off measured 0.42W, meeting 0.5W target requirement.
+
+% Efficiency calculated at 85\% for maximum output and 82\% for 50\% brightness. While falling slightly short of 90\% target efficiency, these values prove acceptable for intended application. Driver circuit optimisation during PCB layout phase may improve efficiency through reduced trace resistances and optimised component placement minimising switching losses.
+
+% \subsubsection{Thermal Performance Evaluation}
+
+% PLAN:
+
+% Extended thermal testing over 4-hour maximum output operation established steady-state heat sink temperature of 71°C with ambient temperature 22°C. LED junction temperature estimated using thermal resistance specifications reaches approximately 88°C, remaining within safe operating range but suggesting thermal design requires refinement.
+
+% Planned improvements include larger heat sink with greater surface area, thermal interface material between LED board and heat sink ensuring low thermal resistance, and housing design maximising natural convection airflow. Target maximum junction temperature 80°C provides safety margin for elevated ambient temperatures and long-term reliability.
+
+\subsection{Challenges Encountered and Solutions}
+
+\subsubsection{iOS Bluetooth Permission Configuration}
+
+Initial deployment to physical iPad revealed Bluetooth state stuck on "Unknown" despite Bluetooth being enabled on device. Investigation identified missing NSBluetoothAlwaysUsageDescription key in Info.plist, preventing iOS from requesting Bluetooth permission from user.
+
+Solution involved adding proper Info.plist entry with user-facing description: "This app needs Bluetooth to connect to your smart bulbs". After adding permission key, completely deleting app from device, and rebuilding, iOS properly displayed permission prompt on launch. After granting permission, Bluetooth state correctly showed "Ready" and BLE scanning functioned properly.
+
+\subsubsection{Network Configuration for Physical Devices}
+
+Initial network communication failed when deploying to physical devices despite working in iOS Simulator. Simulator successfully connected to Flask backend at localhost (127.0.0.1:5000), but physical devices received "Network error" when attempting same connection.
+
+Solution implemented APIConfig structure with compiler directives distinguishing simulator and physical device environments. Simulator builds use localhost address, while physical device builds use Mac's local network IP address (192.168.1.45:5000). Both Mac and iOS devices must be on same Wi-Fi network. This architecture enables seamless testing across simulator and multiple physical devices without code changes.
+
+\subsubsection{Simulator Mode Architecture}
+
+Challenge emerged in testing workflow requiring physical hardware for every test, significantly slowing development iteration. Need identified for testing complete application functionality without ESP32 hardware during development phase.
+
+Solution implemented dual-mode architecture with simulator mode flag stored in UserDefaults. When enabled, BLEManager generates simulated devices with consistent UUIDs during scanning, instantly "connects" to simulated bulbs, and processes control commands by updating local state without hardware communication. Backend database stores is\_simulated flag with each device, enabling proper filtering when loading user's devices. Mode switching in Settings view posts notification triggering refresh of device lists and BLE manager state. This architecture enabled complete development and testing of iOS application features before hardware availability.
+
+\subsubsection{Database Mode Filtering}
+
+Initial implementation stored all devices without distinguishing simulated from physical bulbs, causing confusion when switching between modes as both device types appeared in device list regardless of current mode setting.
+
+Solution modified database schema to include is\_simulated column, updated backend API to accept simulation flag during device addition, and implemented filtered queries returning only devices matching current mode (simulated devices when simulator mode ON, physical devices when OFF). This separation prevents attempting to connect to wrong device type and provides clear user experience when switching between modes.
+
+% \subsubsection{PWM Flicker Issues}
+
+% PLAN:
+
+% Initial implementation using 1 kHz PWM frequency produced visible flicker noticeable in peripheral vision and when recording video. Literature review revealed human flicker fusion threshold varies with brightness and individual physiology, with some individuals detecting flicker above 1 kHz.
+
+% Solution involved increasing PWM frequency to 5 kHz using ESP32 LEDC high-speed channels. This frequency exceeds perceptible threshold for all tested individuals and eliminates flicker artefacts in video recordings. Slight increase in switching losses proved negligible compared to flicker elimination benefits.
+
+% \subsubsection{Wi-Fi Reliability}
+
+% PLAN:
+
+% Early testing revealed occasional Wi-Fi disconnections lasting several minutes, disrupting device control. Investigation identified aggressive power-saving mode causing excessive connection latency and timeouts during low-traffic periods.
+
+% Solution configured Wi-Fi modem sleep mode rather than default light sleep, maintaining more responsive connection at cost of slightly increased power consumption (approximately 0.1W additional standby power). For mains-powered device, prioritising connection reliability over minimal power savings proved appropriate trade-off.
+
+% \subsubsection{Colour Consistency Across Brightness}
+
+% PLAN
+
+% Initial colour temperature mixing maintained constant ratio between warm and cool channels across brightness levels. However, human colour perception varies with brightness (Purkinje effect), causing apparent colour shift as brightness changed even with constant mixing ratio.
+
+% Solution implemented perceptual colour consistency through brightness-dependent mixing adjustments. Empirical testing determined correction factors ensuring perceived colour temperature remains constant across brightness range. Look-up table stores correction factors applied automatically during colour temperature adjustments.
+
+% \subsubsection{Flash Memory Wear}
+
+% PLAN:
+
+% Initial implementation saved learned patterns after every update, potentially causing excessive flash wear and shortened device lifetime. Flash memory endurance typically specified at 10,000-100,000 erase cycles per sector.
+
+% Solution reduced flash write frequency through batching updates and implementing hourly periodic saves rather than immediate persistence. Wear-leveling features of NVS library distribute writes across sectors, extending practical lifetime to decades even with hourly updates. Critical user settings still save immediately, prioritising data preservation over wear considerations.
+
+\backtotocbutton
+\newpage
+
+\phantomsection
+\section{Planned Deliverables and Work Plan}
+
+\subsection{Expected Deliverables}
+
+\subsubsection{Primary Deliverables}
+
+\textbf{Functional Prototype:} Complete working smart bulb system demonstrating all primary requirements including wireless control, adaptive automation, health data integration, and cross-platform interfaces. Prototype will include properly designed housing, safety-compliant electrical design, and reliable operation over extended testing period.
+
+\textbf{iOS Application:} Native iOS application built in Swift with SwiftUI interface, implementing device control, schedule management, HealthKit integration, and visualisation of learned behaviour patterns. Application will be tested on physical iOS devices and documented with user guide.
+
+\textbf{Web Application:} Progressive Web App providing cross-platform access to device control and configuration. Application will function on modern desktop and mobile browsers, implementing responsive design and real-time communication with embedded device.
+
+\textbf{Embedded Firmware:} Complete ESP32 firmware implementing LED control, wireless communications, pattern learning, automation logic, and safety monitoring. Firmware will be documented with code comments, architecture diagrams, and build instructions.
+
+\textbf{Hardware Documentation:} Comprehensive documentation of hardware design including circuit schematics, component specifications, PCB layout (if implemented), 3D housing models, assembly instructions, and safety analysis. Documentation sufficient for reproduction by technically competent individuals.
+
+\textbf{Final Report:} Comprehensive dissertation documenting project motivation, literature review, requirements analysis, system design, implementation details, testing methodology, results evaluation, and conclusions. Report will follow academic standards with appropriate citations and technical depth.
+
+\textbf{Demonstration Video:} Video demonstrating system operation including setup process, manual control, adaptive automation behaviour, health data integration, and multi-platform control. Video will be suitable for technical and non-technical audiences.
+
+\subsubsection{Supporting Deliverables}
+
+\textbf{User Documentation:} Quick-start guide and user manual explaining installation, configuration, and operation of the system. Documentation will be written for non-technical users with clear instructions and troubleshooting guidance.
+
+\textbf{Developer Documentation:} Technical documentation for developers wishing to extend or modify the system, including API specifications, protocol descriptions, and extension points for additional features.
+
+\textbf{Test Results:} Comprehensive test results including functional testing, performance measurements, reliability testing, safety verification, and user acceptance testing if time permits.
+
+\textbf{Source Code Repository:} Complete source code for firmware, iOS application, and web application hosted in version control repository with appropriate licensing and contribution guidelines.
+
+\subsection{Remaining Work}
+
+\subsubsection{Hardware Completion Tasks}
+
+\textbf{Housing Design and Fabrication:} Complete 3D modelling of bulb housing in Autodesk Fusion 360, incorporating thermal management features, assembly points for electrical components, and appropriate safety enclosures. Print housing using university 3D printing facilities with suitable high-temperature material such as PETG or ABS. Test assembled housing for thermal performance and mechanical durability.
+
+\textbf{PCB Layout:} Design printed circuit board integrating ESP32 module, LED driver circuit, power supply, and necessary peripheral components. Layout must maintain proper isolation between mains and low-voltage circuits, minimise electromagnetic interference, and optimise thermal performance. If time and budget permit, manufacture small batch of boards for testing and refinement.
+
+\textbf{Final Assembly and Testing:} Assemble complete prototype in printed housing with proper cable management, strain relief, and component securing. Conduct comprehensive electrical safety testing, thermal testing, and reliability testing under various environmental conditions.
+
+\subsubsection{Firmware Completion Tasks}
+
+\textbf{Advanced Learning Algorithms:} Refine pattern detection algorithms based on real-world testing data, implementing improvements for robustness and accuracy. Add detection for irregular patterns such as gradual routine shifts and seasonal adjustments.
+
+\textbf{Optimisation:} Profile firmware performance identifying bottlenecks and implementing optimisations for reduced power consumption, faster response times, and improved memory utilisation. Implement deep sleep modes for periods of inactivity to minimise standby power.
+
+\textbf{Error Handling:} Enhance error handling throughout firmware with comprehensive logging, graceful degradation when features unavailable, and clear diagnostic information accessible through web interface for troubleshooting.
+
+\subsubsection{Application Completion Tasks}
+
+\textbf{iOS Application Refinement:} Complete remaining UI screens including automation configuration, learned pattern visualisation, and detailed device settings. Implement proper error handling, loading states, and user feedback for all operations. Conduct user interface testing with potential users gathering feedback for refinement.
+
+\textbf{Web Application Feature Parity:} Ensure web application provides equivalent functionality to iOS application except for HealthKit integration which is necessarily platform-specific. Implement missing features and refine user interface for optimal desktop and mobile experiences.
+
+\textbf{Backend Server Hardening:} Improve backend server reliability, security, and performance. Implement proper authentication if multiple users require access, enhance logging for troubleshooting, and optimise WebSocket handling for minimal latency.
+
+\subsubsection{Testing and Evaluation Tasks}
+
+\textbf{Comprehensive System Testing:} Conduct structured testing of all functional requirements, documenting test procedures, results, and any identified issues. Include edge cases, failure scenarios, and long-term reliability testing.
+
+\textbf{Performance Evaluation:} Measure and analyse system performance metrics including response times, power consumption, learning accuracy, and user satisfaction if user testing conducted. Compare results against initial requirements and industry benchmarks where available.
+
+\textbf{Security Analysis:} Review system security considering potential vulnerabilities in wireless communications, firmware update mechanisms, and data storage. Implement appropriate security measures and document security properties and limitations.
+
+\subsubsection{Documentation Tasks}
+
+\textbf{Technical Documentation:} Complete comprehensive technical documentation covering all system aspects sufficient for reproduction, modification, and troubleshooting. Include well-commented source code, architecture diagrams, and design rationale explanations.
+
+\textbf{User Documentation:} Write clear, concise user documentation with appropriate screenshots, diagrams, and step-by-step instructions. Test documentation with non-technical users ensuring comprehensibility.
+
+\textbf{Booklet:}Potentially make like a user manual.
+
+\textbf{Final Report:} Write comprehensive dissertation documenting entire project from motivation through implementation to evaluation. Ensure academic rigour with proper citations, technical depth appropriate for computer science honours project, and clear presentation of results and conclusions.
+
+\subsection{Work Plan and Timeline}
+
+\subsubsection{November 2025}
+
+\begin{itemize}
+\item Complete PCB layout and submit for manufacturing (if budget approved)
+\item Finalise 3D housing design and begin test prints
+\item Refine learning algorithms based on simulated usage data
+\item Complete iOS application core features
+\item Milestone: Initial Mid-term report submission
+\item Milestone: Bulb design and build
+\item Milestone: Initial bulb software, bulb dimming
+\item Milestone: Integrate AI system with bulb dimming
+\end{itemize}
+
+\subsubsection{December 2025}
+
+\begin{itemize}
+\item Receive and populate PCB with components
+\item Refine housing design based on test prints
+\item Integrate and test complete hardware assembly
+\item Complete web application development
+\item Begin comprehensive system testing
+\item University break period: Continue development work
+\item Milestone: Final Mid-term report submission acting on November feedback
+\item Milestone: Finalise bulb AI system and begin implementing sample sleep tracking
+\end{itemize}
+
+\subsubsection{January 2026}
+
+\begin{itemize}
+\item Conduct extended reliability testing
+\item Milestone: Feedback Mid-term report 
+\item Deploy prototype for personal use gathering real-world usage data
+\item Refine automation algorithms based on actual behaviour patterns
+\item Complete user and developer documentation
+\item Begin final report writing
+\item Milestone: Finalise AI sample sleep tracking 
+\end{itemize}
+
+\subsubsection{February 2026}
+
+\begin{itemize}
+\item Analyse testing results and refine system based on findings
+\item Complete security analysis and implement improvements
+\item Finalise demonstration video
+\item Continue final report writing focusing on implementation and testing chapters
+\end{itemize}
+
+\subsubsection{March 2026}
+
+\begin{itemize}
+\item Complete final report writing
+\item Conduct final testing and validation
+\item Prepare presentation materials
+\item Final report submission
+\item Project demonstration and presentation
+\end{itemize}
+
+\subsection{Risk Assessment}
+
+\subsubsection{Technical Risks}
+
+\textbf{Risk 1 - Thermal Management Inadequate:} Heat sink design may prove insufficient for reliable continuous operation at maximum output.
+
+\textit{Mitigation:} Conservative thermal design with margin above minimum requirements. Thermal throttling implemented in firmware reducing output if temperature limits approached. Larger heat sink specified if initial testing reveals issues.
+
+\textbf{Risk 2 - Learning Algorithm Ineffective:} Pattern detection may fail to identify useful patterns or produce excessive false positives disrupting rather than enhancing user experience.
+
+\textit{Mitigation:} Extensive testing with simulated and real usage data before deploying automation. Conservative confidence thresholds preventing premature automation. Manual override always available allowing users to disable automation if unsatisfactory.
+
+\textbf{Risk 3 - Wi-Fi Reliability Issues:} Wireless connectivity may prove unreliable in real-world environments with interference, weak signals, or problematic router configurations.
+
+\textit{Mitigation:} Robust connection handling with automatic reconnection and clear status indication. Bluetooth fallback enabling local control if Wi-Fi unavailable. Comprehensive testing across various network conditions.
+
+\subsubsection{Project Management Risks}
+
+\textbf{Risk 4 - Component Availability:} Electronic components may become unavailable due to supply chain issues common in current market conditions.
+
+\textit{Mitigation:} Order critical components early in project timeline. Identify alternative compatible components as backup options. Maintain flexible design allowing component substitution without major redesign.
+
+\textbf{Risk 5 - Schedule Overrun:} Project scope may prove larger than anticipated, causing delays and potentially incomplete deliverables.
+
+\textit{Mitigation:} Realistic timeline with clearly defined primary and secondary objectives. Primary objectives prioritised ensuring core functionality completed even if time constraints prevent secondary enhancements. Regular progress review with supervisor enabling early identification of schedule issues.
+
+\textbf{Risk 6 - PCB Manufacturing Delays:} If custom PCB manufactured, delays or manufacturing defects could impact timeline.
+
+\textit{Mitigation:} Early PCB submission maximising available time for manufacturing. Continued development using breadboard prototypes if PCB delayed. Alternative vendors identified as backup if primary manufacturer experiences issues.
+
+\subsubsection{Safety Risks}
+
+\textbf{Risk 7 - Electrical Safety Failure:} Design or manufacturing defect could create electrical shock or fire hazard.
+
+\textit{Mitigation:} Conservative safety design following established principles even without formal certification. Thorough safety testing including isolation verification, ground continuity, and thermal stress testing. Prototype operation supervised, not deployed in unsupervised residential use until safety thoroughly validated.
+
+\textbf{Risk 8 - Thermal Safety:} Inadequate thermal management could cause excessive temperatures creating fire risk.
+
+\textit{Mitigation:} Thermal protection in firmware automatically reduces output if temperature limits approached. Thermal fuses as last-resort protection against runaway temperature. Housing materials selected for appropriate temperature tolerance. Testing under worst-case conditions validates thermal safety margins.
+
+\backtotocbutton
+\newpage
+
+\phantomsection
+\section{Estimated Total Cost}
+
+\subsection{Hardware Components}
+
+\begin{itemize}
+\item ESP32-WROOM-32D Module (×2 for development): £9.00
+\item Dual-channel COB LED Module (2700K/6000K): £8.00
+\item MOSFET PWM Control Module: £9.00
+\item LED Thermal Conductive Tape: £6.00
+\item Aluminium Heat Sink: £10.00
+\item E27 Lamp Base: £5.00
+\item Temperature Sensor (Thermistor): £1.00
+\item Miscellaneous components (connectors, hardware): £45.00
+\end{itemize}
+
+\textbf{Hardware Subtotal:} £93.00
+
+\subsection{Materials and Fabrication}
+
+\begin{itemize}
+\item 3D Printing Filament (PETG, 0.5kg): £12.00
+\item Thermal Interface Material: £3.00
+\item Assembly Supplies: £8.00
+\end{itemize}
+
+\textbf{Materials Subtotal:} £23.00
+
+\subsection{Software and Services}
+
+\begin{itemize}
+\item Apple Developer Account (already owned): £0.00
+\item Cloud Services (not required due to local architecture): £0.00
+\item Development Software (all open-source or freely available): £0.00
+\end{itemize}
+
+\textbf{Software Subtotal:} £0.00
+
+\subsection{Documentation and Presentation}
+
+\begin{itemize}
+\item Report Printing and Binding: £15.00
+\item Demonstration Materials: £5.00
+\end{itemize}
+
+\textbf{Documentation Subtotal:} £20.00
+
+\subsection{Contingency}
+
+\begin{itemize}
+\item Component Replacements (damaged parts, alternatives): £15.00
+\item Additional Testing Materials: £10.00
+\end{itemize}
+
+\textbf{Contingency Subtotal:} £25.00
+
+\subsection{Total Project Budget}
+
+\textbf{Estimated Total Cost:} £161.00
+
+This budget represents realistic estimate for completing primary project objectives. Most significant costs are electronic components and PCB manufacturing if pursued. 3D printing costs include potential filament needed. Software costs eliminated through open-source tools and existing Apple Developer account. I have also included printing my final report and therefore the printing costs. Contingency allocation provides buffer for unexpected requirements or component replacements.
+
+% Budget is modest compared to many engineering projects, reflecting advantages of modern embedded platforms and open-source ecosystems. Total cost remains well within typical undergraduate project budgets and has been primarily self-funded with support from university resources (3D printing, development equipment).
+
+\backtotocbutton
+\newpage
+
+\phantomsection
+\section{Plan of Final Report Structure}
+
+\subsection{Proposed Chapter Structure}
+
+The final dissertation will follow standard Electronic Engineering project report structure, expanding upon this mid-term report with complete implementation details, comprehensive testing results, and thorough evaluation.
+
+\textbf{Chapter 1: Introduction}
+\begin{itemize}
+\item Project motivation and context
+\item Problem statement and significance
+\item Aims and objectives
+\item Project scope and constraints
+\item Report structure overview
+\item Contributions and achievements
+\end{itemize}
+
+\textbf{Chapter 2: Background and Literature Review}
+\begin{itemize}
+\item Smart home automation systems
+\item LED technology and driver circuits
+\item Embedded systems and IoT platforms
+\item Machine learning on embedded devices
+\item Health data integration and privacy
+\item Circadian rhythm and lighting effects
+\item Summary of existing approaches and identified gaps
+\end{itemize}
+
+\textbf{Chapter 3: Requirements Analysis and System Design}
+\begin{itemize}
+\item Functional and non-functional requirements
+\item System architecture overview
+\item Hardware architecture and component selection
+\item Firmware architecture and software design
+\item Application architecture and interface design
+\item Communication protocols and data flows
+\item Security and privacy considerations
+\item Use case scenarios
+\end{itemize}
+
+\textbf{Chapter 4: Implementation}
+\begin{itemize}
+\item Hardware implementation details
+\item Circuit design and PCB layout
+\item Housing design and thermal management
+\item Firmware implementation
+\item LED control and PWM generation
+\item Wireless communication implementation
+\item Learning algorithm implementation
+\item iOS application development
+\item Web application development
+\item Backend services implementation
+\item Implementation challenges and solutions
+\end{itemize}
+
+\textbf{Chapter 5: Testing and Evaluation}
+\begin{itemize}
+\item Testing methodology and procedures
+\item Functional testing results
+\item Performance evaluation
+\item Power consumption analysis
+\item Thermal performance testing
+\item Learning algorithm evaluation
+\item Usability testing
+\item Security analysis
+\item Reliability and long-term testing
+\item Comparison with requirements
+\end{itemize}
+
+\textbf{Chapter 6: Results and Discussion}
+\begin{itemize}
+\item System performance summary
+\item Learning algorithm effectiveness
+\item User experience evaluation
+\item Energy efficiency analysis
+\item Comparison with existing solutions
+\item Limitations and constraints
+\item Success criteria assessment
+\item Discussion of findings
+\end{itemize}
+
+\textbf{Chapter 7: Conclusions and Future Work}
+\begin{itemize}
+\item Summary of achievements
+\item Objectives fulfilment assessment
+\item Contributions to field
+\item Lessons learned
+\item Future enhancements and extensions
+\item Alternative approaches
+\item Broader implications
+\item Final remarks
+\end{itemize}
+
+\subsection{Anticipated Contributions}
+
+This project makes several contributions to the intersection of embedded systems, IoT, and home automation:
+
+\textbf{Privacy-Preserving Smart Home Design:} Demonstrates feasibility of sophisticated home automation without cloud dependency, processing all user data locally whilst maintaining full functionality. This approach addresses growing privacy concerns in consumer IoT devices.
+
+\textbf{On-Device Learning Implementation:} Practical implementation of lightweight machine learning on resource-constrained embedded platform, showing that adaptive behaviour does not require powerful servers or extensive computational resources. Provides reference implementation for TinyML applications in home automation context.
+
+\textbf{Health Data Integration:} Novel integration of health platform data (HealthKit) with physical home automation device, creating feedback loop between physiological data and environmental control. Demonstrates potential for health-aware smart home systems.
+
+\textbf{Complete System Development:} End-to-end implementation from hardware design through embedded firmware to cross-platform applications provides comprehensive case study in IoT system development, valuable for education and future projects.
+
+\textbf{Open Design Approach:} Comprehensive documentation and open-source code release enables reproduction, modification, and extension by others, contributing to open hardware and software communities.
+
+\backtotocbutton
+\newpage
+
+\phantomsection
+\section{Conclusions}
+
+\subsection{Progress Summary}
+
+PLAN:
+
+Significant progress has been achieved across all major project areas during the first term. Hardware component selection and procurement completed successfully, with initial prototyping validating circuit designs and identifying thermal management considerations requiring attention. Embedded firmware development established core functionality including LED control, wireless communications, and preliminary pattern learning algorithms.
+
+Software application development produced functional iOS application with HealthKit integration and web-based Progressive Web App providing cross-platform access. Communication infrastructure using MQTT and WebSockets enables real-time device control and state synchronisation across multiple interfaces. Initial system integration testing confirmed end-to-end functionality meeting response time requirements.
+
+Preliminary testing revealed areas requiring refinement, particularly thermal management and colour consistency across brightness levels. Solutions have been identified and partially implemented, with remaining work clearly defined. The project remains on schedule with realistic expectation of completing all primary objectives within available timeframe.
+
+\subsection{Assessment of Progress Against Timeline}
+
+PLAN:
+
+Project progress aligns well with planned timeline established at project start. November milestones including literature review, component procurement, and initial prototyping have been achieved. Development environment setup and initial implementation work position the project well for December hardware finalisation and January testing phases.
+
+Some tasks progressed ahead of schedule, particularly software application development which benefited from established frameworks and prior experience with relevant technologies. Hardware development encountered expected challenges with thermal management and safety considerations, but these were anticipated in timeline buffer and do not threaten schedule adherence.
+
+The mid-term report submission represents key milestone confirming project viability and providing foundation for completion phase. Supervisor feedback on this report will inform refinements to approach and priorities for remaining work.
+
+\subsection{Key Learnings}
+
+Several important lessons have emerged from work completed to date:
+
+\textbf{Thermal Management Criticality:} LED lighting systems require careful thermal design from project inception rather than as afterthought. Heat sink sizing, material selection, and airflow considerations significantly impact reliability and safety. Conservative thermal margins prove essential given uncertainties in real-world operating conditions.
+
+\textbf{Safety-First Design:} Mains-voltage electrical design demands rigorous attention to safety principles. Understanding isolation requirements, creepage distances, and ground bonding proved essential for responsible hardware development. Pre-certified power supply modules provide cost-effective safety compliance for student projects.
+
+\textbf{Embedded Resource Constraints:} Microcontroller programming requires mindfulness of memory and processing limitations absent in typical application development. Algorithm selection, optimisation, and profiling become essential skills for embedded development.
+
+\textbf{Protocol Selection Importance:} Choosing appropriate communication protocols early in project significantly impacts architecture and implementation complexity. MQTT provides excellent fit for IoT messaging, whilst WebSockets enable real-time web application interactions with complexity manageable in project timeframe.
+
+\textbf{Privacy by Design:} Implementing privacy-preserving architecture from beginning proves easier than retrofitting privacy protections. Local data processing decision simplified architecture, eliminated external dependencies, and addressed user privacy concerns inherently rather than through access controls.
+
+\textbf{Iterative Development Value:} Building functional prototypes early, even with breadboard circuits and incomplete features, enabled testing and validation guiding subsequent development. Discovering issues early through hands-on experimentation prevented larger problems later.
+
+\subsection{Next Steps}
+
+Immediate priorities for December focus on hardware completion and refinement. PCB layout will be finalised and submitted for manufacturing if budget approved, whilst parallel breadboard prototyping continues ensuring progress despite manufacturing lead times. Housing design will be completed with thermal simulation and test prints validating approach before final production.
+
+Firmware development will continue refining learning algorithms based on accumulated testing data and implementing remaining features for robust operation. Particular attention will be given to error handling, recovery mechanisms, and diagnostic capabilities essential for reliable autonomous operation.
+
+Application development will focus on completing remaining interface features, conducting user interface testing with potential users, and implementing refinements based on feedback. Backend server will be hardened for reliability and security appropriate for long-term operation.
+
+January will shift focus to comprehensive testing and evaluation, deploying prototype for extended real-world use gathering genuine usage data informing final refinements. This personal deployment will provide invaluable insights into practical system behaviour and automation effectiveness.
+
+Final report writing will begin in January with completion of methodology and implementation chapters whilst details remain fresh. Results and discussion chapters will be written in February following completion of comprehensive testing. Conclusions and future work will be drafted in March alongside final refinements and preparation of demonstration materials.
+
+The project demonstrates strong progress toward achieving stated objectives. Remaining work is substantial but well-defined, with realistic expectation of successful completion producing valuable contribution demonstrating principles of privacy-preserving, adaptive home automation whilst exploring full system development from hardware through firmware to applications.
+
+\backtotocbutton
+\newpage
+
+\phantomsection
+\section*{References}
+\addcontentsline{toc}{section}{References}
+
+\vspace{0.4em}
+\hypertarget{cite:cajochen2011}{}[1] C. Cajochen, S. Frey, D. Anders, J. Späti, M. Bues, A. Pross, R. Mager, A. Wirz-Justice, and O. Stefani, ``Evening exposure to a light-emitting diodes (LED)-backlit computer screen affects circadian physiology and cognitive performance,'' \textit{Journal of Applied Physiology}, vol. 110, no. 5, pp. 1432--1438, May 2011. \hyperlink{ref:cajochen2011-1}{$\uparrow$}\hyperlink{ref:cajochen2011-2}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:zeng2017}{}[2] E. Zeng, S. Mare, and F. Roesner, ``End user security and privacy concerns with smart homes,'' in \textit{Proceedings of the Thirteenth Symposium on Usable Privacy and Security (SOUPS 2017)}, Santa Clara, CA, USA, Jul. 2017, pp. 65--80. \hyperlink{ref:zeng2017-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:chang2015}{}[3] A.-M. Chang, D. Aeschbach, J. F. Duffy, and C. A. Czeisler, ``Evening use of light-emitting eReaders negatively affects sleep, circadian timing, and next-morning alertness,'' \textit{Proceedings of the National Academy of Sciences}, vol. 112, no. 4, pp. 1232--1237, Jan. 2015. \hyperlink{ref:chang2015-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:gimenez2017}{}[4] M. C. Giménez, M. Geerdinink, P. Verstegen, Y. Mesman, Y. de Vries, Y. A. de Kort, W. D. van Marken Lichtenbelt, and A. L. Schlangen, ``Evaluating the circadian performance of a polychromatic white LED light source,'' \textit{Lighting Research \& Technology}, vol. 49, no. 5, pp. 586--600, Aug. 2017. \hyperlink{ref:gimenez2017-1}{$\uparrow$}\hyperlink{ref:gimenez2017-2}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:warden2019}{}[5] P. Warden and D. Situnayake, \textit{TinyML: Machine Learning with TensorFlow Lite on Arduino and Ultra-Low-Power Microcontrollers}, 1st ed. Sebastopol, CA, USA: O'Reilly Media, 2019. \hyperlink{ref:warden2019-1}{$\uparrow$}\hyperlink{ref:warden2019-2}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:espressif2023}{}[6] Espressif Systems, \textit{ESP-IDF Programming Guide}, 2023. Available: \href{https://docs.espressif.com/projects/esp-idf/}{https://docs.espressif.com/projects/esp-idf/}. [Accessed: Nov. 15, 2025]. \hyperlink{ref:espressif2023-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:banbury2021}{}[7] C. Banbury, V. J. Reddi, M. Lam, W. Fu, A. Fazel, J. Holleman, X. Huang, R. Hurtado, D. Kanter, A. Lokhmotov, D. Patterson, D. Pau, J.-S. Seo, J. Sieracki, U. Thakker, M. Verhelst, and P. Yadav, ``Benchmarking TinyML systems: Challenges and direction,'' \textit{arXiv preprint arXiv:2003.04821}, 2021. \hyperlink{ref:banbury2021-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:apple2023}{}[8] Apple Inc., \textit{HealthKit Framework Documentation}, 2023. Available: \href{https://developer.apple.com/documentation/healthkit}{https://developer.apple.com/documentation/healthkit}. [Accessed: Nov. 15, 2025]. \hyperlink{ref:apple2023-1}{$\uparrow$}\hyperlink{ref:apple2023-2}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:grigorik2013}{}[9] I. Grigorik, \textit{High Performance Browser Networking}, 1st ed. Sebastopol, CA, USA: O'Reilly Media, 2013. \hyperlink{ref:grigorik2013-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:sutton2018}{}[10] R. S. Sutton and A. G. Barto, \textit{Reinforcement Learning: An Introduction}, 2nd ed. Cambridge, MA, USA: MIT Press, 2018. \hyperlink{ref:sutton2018-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:skeldon2017}{}[11] A. C. Skeldon and D.-J. Dijk, ``School start times and daylight saving time confuse California lawmakers,'' \textit{Current Biology}, vol. 27, no. 18, pp. R1139--R1140, Sep. 2017. \hyperlink{ref:skeldon2017-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:iec60598}{}[12] International Electrotechnical Commission, ``IEC 60598-1:2020 Luminaires - Part 1: General requirements and tests,'' \textit{IEC Standards}, 2020. \hyperlink{ref:iec60598-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:ray2019}{}[13] P. P. Ray, ``A review on TinyML: State-of-the-art and prospects,'' \textit{Journal of King Saud University - Computer and Information Sciences}, vol. 34, no. 4, pp. 1595--1623, Apr. 2022. \hyperlink{ref:ray2019-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:guo2010}{}[14] X. Guo, S. H. Lin, M. R. Hamblin, and J. Xu, ``Photobiomodulation in Alzheimer's disease,'' in \textit{Photobiomodulation, Photomedicine, and Laser Surgery}, vol. 38, no. 10, pp. 589--597, Oct. 2010. \hyperlink{ref:guo2010-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:gomez2012}{}[15] C. Gomez, J. Oller, and J. Paradells, ``Overview and evaluation of Bluetooth Low Energy: An emerging low-power wireless technology,'' \textit{Sensors}, vol. 12, no. 9, pp. 11734--11753, Sep. 2012. \hyperlink{ref:gomez2012-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:caird2008}{}[16] S. Caird and R. Roy, ``User-centred improvements to energy efficiency products and renewable energy systems: Research on household adoption and use,'' \textit{International Journal of Innovation and Sustainable Development}, vol. 3, nos. 1--2, pp. 77--91, 2008. \hyperlink{ref:caird2008-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:schubert2006}{}[17] E. F. Schubert, \textit{Light-Emitting Diodes}, 2nd ed. Cambridge, UK: Cambridge University Press, 2006. \hyperlink{ref:schubert2006-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:erickson2007}{}[18] R. W. Erickson and D. Maksimović, \textit{Fundamentals of Power Electronics}, 2nd ed. New York, NY, USA: Springer, 2007. \hyperlink{ref:erickson2007-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:christensen2009}{}[19] A. Christensen and S. Graham, ``Thermal effects in packaging high power light emitting diode arrays,'' \textit{Applied Thermal Engineering}, vol. 29, nos. 2--3, pp. 364--371, Feb. 2009. \hyperlink{ref:christensen2009-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:maier2017}{}[20] M. Maier, M. Chowdhury, B. P. Rimal, and D. P. Van, ``The audacity of fiber-wireless (FiWi) networks: Revisited for clouds and cloudlets,'' \textit{China Communications}, vol. 12, no. 8, pp. 33--45, Aug. 2015. \hyperlink{ref:maier2017-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:hunkeler2008}{}[21] U. Hunkeler, H. L. Truong, and A. Stanford-Clark, ``MQTT-S - A publish/subscribe protocol for Wireless Sensor Networks,'' in \textit{Proc. 3rd International Conference on Communication Systems Software and Middleware (COMSWARE 2008)}, Bangalore, India, Jan. 2008, pp. 791--798. \hyperlink{ref:hunkeler2008-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:barry2009}{}[22] R. Barry, \textit{Using the FreeRTOS Real Time Kernel: A Practical Guide}, 1st ed. Seattle, WA, USA: Amazon Digital Services, 2009. \hyperlink{ref:barry2009-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:gama2014}{}[23] J. Gama, I. Žliobaitė, A. Bifet, M. Pechenizkiy, and A. Bouchachia, ``A survey on concept drift adaptation,'' \textit{ACM Computing Surveys}, vol. 46, no. 4, pp. 1--37, Mar. 2014. \hyperlink{ref:gama2014-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:rabiner1989}{}[24] L. R. Rabiner, ``A tutorial on hidden Markov models and selected applications in speech recognition,'' \textit{Proceedings of the IEEE}, vol. 77, no. 2, pp. 257--286, Feb. 1989. \hyperlink{ref:rabiner1989-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:voigt2017}{}[25] P. Voigt and A. von dem Bussche, \textit{The EU General Data Protection Regulation (GDPR): A Practical Guide}, 1st ed. Cham, Switzerland: Springer, 2017. \hyperlink{ref:voigt2017-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:mcmahan2017}{}[26] H. B. McMahan, E. Moore, D. Ramage, S. Hampson, and B. A. y Arcas, ``Communication-efficient learning of deep networks from decentralized data,'' in \textit{Proc. 20th International Conference on Artificial Intelligence and Statistics (AISTATS)}, Fort Lauderdale, FL, USA, Apr. 2017, pp. 1273--1282. \hyperlink{ref:mcmahan2017-1}{$\uparrow$}
+
+\vspace{0.4em}
+\hypertarget{cite:souman2018}{}[27] J. L. Souman, A. M. Tinga, S. C. J. Te Pas, R. van Ee, and B. N. S. Vlaskamp, ``Acute alerting effects of light: A systematic literature review,'' \textit{Behavioural Brain Research}, vol. 337, pp. 228--239, Jan. 2018. \hyperlink{ref:souman2018-1}{$\uparrow$}
+
+\backtotocbutton
+\newpage
+
+\phantomsection
+\section*{Appendices}
+\addcontentsline{toc}{section}{Appendices}
+
+\subsection*{Appendix A: Health and Safety Assessment}
+
+\textbf{Project Title:} AI-Based Smart Bulb for Adaptive Home Automation
+
+\textbf{Student Name:} Caleb Ram
+
+\textbf{Student ID:} 6801936
+
+\textbf{Supervisor:} Dr Ahmed Elzanaty
+
+\textbf{Hazard Identification and Risk Assessment}
+
+\textbf{Hazard 1: Electrical Shock from Mains Voltage}
+
+\textit{Description:} Working with 230V AC mains voltage during power supply integration and testing presents risk of electric shock causing injury or death.
+
+\textit{Risk Level:} High
+
+\textit{Control Measures:}
+\begin{itemize}
+\item All mains voltage work conducted with power disconnected except during necessary testing
+\item Isolation transformer used during mains-connected testing
+\item One-hand rule observed when probing live circuits
+\item Insulated tools used exclusively
+\item Residual Current Device (RCD) protection on test bench
+\item Appropriate creepage and clearance distances maintained in circuit design
+\item Double insulation or earthing of exposed conductive parts
+\item Supervisor or competent person present during initial mains testing
+\end{itemize}
+
+\textit{Residual Risk:} Low
+
+\textbf{Hazard 2: Thermal Burns from Heat Sink and LED}
+
+\textit{Description:} LED and heat sink reach elevated temperatures during operation, potentially causing burns on contact.
+
+\textit{Risk Level:} Medium
+
+\textit{Control Measures:}
+\begin{itemize}
+\item Warning labels affixed to prototype indicating hot surfaces
+\item Appropriate cooling-off period before handling after operation
+\item Thermal testing conducted with temperature monitoring equipment
+\item Housing design prevents accidental contact with hot components
+\item Thermal cutoff protection implemented in firmware
+\end{itemize}
+
+\textit{Residual Risk:} Low
+
+\textbf{Hazard 3: Fire Risk from Thermal Runaway or Component Failure}
+
+\textit{Description:} Inadequate thermal management or component failure could cause excessive heating leading to fire.
+
+\textit{Risk Level:} Medium
+
+\textit{Control Measures:}
+\begin{itemize}
+\item Conservative thermal design with adequate safety margins
+\item Firmware thermal protection reducing output if temperature limits approached
+\item Non-flammable housing materials (PETG or ABS with appropriate fire rating)
+\item Testing conducted on non-flammable surface with fire extinguisher available
+\item Thermal fuses as redundant overheat protection
+\item Prototype operation supervised, not left unattended during extended testing
+\end{itemize}
+
+\textit{Residual Risk:} Low
+
+\textbf{Hazard 4: Soldering Fumes and Chemical Exposure}
+
+\textit{Description:} Soldering produces fumes containing rosin and flux compounds that may cause respiratory irritation.
+
+\textit{Risk Level:} Low
+
+\textit{Control Measures:}
+\begin{itemize}
+\item Fume extraction used during all soldering operations
+\item Work conducted in well-ventilated area
+\item Lead-free solder used exclusively
+\item Frequent breaks during extended soldering sessions
+\end{itemize}
+
+\textit{Residual Risk:} Very Low
+
+\textbf{Hazard 5: Eye Damage from LED Light Exposure}
+
+\textit{Description:} Direct viewing of high-brightness LED may cause temporary or permanent eye damage.
+
+\textit{Risk Level:} Low
+
+\textit{Control Measures:}
+\begin{itemize}
+\item LED testing conducted with diffuser or indirect viewing
+\item Avoid direct gaze at illuminated LED
+\item Warning labels indicating eye safety precautions
+\item Brightness limited during testing to levels safe for direct viewing
+\end{itemize}
+
+\textit{Residual Risk:} Very Low
+
+\textbf{Hazard 6: Sharp Tools and Components}
+
+\textit{Description:} Use of cutting tools, component leads, and heat sink fins may cause cuts or punctures.
+
+\textit{Risk Level:} Low
+
+\textit{Control Measures:}
+\begin{itemize}
+\item Appropriate personal protective equipment (safety glasses, gloves when appropriate)
+\item Proper tool handling and storage procedures
+\item Component leads trimmed carefully and disposed of properly
+\item First aid kit readily available in workspace
+\end{itemize}
+
+\textit{Residual Risk:} Very Low
+
+\textbf{Declaration}
+
+I confirm that I have read and understood this health and safety assessment. I will follow all specified control measures and report any incidents or near-misses to my supervisor immediately. I understand that deviation from approved procedures may result in disciplinary action and project suspension.
+
+\vspace{1cm}
+Student Signature: \rule{5cm}{0.4pt} \hspace{1cm} Date: \rule{3cm}{0.4pt}
+
+\vspace{1cm}
+Supervisor Signature: \rule{5cm}{0.4pt} \hspace{1cm} Date: \rule{3cm}{0.4pt}
+
+\subsection*{Appendix B: Ethics Considerations}
+
+\textbf{Project Title:} AI-Based Smart Bulb for Adaptive Home Automation
+
+\textbf{Ethical Review Assessment}
+
+This project involves collection and processing of personal health data through Apple HealthKit integration. The following ethical considerations have been identified and addressed:
+
+\textbf{Data Privacy and Protection}
+
+All health data processing occurs locally on user-owned devices. No health data is transmitted to external servers, cloud services, or third parties. HealthKit permissions requested explicitly with clear explanation of how data will be used. Users maintain complete control over data access and can revoke permissions at any time.
+
+\textbf{Informed Consent}
+
+Application clearly explains what data is collected, how it is used, and what benefits automation provides. Technical language avoided in favour of clear, understandable descriptions. Users must explicitly grant permission before any health data access occurs. Consent can be withdrawn at any time without affecting basic lighting control functionality.
+
+\textbf{Transparency and Explainability}
+
+System makes learned behaviour patterns visible to users through application interface. Users can understand why automation actions occur based on displayed patterns. All automated behaviours can be overridden or disabled by user preference. System does not make autonomous decisions that cannot be explained or controlled by users.
+
+\textbf{Testing and Evaluation}
+
+Any user testing will be conducted with appropriate informed consent documentation. Participants will be provided with information sheets explaining study purpose, procedures, data handling, and right to withdraw. No vulnerable populations will be involved in testing. Testing will be limited to adults capable of informed consent.
+
+\textbf{Data Security}
+
+While data remains local, appropriate security measures implemented including encrypted storage of sensitive configuration data, authentication for remote access if implemented, and secure communication protocols (TLS/SSL) for network communications.
+
+\textbf{Risk-Benefit Analysis}
+
+Primary risk involves inappropriate lighting automation disrupting user comfort or sleep. This risk is mitigated through manual override capabilities, gradual automation engagement, and user control over all system behaviours. Benefits include improved sleep quality, energy efficiency, and convenience, with users making informed decision about acceptable trade-offs.
+
+\textbf{Assessment Conclusion}
+
+This project qualifies for expedited ethical review as it involves minimal risk to participants, maintains complete user control over data, and implements appropriate privacy protections. No vulnerable populations are involved, and all data processing occurs on user-controlled devices without external transmission.
+
+The project design follows privacy-by-design principles and complies with relevant data protection regulations including GDPR principles of data minimisation, purpose limitation, and user consent.
+
+\textbf{Ethics Approval Status}
+
+This project has been reviewed and determined to require ethics approval category: \textbf{Expedited Review - Minimal Risk}
+
+Ethics approval reference: [To be completed by ethics committee]
+
+\subsection*{Appendix C: Project Meetings Log}
+
+\textbf{Meeting 1 - Project Selection and Initial Planning}
+
+\textit{Date:} 7 October 2025
+
+\textit{Attendees:} Caleb Ram, Dr Ahmed Elzanaty
+
+\textit{Discussion Points:}
+\begin{itemize}
+\item Project proposal presented and discussed
+\item Scope refinement focusing on achievable objectives within timeframe
+\item Discussion of technical challenges particularly thermal management
+\end{itemize}
+
+\textit{Actions:}
+\begin{itemize}
+\item Student: Complete literature review, order initial components, set up development environment
+\item Supervisor: Provide feedback on project scope and recommended reading materials
+\end{itemize}
+
+\textbf{Meeting 2 - Progress Review and Technical Discussion}
+
+\textit{Date:} 17 November 2025
+
+\textit{Attendees:} Caleb Ram, Dr Ahmed Elzanaty
+
+\textit{Discussion Points:}
+\begin{itemize}
+\item Review of literature findings and technology selection rationale
+\item Initial hardware prototyping results including thermal concerns
+\item Discussion of firmware architecture and task priority design
+\item HealthKit integration approach and privacy considerations
+\item Literature review scope and key areas to investigate
+\item Safety requirements and electrical design considerations
+\item Mid-term report structure and expectations
+\end{itemize}
+
+\textit{Actions:}
+\begin{itemize}
+\item Student: Continue mid-term report writing
+\item Supervisor: Write email to Laurence asking about budget and sending components needed.
+\end{itemize}
+
+\textbf{Meeting 3 - Mid-Term Progress Review}
+
+\textit{Date:} 1 December 2025
+
+\textit{Attendees:} Caleb Ram, Dr Ahmed Elzanaty
+
+\textit{Discussion Points:}
+\begin{itemize}
+\item Demonstration of current prototype functionality
+\item Review of learning algorithm preliminary results
+\item Discussion of PCB layout considerations versus continued breadboard approach
+\item Timeline review and risk assessment
+\item Mid-term report draft sections reviewed
+\end{itemize}
+
+\textit{Actions:}
+\begin{itemize}
+\item Student: Complete mid-term report, finalise component procurement decisions, continue integration testing
+\item Supervisor: Provide feedback on draft report sections and advise on PCB decision
+\end{itemize}
+
+\textbf{Planned Future Meetings}
+
+Regular fortnightly meetings scheduled throughout project duration. Next meeting scheduled for 15 December 2025 to review hardware finalisation progress and discuss testing methodology for evaluation phase.
+
+\subsection*{Appendix D: Initial Email Correspondence}
+
+The following email correspondence documents initial project proposal and confirmation with project supervisor Dr Ahmed Elzanaty.
+
+\textit{[Email correspondence from project proposal and setup phase would be included here with appropriate formatting. For brevity in this template, specific email content has been incorporated into other sections of the report.]}
+
+\subsection*{Appendix E: Component Specifications}
+
+\textbf{ESP32-WROOM-32E Module}
+\begin{itemize}
+\item Processor: Dual-core Xtensa LX6, 240 MHz
+\item Memory: 520 KB SRAM, 4 MB Flash
+\item Wireless: Wi-Fi 802.11 b/g/n, Bluetooth 4.2 / BLE
+\item GPIO: 34 programmable pins
+\item Peripherals: SPI, I2C, I2S, UART, ADC, DAC, PWM
+\item Operating Voltage: 3.0 - 3.6 V
+\item Power Consumption: 80 mA (active), 5 μA (deep sleep)
+\end{itemize}
+
+\textbf{COB LED Module}
+\begin{itemize}
+\item Configuration: Dual-channel warm/cool white
+\item Colour Temperature: 2700K (warm), 6000K (cool)
+\item CRI: >95
+\item Forward Voltage: 36V per channel
+\item Forward Current: 300 mA per channel
+\item Luminous Flux: 800 lm (warm), 900 lm (cool)
+\item Thermal Resistance: 8 °C/W junction to board
+\end{itemize}
+
+\textbf{LM3409 LED Driver}
+\begin{itemize}
+\item Topology: Buck (step-down) constant current
+\item Input Voltage: 6 - 42 V
+\item Output Current: Up to 1 A (adjustable via resistor)
+\item Efficiency: >90\% typical
+\item Switching Frequency: 750 kHz
+\item Dimming: PWM and analogue inputs
+\item Protection: Over-temperature, under-voltage lockout
+\end{itemize}
+
+\textbf{IRM-20-12 Power Supply}
+\begin{itemize}
+\item Type: Enclosed switching AC-DC converter
+\item Input: 85 - 264 VAC, 47 - 63 Hz
+\item Output: 12 VDC, 1.67 A (20W)
+\item Isolation: 3 kVAC input to output
+\item Efficiency: 84\% typical
+\item Protection: Short circuit, overload, over-voltage
+\item Safety: UL/cUL, TUV, CE certified
+\end{document}
