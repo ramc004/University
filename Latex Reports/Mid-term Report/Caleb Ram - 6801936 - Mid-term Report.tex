@@ -404,8 +404,7 @@ Flask-based backend server development environment established with Python virtu
 
 % Power supply selection considered both isolated AC-DC modules and building custom supply from components. Safety requirements mandate isolation between mains and low-voltage circuits. Pre-certified 12V 2A isolated AC-DC module (Mean Well IRM-20-12) provides cost-effective solution meeting safety requirements without custom transformer design and testing. Secondary low-dropout regulator provides 3.3V for ESP32 and control electronics.
 
-ESP32-WROOM-32E module selected as final production component, offering integrated antenna, FCC/CE certification, and established supply chain. BLE service and characteristic UUIDs have been defined for device communication: service UUID (4fafc201-1fb5-459e-8fcc-c5c9c331914b) with five characteristics for Power (beb5483e-36e1-4688-b7f5-ea07361b26a8), Brightness (beb5483e-36e1-4688-b7f5-ea07361b26a9), Color RGB (beb5483e-36e1-4688-b7f5-ea07361b26aa), Mode (beb5483e-36e1-4688-b7f5-ea07361b26ab), and Status (beb5483e-36e1-4688-b7f5-ea07361b26ac).
-
+ESP32-WROOM-32D module selected as final production component, offering integrated antenna, FCC/CE certification, and established supply chains. A dedicated BLE service has been configured using a universally unique identifier, UUID. One service UUID defines the overall control service, and five characteristic UUIDs handle power, brightness, RGB colour control, mode selection, and status reporting.
 % \subsubsection{Initial Prototyping}
 
 % PLAN: 
@@ -436,9 +435,7 @@ ESP32-WROOM-32E module selected as final production component, offering integrat
 
 \subsubsection{Wireless Communication Implementation}
 
-% PLAN:
-
-Bluetooth Low Energy communication protocol fully specified using CoreBluetooth framework specifications. BLE GATT server architecture defined with custom service for device control. Characteristics defined for brightness (0-255 range), RGB color (three-byte values), power state (boolean), lighting mode (0=Solid, 1=Fade, 2=Rainbow, 3=Pulse), and status monitoring, with read/write permissions and notification support for bidirectional communication. BLE will be used for initial device discovery, pairing, and real-time control from iOS application.
+Bluetooth Low Energy communication protocol fully specified using CoreBluetooth framework specifications. BLE GATT server architecture defined with custom service for device control. Characteristics defined for brightness (0-255 range), RGB colour (three-byte values), power state (boolean), lighting mode (0=Solid, 1=Fade, 2=Rainbow, 3=Pulse), and status monitoring, with read/write permissions and notification support for bidirectional communication. BLE will be used for initial device discovery, pairing, and real-time control from iOS application.
 
 % Wi-Fi connectivity implemented using ESP-IDF Wi-Fi driver with station mode configuration. Device connects to user-specified access point using credentials stored in non-volatile storage. Connection resilience improved through automatic reconnection on signal loss and retry logic with exponential backoff.
 
@@ -458,21 +455,62 @@ Bluetooth Low Energy communication protocol fully specified using CoreBluetooth 
 
 \subsubsection{iOS Application Development}
 
-% PLAN:
-
-SwiftUI-based iOS application implements comprehensive device management and control interface. The application features secure user authentication with email verification using six-digit codes sent via SMTP, password reset functionality with timed code expiration, and session management with persistent login state. User credentials stored securely on Flask backend server with SHA-256 password hashing.
+SwiftUI-based iOS application implements comprehensive device management and control interface. The application features secure user authentication with email verification using six-digit codes sent via SMTP, password reset functionality with timed code expiration, and session management with persistent login state. User credentials stored securely on Flask backend server with Secure Hash Algorithm, SHA-256 password hashing.
 
 Device management interface provides BLE scanning for nearby smart bulbs with real-time device discovery, custom device naming and room assignment, persistent storage of user's devices linked to account, and separation between simulated and physical hardware devices. Dual-mode architecture implemented supporting both physical ESP32 hardware and software simulator, enabling complete development and testing without requiring physical bulbs. Simulator mode toggle in Settings view allows seamless switching between modes, with appropriate filtering of devices based on current mode.
 
-Control interface provides real-time adjustment of power state with toggle switch, brightness control via slider (0-255 range with percentage display), RGB color selection through ColorPicker with four quick-access preset colors (White, Red, Green, Blue), and four lighting effect modes (Solid, Fade, Rainbow, Pulse) with visual selection interface. All controls update device state immediately with visual feedback, and device state synchronization ensures interface reflects current bulb status.
+\newpage
 
-BLE communication implemented using CoreBluetooth framework with proper iOS permission handling (NSBluetoothAlwaysUsageDescription in Info.plist). Device discovery scans for devices advertising specified service UUID, connection management handles pairing and maintains persistent connections, bidirectional communication supports both control commands and status notifications from device, and automatic reconnection attempts after connection loss. Network communication configured for both iOS Simulator (localhost 127.0.0.1) and physical devices (local network IP address) through APIConfig structure with compiler directives.
+\subsection{Control Interface and Communication}
 
-% HealthKit integration implemented following privacy-first approach. Application requests sleep analysis permission only when user attempts to enable health-based automation feature, with clear explanation of data usage. Once granted, application queries sleep data for previous 14 days, identifying typical sleep and wake times for each day of week. This analysis performed locally within application; no health data transmitted to device or external servers.
+The control interface provides comprehensive real-time device management through an intuitive SwiftUI-based interface. The power state control utilises a toggle switch for immediate on/off functionality, while brightness adjustment is managed through a slider control operating across the full 0-255 range with real-time percentage display calculated as \texttt{(brightness/255) × 100}. RGB colour selection is implemented via SwiftUI's native \texttt{ColourPicker} component, which converts selected colours to 8-bit RGB values (0-255) for transmission to the device. Four quick-access preset colours (White, Red, Green, Blue) are provided through the \texttt{QuickColourButton} component for common lighting scenarios. The lighting effect system supports four distinct modes: Solid (mode 0), Fade (mode 1), Rainbow (mode 2), and Pulse (mode 3), each selectable through the \texttt{EffectButton} visual interface. All control actions trigger immediate state updates with visual feedback through the \texttt{BulbVisualView} component, which dynamically renders the bulb's current state using radial gradients and opacity adjustments based on RGB values and brightness levels.
 
-% Schedule view enables creation of time-based automation rules specifying target brightness and colour temperature at particular times. Schedules saved to device via MQTT messages, with cloud-like synchronisation ensuring schedules survive application reinstalls by retrieving current configuration from device on launch.
+Device state synchronisation is maintained through the \texttt{BulbState} structure, which tracks power status, brightness level, RGB colour values, and active effect mode. The interface continuously reflects current bulb status, with the \texttt{BulbVisualView} component providing real-time visual representation of the device state through dynamic colour blending and animated transitions.
 
-Application successfully deployed and tested on physical iPad and iPhone devices with proper developer certificate configuration, iOS permission prompts functioning correctly, Bluetooth state monitoring showing "Ready" status, and network communication functioning across local network to Flask backend server.
+\subsection{Bluetooth Low Energy Communication}
+
+BLE communication is implemented using Apple's CoreBluetooth framework within the \texttt{BLEManager} class, which serves as both \texttt{CBCentralManagerDelegate} and \texttt{CBPeripheralDelegate}. The implementation requires proper iOS permission configuration through \texttt{NSBluetoothAlwaysUsageDescription} in the application's Info.plist file, providing users with clear explanation of Bluetooth usage during permission requests.
+
+Device discovery is initiated through \texttt{centralManager.scanForPeripherals(withServices:)} targeting the specific service UUID, which must match the ESP32 device configuration. Discovered devices are added to the \texttt{discoveredBulbs} array with metadata including device name, RSSI signal strength, and unique peripheral identifier. Connection management is handled through \texttt{centralManager.connect(\_:options:)} with automatic peripheral delegate assignment and service discovery initiation upon successful connection.
+
+The communication protocol defines five BLE characteristics for bidirectional data exchange: Power Control for single-byte write for power state (0x00/0x01),  Brightness Control for single-byte write for brightness (0-255), Colour Control for three-byte write for RGB values, Mode Control for single-byte write for effect mode (0-3) and Status Notification for six-byte notification containing complete device state.
+\end{itemize}
+
+Control commands are transmitted using \texttt{writeValue(\_:for:type:)} with \texttt{.withResponse} type to ensure reliable delivery. Status updates are received through characteristic notifications enabled via \texttt{setNotifyValue(true, for:)}, allowing the device to push state changes to the application without polling. Connection state monitoring is implemented through delegate callbacks for connection success, disconnection events, and connection failures, with appropriate UI feedback provided through the \texttt{bluetoothState} published property.
+
+\subsection{Simulator Mode Implementation}
+
+To enable development and testing without physical ESP32 hardware, a comprehensive simulator mode has been implemented. The \texttt{simulatorMode} flag, stored in \texttt{UserDefaults}, determines whether the application operates with simulated or real Bluetooth devices. When simulator mode is enabled, the \texttt{BLEManager} generates three persistent simulated bulbs with consistent UUIDs stored across application launches, ensuring database associations remain valid during development.
+
+Simulated bulbs are marked with the \texttt{isSimulated} property throughout the application stack, from the \texttt{SmartBulb} model through the database schema (via \texttt{is\_simulated} column in the bulbs table). The backend \texttt{/get\_bulbs} endpoint filters bulbs based on the \texttt{simulator\_mode} parameter, ensuring users only see bulbs appropriate for their current mode. Visual indicators distinguish simulated bulbs through orange "play" icons and status labels.
+
+All BLE operations in simulator mode use simulated delays (e.g., 1.0 second connection delay) to replicate real hardware behaviour, while control commands immediately update the local \texttt{bulbState} without actual Bluetooth transmission. This architecture allows complete UI/UX testing and backend integration validation on the iOS Simulator, which does not support CoreBluetooth functionality.
+
+Mode switching is handled through the \texttt{SettingsView} toggle, which updates \texttt{UserDefaults}, posts a \texttt{SimulatorModeChanged} notification to all active \texttt{BLEManager} instances, and triggers a refresh of the bulb list in \texttt{HomeView} to display only mode-appropriate devices.
+
+\subsection{Network Communication Architecture}
+
+Network communication is implemented using \texttt{URLSession} for HTTP requests to a Flask backend server. The \texttt{APIConfig} structure uses Swift compiler directives to configure appropriate endpoints: the iOS Simulator uses localhost (\texttt{http://127.0.0.1:5000}) for development, while physical devices use the local network IP address (\texttt{http://192.168.1.45:5000}) to communicate with the Flask server running on the development machine.
+
+All API endpoints follow a consistent JSON request/response pattern with proper HTTP status codes (200 for success, 404 for not found, 409 for conflicts, 500 for server errors). The application implements comprehensive error handling for network failures, JSON parsing errors, and HTTP error responses, providing appropriate user feedback through published state properties and UI messages.
+
+User authentication is maintained through session management with the current user's email stored in \texttt{UserDefaults} under the \texttt{currentUserEmail} key. This session token is included in all bulb management API calls (\texttt{/add\_bulb}, \texttt{/get\_bulbs}, \texttt{/update\_bulb}, \texttt{/delete\_bulb}) to associate devices with the authenticated user account.
+
+% \subsection{Health Data Integration}
+% Future implementation will include HealthKit integration following a privacy-first approach. The application will request sleep analysis permission only when users attempt to enable health-based automation features, with clear explanation of data usage. Once granted, the application will query sleep data for the previous 14 days, identifying typical sleep and wake times for each day of week. This analysis will be performed locally within the application; no health data will be transmitted to external servers or stored on cloud services.
+
+% \subsection{Scheduling and Automation}
+% Planned schedule view will enable creation of time-based automation rules specifying target brightness and colour temperature at particular times. Schedules will be saved to the ESP32 device via BLE communication, with persistent storage ensuring schedules survive device power cycles. The application will retrieve current schedule configuration from the device upon connection, enabling synchronisation across multiple control devices.
+
+\subsection{Deployment and Testing}
+
+The application has been successfully configured for deployment to physical iOS devices through proper Apple Developer certificate configuration and provisioning profile setup. iOS permission prompts for Bluetooth access function correctly on physical devices, displaying the configured usage description. The \texttt{BLEManager} implements proper Bluetooth state monitoring, displaying status messages ranging from "Ready" (powered on), "Bluetooth Off", "Unauthorized", "Not Supported", to "Simulator Mode" based on current system state and application configuration.
+
+\newpage 
+
+Network communication has been validated across the local network, with the Flask backend server accepting requests from physical iOS devices and returning appropriate JSON responses. Database operations for user registration, authentication, and bulb management function correctly with proper error handling for edge cases such as duplicate registrations and invalid credentials.
+
+The simulator mode implementation has been extensively tested on iOS Simulator, validating that all UI components, navigation flows, and state management logic function correctly without physical Bluetooth hardware. Mode switching between simulator and real hardware modes has been verified, confirming that bulb lists update appropriately and connection logic follows the correct code paths based on the \texttt{simulatorMode} flag.
 
 % \subsubsection{Web Application Development}
 
@@ -488,9 +526,9 @@ Application successfully deployed and tested on physical iPad and iPhone devices
 
 Flask-based RESTful API server implemented with comprehensive endpoint coverage for user and device management. Authentication endpoints provide user registration with email verification, secure login with credential validation, password reset with verification codes, and email availability checking for registration validation. Device management endpoints support adding new bulbs with simulation mode flag, retrieving user's devices filtered by simulator/hardware mode, updating device names and room assignments, and deleting devices from user accounts.
 
-SQLite database schema implemented with users table storing email and hashed passwords, and bulbs table storing device IDs, names, room assignments, and simulation mode flags with foreign key relationships to users. Database initialization includes automatic table creation and migration for adding simulation mode column to existing databases.
+SQLite database schematic implemented with users table storing email and hashed passwords, and bulbs table storing device IDs, names, room assignments, and simulation mode flags with foreign key relationships to users. Database initialisation includes automatic table creation and migration for adding simulation mode column to existing databases.
 
-Email verification system implemented using Gmail SMTP with app-specific password, sending formatted verification codes, and 5-minute code expiration handled by client-side timer. Server runs on local network accepting connections from both localhost (iOS Simulator) and local network IP (physical devices), with CORS configured for development.
+Email verification system implemented using Gmail SMTP with app-specific password, sending formatted verification codes, and 5-minute code expiration handled by client-side timer. Server runs on local network accepting connections from both localhost (iOS Simulator) and local network IP (physical devices), with Cross Origin Resource Sharing, CORS, configured for development.
 
 % \subsection{Machine Learning Algorithm Development}
 
@@ -522,7 +560,7 @@ Email verification system implemented using Gmail SMTP with app-specific passwor
 
 End-to-end testing verified iOS application functionality across development and deployment workflow. User authentication tested with successful account creation, email verification, login/logout cycles, and password reset flows. Device management tested with adding simulated bulbs, switching between simulator and hardware modes, editing device details, and removing devices from accounts. Application successfully deployed to physical iPad and iPhone with proper Bluetooth permissions, developer certificates, and network connectivity.
 
-BLE communication architecture validated through simulator mode testing with instant connection to simulated devices, bidirectional state updates, control command processing, and proper disconnection handling. Real-time control interface tested with immediate UI updates, smooth transitions between states, and consistent behavior across multiple app launches.
+BLE communication architecture validated through simulator mode testing with instant connection to simulated devices, bidirectional state updates, control command processing, and proper disconnection handling. Real-time control interface tested with immediate UI updates, smooth transitions between states, and consistent behaviour across multiple app launches.
 
 Backend server integration tested with successful API communication from physical devices, database persistence across server restarts, concurrent user sessions, and proper error handling for invalid requests. Network configuration validated for both simulator (localhost) and physical device (local network IP) scenarios.
 
@@ -565,6 +603,8 @@ Solution implemented APIConfig structure with compiler directives distinguishing
 Challenge emerged in testing workflow requiring physical hardware for every test, significantly slowing development iteration. Need identified for testing complete application functionality without ESP32 hardware during development phase.
 
 Solution implemented dual-mode architecture with simulator mode flag stored in UserDefaults. When enabled, BLEManager generates simulated devices with consistent UUIDs during scanning, instantly "connects" to simulated bulbs, and processes control commands by updating local state without hardware communication. Backend database stores is\_simulated flag with each device, enabling proper filtering when loading user's devices. Mode switching in Settings view posts notification triggering refresh of device lists and BLE manager state. This architecture enabled complete development and testing of iOS application features before hardware availability.
+
+\newpage 
 
 \subsubsection{Database Mode Filtering}
 
@@ -642,35 +682,35 @@ Solution modified database schema to include is\_simulated column, updated backe
 
 \subsubsection{Hardware Completion Tasks}
 
-\textbf{Housing Design and Fabrication:} Complete 3D modelling of bulb housing in Autodesk Fusion 360, incorporating thermal management features, assembly points for electrical components, and appropriate safety enclosures. Print housing using university 3D printing facilities with suitable high-temperature material such as PETG or ABS. Test assembled housing for thermal performance and mechanical durability.
+\textbf{Housing Design and Fabrication:} Finalise 3D modelling of the bulb housing in Autodesk Fusion 360, incorporating thermal management features, secure mounting points for electrical components, and safety enclosures. Print the housing using university 3D printing facilities with high-temperature materials such as PETG or ABS. Perform thermal performance testing under continuous operation and assess mechanical durability including drop and vibration resistance.
 
-\textbf{PCB Layout:} Design printed circuit board integrating ESP32 module, LED driver circuit, power supply, and necessary peripheral components. Layout must maintain proper isolation between mains and low-voltage circuits, minimise electromagnetic interference, and optimise thermal performance. If time and budget permit, manufacture small batch of boards for testing and refinement.
+\textbf{PCB Layout:} Design a printed circuit board integrating the ESP32 module, LED driver circuit, power supply, and peripheral components. Ensure proper isolation between mains and low-voltage circuits, minimise electromagnetic interference, and optimise thermal performance. Manufacture a small batch of boards for testing and refinement if time and budget allow.
 
-\textbf{Final Assembly and Testing:} Assemble complete prototype in printed housing with proper cable management, strain relief, and component securing. Conduct comprehensive electrical safety testing, thermal testing, and reliability testing under various environmental conditions.
+\textbf{Final Assembly and Testing:} Assemble the complete prototype in the printed housing with secure cable management and strain relief. Conduct comprehensive electrical safety, thermal, and reliability testing under varied environmental conditions.
 
 \subsubsection{Firmware Completion Tasks}
 
-\textbf{Advanced Learning Algorithms:} Refine pattern detection algorithms based on real-world testing data, implementing improvements for robustness and accuracy. Add detection for irregular patterns such as gradual routine shifts and seasonal adjustments.
+\textbf{Advanced Learning Algorithms:} Refine pattern detection algorithms using real-world test data, improving robustness and accuracy. Extend detection to irregular patterns such as gradual routine shifts and seasonal adjustments.
 
-\textbf{Optimisation:} Profile firmware performance identifying bottlenecks and implementing optimisations for reduced power consumption, faster response times, and improved memory utilisation. Implement deep sleep modes for periods of inactivity to minimise standby power.
+\textbf{Optimisation:} Profile firmware to identify bottlenecks and implement improvements for reduced power consumption, faster response times, and better memory usage. Implement deep sleep modes for periods of inactivity to minimise standby power.
 
-\textbf{Error Handling:} Enhance error handling throughout firmware with comprehensive logging, graceful degradation when features unavailable, and clear diagnostic information accessible through web interface for troubleshooting.
+\textbf{Error Handling:} Enhance error handling with comprehensive logging, graceful degradation for unavailable features, and clear diagnostics accessible through the web interface.
 
 \subsubsection{Application Completion Tasks}
 
-\textbf{iOS Application Refinement:} Complete remaining UI screens including automation configuration, learned pattern visualisation, and detailed device settings. Implement proper error handling, loading states, and user feedback for all operations. Conduct user interface testing with potential users gathering feedback for refinement.
+\textbf{iOS Application Refinement:} Complete remaining UI screens for automation configuration, pattern visualisation, and detailed device settings. Implement proper error handling, loading states, and user feedback. Conduct user interface testing with potential users and gather feedback for refinement.
 
-\textbf{Web Application Feature Parity:} Ensure web application provides equivalent functionality to iOS application except for HealthKit integration which is necessarily platform-specific. Implement missing features and refine user interface for optimal desktop and mobile experiences.
+\textbf{Web Application Feature Parity:} Ensure web application offers equivalent functionality to the iOS application, except for platform-specific HealthKit integration. Refine user interface for both desktop and mobile experiences.
 
-\textbf{Backend Server Hardening:} Improve backend server reliability, security, and performance. Implement proper authentication if multiple users require access, enhance logging for troubleshooting, and optimise WebSocket handling for minimal latency.
+\textbf{Backend Server Hardening:} Improve server reliability, security, and performance. Implement proper authentication for multiple users, enhance logging for troubleshooting, and optimise WebSocket handling for minimal latency.
 
 \subsubsection{Testing and Evaluation Tasks}
 
-\textbf{Comprehensive System Testing:} Conduct structured testing of all functional requirements, documenting test procedures, results, and any identified issues. Include edge cases, failure scenarios, and long-term reliability testing.
+\textbf{Comprehensive System Testing:} Perform structured testing of all functional requirements, documenting test procedures, results, and identified issues. Include edge cases, failure scenarios, and long-term reliability testing.
 
-\textbf{Performance Evaluation:} Measure and analyse system performance metrics including response times, power consumption, learning accuracy, and user satisfaction if user testing conducted. Compare results against initial requirements and industry benchmarks where available.
+\textbf{Performance Evaluation:} Measure and analyse metrics including response times, power consumption, learning accuracy, and user satisfaction. Compare results against initial requirements and industry benchmarks where available.
 
-\textbf{Security Analysis:} Review system security considering potential vulnerabilities in wireless communications, firmware update mechanisms, and data storage. Implement appropriate security measures and document security properties and limitations.
+\textbf{Security Analysis:} Review system security considering potential vulnerabilities in wireless communications, firmware updates, and data storage. Implement and document appropriate security measures and limitations.
 
 \subsubsection{Documentation Tasks}
 
@@ -678,68 +718,72 @@ Solution modified database schema to include is\_simulated column, updated backe
 
 \textbf{User Documentation:} Write clear, concise user documentation with appropriate screenshots, diagrams, and step-by-step instructions. Test documentation with non-technical users ensuring comprehensibility.
 
-\textbf{Booklet:}Potentially make like a user manual.
+\textbf{Booklet:}Potentially make a user manual.
 
-\textbf{Final Report:} Write comprehensive dissertation documenting entire project from motivation through implementation to evaluation. Ensure academic rigour with proper citations, technical depth appropriate for computer science honours project, and clear presentation of results and conclusions.
+\textbf{Final Report:} Write comprehensive documentation with project motivation through implementation to evaluation.
 
 \subsection{Work Plan and Timeline}
 
 \subsubsection{November 2025}
 
 \begin{itemize}
-\item Complete PCB layout and submit for manufacturing (if budget approved)
-\item Finalise 3D housing design and begin test prints
-\item Refine learning algorithms based on simulated usage data
-\item Complete iOS application core features
-\item Milestone: Initial Mid-term report submission
-\item Milestone: Bulb design and build
-\item Milestone: Initial bulb software, bulb dimming
-\item Milestone: Integrate AI system with bulb dimming
+\item Complete iOS application core functionality for iPhone and iPad, tested on physical devices and simulator.
+\item Implement simulator mode for ESP32 bulbs to enable seamless testing before physical hardware is available.
+\item Verify Bluetooth connectivity and discovery in ESP32 simulation mode.
+\item Refine initial learning algorithms based on simulated usage data.
+\item Milestone: Bulb design and component selection completed
+\item Milestone: Initial prototype software via simulator mode
 \end{itemize}
 
 \subsubsection{December 2025}
 
 \begin{itemize}
-\item Receive and populate PCB with components
-\item Refine housing design based on test prints
-\item Integrate and test complete hardware assembly
-\item Complete web application development
-\item Begin comprehensive system testing
-\item University break period: Continue development work
-\item Milestone: Final Mid-term report submission acting on November feedback
-\item Milestone: Finalise bulb AI system and begin implementing sample sleep tracking
+\item Focus on core ESP32 bulb features: on/off switching, dimming, and basic colour control.
+\item Begin PCB layout and preparation for manufacturing (subject to budget approval).
+\item Refine 3D housing concept, preparing for first test prints.
+\item Continue development during university break period.
+\item Begin web application development if time permits.
 \end{itemize}
 
 \subsubsection{January 2026}
 
 \begin{itemize}
-\item Conduct extended reliability testing
-\item Milestone: Feedback Mid-term report 
-\item Deploy prototype for personal use gathering real-world usage data
-\item Refine automation algorithms based on actual behaviour patterns
-\item Complete user and developer documentation
-\item Begin final report writing
-\item Milestone: Finalise AI sample sleep tracking 
+\item Milestone: Submit mid-term report (January 2nd)
+\item Exams period: focus on preparation and revision.
+\item Finalise 3D housing design and begin test prints.
+\item Manufacture and populate PCB, integrate with ESP32 module.
+\item Assemble complete bulb prototype with housing and electronics.
+\item Start designing and adding more core hardware functions (power, AI dimming, colour control) for stability and reliability.
 \end{itemize}
 
 \subsubsection{February 2026}
 
 \begin{itemize}
-\item Analyse testing results and refine system based on findings
-\item Complete security analysis and implement improvements
-\item Finalise demonstration video
-\item Continue final report writing focusing on implementation and testing chapters
+\item Begin integration of AI and automation features (after core functionality is stable).
+\item Conduct extended reliability testing and performance evaluation.
+\item Deploy prototype for real-world usage data collection.
+\item Analyse results from system and reliability testing; implement improvements.
+\item Conduct security analysis and apply necessary measures.
+\item Continue final report writing, focusing on implementation and testing chapters.
+\item Refine automation algorithms based on actual usage patterns.
+\item Prepare demonstration materials, including prototype showcase and video.
 \end{itemize}
 
 \subsubsection{March 2026}
 
 \begin{itemize}
-\item Complete final report writing
-\item Conduct final testing and validation
-\item Prepare presentation materials
-\item Final report submission
-\item Project demonstration and presentation
+\item If time permits add some refinement to processes using threading
+\item Finalise report writing and editing.
+\item Conduct final system testing and validation.
 \end{itemize}
+
+\subsubsection{April 2026}
+\item Prepare and rehearse presentation materials.
+\item Project demonstration and presentation.
+\item Submit final report.
+\end{itemize}
+
+\newpage
 
 \subsection{Risk Assessment}
 
@@ -797,10 +841,9 @@ Solution modified database schema to include is\_simulated column, updated backe
 \item Aluminium Heat Sink: £10.00
 \item E27 Lamp Base: £5.00
 \item Temperature Sensor (Thermistor): £1.00
-\item Miscellaneous components (connectors, hardware): £45.00
 \end{itemize}
 
-\textbf{Hardware Subtotal:} £93.00
+\textbf{Hardware Subtotal:} £46.00
 
 \subsection{Materials and Fabrication}
 
@@ -842,11 +885,9 @@ Solution modified database schema to include is\_simulated column, updated backe
 
 \subsection{Total Project Budget}
 
-\textbf{Estimated Total Cost:} £161.00
+\textbf{Estimated Total Cost:} £116.00
 
 This budget represents realistic estimate for completing primary project objectives. Most significant costs are electronic components and PCB manufacturing if pursued. 3D printing costs include potential filament needed. Software costs eliminated through open-source tools and existing Apple Developer account. I have also included printing my final report and therefore the printing costs. Contingency allocation provides buffer for unexpected requirements or component replacements.
-
-% Budget is modest compared to many engineering projects, reflecting advantages of modern embedded platforms and open-source ecosystems. Total cost remains well within typical undergraduate project budgets and has been primarily self-funded with support from university resources (3D printing, development equipment).
 
 \backtotocbutton
 \newpage
@@ -966,53 +1007,49 @@ This project makes several contributions to the intersection of embedded systems
 
 \subsection{Progress Summary}
 
-PLAN:
+Significant progress has been made during the first term across key project areas. Hardware component selection and procurement have been completed successfully. Initial prototyping of the ESP32-based bulb has validated core circuit designs and highlighted areas for thermal management that will require attention in later stages.  
 
-Significant progress has been achieved across all major project areas during the first term. Hardware component selection and procurement completed successfully, with initial prototyping validating circuit designs and identifying thermal management considerations requiring attention. Embedded firmware development established core functionality including LED control, wireless communications, and preliminary pattern learning algorithms.
+Embedded firmware development has established core functionality, including LED control and wireless Bluetooth communication. A simulator mode for ESP32 bulbs has been implemented, enabling testing of the iOS application before physical hardware is available. Initial pattern learning algorithms have been prototyped using simulated usage data.  
 
-Software application development produced functional iOS application with HealthKit integration and web-based Progressive Web App providing cross-platform access. Communication infrastructure using MQTT and WebSockets enables real-time device control and state synchronisation across multiple interfaces. Initial system integration testing confirmed end-to-end functionality meeting response time requirements.
+Software development has produced a functional iOS application running on both iPhone and iPad devices, tested on physical devices and simulators. Communication infrastructure has been verified in simulator mode, demonstrating that the app can detect and interact with ESP32 devices over Bluetooth.  
 
-Preliminary testing revealed areas requiring refinement, particularly thermal management and colour consistency across brightness levels. Solutions have been identified and partially implemented, with remaining work clearly defined. The project remains on schedule with realistic expectation of completing all primary objectives within available timeframe.
+Preliminary testing has confirmed that the core system functions correctly. Areas identified for further refinement include thermal performance of the housing and optimisation of the learning algorithms. The project remains on schedule, with a clear plan for completing remaining objectives within the available timeframe.
 
 \subsection{Assessment of Progress Against Timeline}
 
-PLAN:
+Project progress is aligned with the timeline established at the start of the project. November milestones, including component selection, iOS application core development, and initial simulator testing, have been achieved.  
 
-Project progress aligns well with planned timeline established at project start. November milestones including literature review, component procurement, and initial prototyping have been achieved. Development environment setup and initial implementation work position the project well for December hardware finalisation and January testing phases.
+Software development has progressed efficiently due to prior experience and the use of established frameworks, allowing early verification of key functionality. Hardware development has proceeded with expected challenges, particularly relating to thermal management, which have been taken into account when selecting components for future build.  
 
-Some tasks progressed ahead of schedule, particularly software application development which benefited from established frameworks and prior experience with relevant technologies. Hardware development encountered expected challenges with thermal management and safety considerations, but these were anticipated in timeline buffer and do not threaten schedule adherence.
-
-The mid-term report submission represents key milestone confirming project viability and providing foundation for completion phase. Supervisor feedback on this report will inform refinements to approach and priorities for remaining work.
+The mid-term report submission in early January represents a key milestone, providing an opportunity to review progress and refine priorities for the remaining work. Overall, the project is progressing as planned and is well-positioned to complete core functionality and subsequent AI feature integration on schedule.
 
 \subsection{Key Learnings}
 
 Several important lessons have emerged from work completed to date:
 
-\textbf{Thermal Management Criticality:} LED lighting systems require careful thermal design from project inception rather than as afterthought. Heat sink sizing, material selection, and airflow considerations significantly impact reliability and safety. Conservative thermal margins prove essential given uncertainties in real-world operating conditions.
+\textbf{Thermal Management Awareness:} Even at early prototyping stages, considering heat generation from the ESP32 and LED circuitry is important. Initial tests on simulated hardware have highlighted the need to monitor temperature and plan housing ventilation for future prototypes.  
 
-\textbf{Safety-First Design:} Mains-voltage electrical design demands rigorous attention to safety principles. Understanding isolation requirements, creepage distances, and ground bonding proved essential for responsible hardware development. Pre-certified power supply modules provide cost-effective safety compliance for student projects.
+\textbf{Safety Considerations:} Awareness of electrical safety principles has been reinforced, particularly regarding low-voltage circuit design and proper component selection. Using pre-certified power supply modules simplifies safe hardware development for student projects.  
 
-\textbf{Embedded Resource Constraints:} Microcontroller programming requires mindfulness of memory and processing limitations absent in typical application development. Algorithm selection, optimisation, and profiling become essential skills for embedded development.
+\textbf{Embedded Resource Constraints:} Programming the ESP32 microcontroller requires attention to memory and processing limitations. Writing efficient firmware and planning algorithm implementation with limited resources are critical skills that have been applied in initial development.  
 
-\textbf{Protocol Selection Importance:} Choosing appropriate communication protocols early in project significantly impacts architecture and implementation complexity. MQTT provides excellent fit for IoT messaging, whilst WebSockets enable real-time web application interactions with complexity manageable in project timeframe.
+\textbf{Communication Protocol Selection:} Implementing Bluetooth Low Energy (BLE) in the simulator and iOS application early demonstrated the importance of selecting appropriate protocols for device discovery and control. Understanding BLE GATT services and characteristics has guided the design of the communication interface.  
 
-\textbf{Privacy by Design:} Implementing privacy-preserving architecture from beginning proves easier than retrofitting privacy protections. Local data processing decision simplified architecture, eliminated external dependencies, and addressed user privacy concerns inherently rather than through access controls.
+\textbf{Value of Prototyping:} Developing functional prototypes in both hardware simulator and iOS application form has enabled early testing and validation of core functionality. Early experimentation has helped identify potential issues with device connectivity and LED control before physical hardware is available.  
 
-\textbf{Iterative Development Value:} Building functional prototypes early, even with breadboard circuits and incomplete features, enabled testing and validation guiding subsequent development. Discovering issues early through hands-on experimentation prevented larger problems later.
+\newpage
 
 \subsection{Next Steps}
 
-Immediate priorities for December focus on hardware completion and refinement. PCB layout will be finalised and submitted for manufacturing if budget approved, whilst parallel breadboard prototyping continues ensuring progress despite manufacturing lead times. Housing design will be completed with thermal simulation and test prints validating approach before final production.
+Immediate priorities for January focus on finalising the mid-term report and completing core hardware development. The 3D housing design will be finalised and initial test prints conducted to validate thermal performance and mechanical fit. PCB manufacturing and component population will proceed once budget approval is confirmed, followed by assembly of the complete ESP32 bulb prototype. Core functionality including on/off control, dimming, and colour adjustment will be tested for stability and reliability.  
 
-Firmware development will continue refining learning algorithms based on accumulated testing data and implementing remaining features for robust operation. Particular attention will be given to error handling, recovery mechanisms, and diagnostic capabilities essential for reliable autonomous operation.
+Firmware development will continue with refinement of learning algorithms based on simulated and initial real-world usage data. Attention will be given to error handling, recovery mechanisms, and diagnostic capabilities to ensure reliable operation. Integration of AI and advanced automation features will commence once core bulb functionality is stable.  
 
-Application development will focus on completing remaining interface features, conducting user interface testing with potential users, and implementing refinements based on feedback. Backend server will be hardened for reliability and security appropriate for long-term operation.
+Application development will focus on refining the iOS interface and testing simulator mode functionality. Optional web application development will continue if time permits, ensuring parity with the iOS app where possible. Backend server reliability and security will be reviewed and improved as required.  
 
-January will shift focus to comprehensive testing and evaluation, deploying prototype for extended real-world use gathering genuine usage data informing final refinements. This personal deployment will provide invaluable insights into practical system behaviour and automation effectiveness.
+February priorities include extended system testing, real-world deployment of the prototype, and analysis of collected usage data to inform final refinements. Automation algorithms will be adjusted based on observed behaviour patterns, and security analysis will be completed. Final report writing will continue, with implementation and testing chapters completed during this period.  
 
-Final report writing will begin in January with completion of methodology and implementation chapters whilst details remain fresh. Results and discussion chapters will be written in February following completion of comprehensive testing. Conclusions and future work will be drafted in March alongside final refinements and preparation of demonstration materials.
-
-The project demonstrates strong progress toward achieving stated objectives. Remaining work is substantial but well-defined, with realistic expectation of successful completion producing valuable contribution demonstrating principles of privacy-preserving, adaptive home automation whilst exploring full system development from hardware through firmware to applications.
+March will focus on final report completion, system validation, preparation of demonstration materials, and presentation. Remaining work is well-defined, and progress to date indicates that the project objectives are achievable within the available timeframe, providing a fully functional adaptive smart bulb system with privacy-preserving design principles and end-to-end hardware-to-software integration.
 
 \backtotocbutton
 \newpage
@@ -1141,6 +1178,8 @@ The project demonstrates strong progress toward achieving stated objectives. Rem
 
 \textit{Residual Risk:} Low
 
+\newpage
+
 \textbf{Hazard 2: Thermal Burns from Heat Sink and LED}
 
 \textit{Description:} LED and heat sink reach elevated temperatures during operation, potentially causing burns on contact.
@@ -1176,6 +1215,8 @@ The project demonstrates strong progress toward achieving stated objectives. Rem
 
 \textit{Residual Risk:} Low
 
+\newpage
+
 \textbf{Hazard 4: Soldering Fumes and Chemical Exposure}
 
 \textit{Description:} Soldering produces fumes containing rosin and flux compounds that may cause respiratory irritation.
@@ -1208,6 +1249,8 @@ The project demonstrates strong progress toward achieving stated objectives. Rem
 
 \textit{Residual Risk:} Very Low
 
+\newpage
+
 \textbf{Hazard 6: Sharp Tools and Components}
 
 \textit{Description:} Use of cutting tools, component leads, and heat sink fins may cause cuts or punctures.
@@ -1234,6 +1277,8 @@ Student Signature: \rule{5cm}{0.4pt} \hspace{1cm} Date: \rule{3cm}{0.4pt}
 \vspace{1cm}
 Supervisor Signature: \rule{5cm}{0.4pt} \hspace{1cm} Date: \rule{3cm}{0.4pt}
 
+\newpage
+
 \subsection*{Appendix B: Ethics Considerations}
 
 \textbf{Project Title:} AI-Based Smart Bulb for Adaptive Home Automation
@@ -1258,6 +1303,8 @@ System makes learned behaviour patterns visible to users through application int
 
 Any user testing will be conducted with appropriate informed consent documentation. Participants will be provided with information sheets explaining study purpose, procedures, data handling, and right to withdraw. No vulnerable populations will be involved in testing. Testing will be limited to adults capable of informed consent.
 
+\newpage
+
 \textbf{Data Security}
 
 While data remains local, appropriate security measures implemented including encrypted storage of sensitive configuration data, authentication for remote access if implemented, and secure communication protocols (TLS/SSL) for network communications.
@@ -1268,15 +1315,13 @@ Primary risk involves inappropriate lighting automation disrupting user comfort 
 
 \textbf{Assessment Conclusion}
 
-This project qualifies for expedited ethical review as it involves minimal risk to participants, maintains complete user control over data, and implements appropriate privacy protections. No vulnerable populations are involved, and all data processing occurs on user-controlled devices without external transmission.
+No ethics review is required for this project, as it does not involve human participants, human data, human tissue, or any identifiable personal information. All data processing occurs locally on user-controlled devices, and no external transmission of data takes place.
 
 The project design follows privacy-by-design principles and complies with relevant data protection regulations including GDPR principles of data minimisation, purpose limitation, and user consent.
 
-\textbf{Ethics Approval Status}
+While the system may be shared with a small number of users for informal usability testing, this does not involve collection of personal data or sensitive information, and therefore no formal ethics review is required.
 
-This project has been reviewed and determined to require ethics approval category: \textbf{Expedited Review - Minimal Risk}
-
-Ethics approval reference: [To be completed by ethics committee]
+\newpage
 
 \subsection*{Appendix C: Project Meetings Log}
 
@@ -1334,13 +1379,13 @@ Ethics approval reference: [To be completed by ethics committee]
 \item Review of learning algorithm preliminary results
 \item Discussion of PCB layout considerations versus continued breadboard approach
 \item Timeline review and risk assessment
-\item Mid-term report draft sections reviewed
+\item Mid-term report draft sections submitted for review
 \end{itemize}
 
 \textit{Actions:}
 \begin{itemize}
-\item Student: Complete mid-term report, finalise component procurement decisions, continue integration testing
-\item Supervisor: Provide feedback on draft report sections and advise on PCB decision
+\item Student: Act on mid-term report feedback given over Christmas break, and continue begin building ESP32 bulb and then designing PCB if budget permits
+\item Supervisor: Provide feedback on first draft for Mid-Term Report
 \end{itemize}
 
 \textbf{Planned Future Meetings}
@@ -1351,11 +1396,15 @@ Regular fortnightly meetings scheduled throughout project duration. Next meeting
 
 The following email correspondence documents initial project proposal and confirmation with project supervisor Dr Ahmed Elzanaty.
 
-\textit{[Email correspondence from project proposal and setup phase would be included here with appropriate formatting. For brevity in this template, specific email content has been incorporated into other sections of the report.]}
+\textbf{Email correspondence from project proposal and setup phase}
+
+Specific email content has been incorporated into other sections of the report with a screenshot showing proof of project initialisation with start date.
 
 \subsection*{Appendix E: Component Specifications}
 
-\textbf{ESP32-WROOM-32E Module}
+Update this when components have all arrived as they arrive 
+
+\textbf{ESP32-WROOM-32D Module}
 \begin{itemize}
 \item Processor: Dual-core Xtensa LX6, 240 MHz
 \item Memory: 520 KB SRAM, 4 MB Flash

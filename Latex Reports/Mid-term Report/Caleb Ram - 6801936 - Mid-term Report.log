@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.4.30)  23 NOV 2025 21:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.4.30)  24 NOV 2025 18:30
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -745,8 +745,36 @@ l.127 \newpage
 [20]
 
 [21]
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `cmtt' (encoding: OT1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `cmtt' (encoding: TS1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
 
-[22]
+
+[22{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.en
+c}]
+
+./Caleb Ram - 6801936 - Mid-term Report.tex:477: LaTeX Error: \begin{document} 
+ended by \end{itemize}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.477 \end{itemize}
+                   
+? 
+./Caleb Ram - 6801936 - Mid-term Report.tex:477: Extra \endgroup.
+\end  ...end#1\endcsname \@checkend {#1}\endgroup 
+                                                  \UseHook {env/#1/after}\if...
+l.477 \end{itemize}
+                   
+? 
+
 
 [23]
 
@@ -759,8 +787,14 @@ l.127 \newpage
 [27]
 
 [28]
-LaTeX Font Info:    Trying to load font information for TS1+phv on input line 6
-90.
+
+[29]
+
+[30]
+
+[31]
+LaTeX Font Info:    Trying to load font information for TS1+phv on input line 7
+30.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/ts1phv.fd
 File: ts1phv.fd 2020/03/25 scalable font definitions for TS1/phv.
 )
@@ -770,20 +804,80 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             See the microtype manual for details.
 
 
-[29]
-
-[30]
-LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <12> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 750.
-
-
-[31]
-
 [32]
 
 [33]
 
+./Caleb Ram - 6801936 - Mid-term Report.tex:781: LaTeX Error: Lonely \item--per
+haps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.781 \item P
+             repare and rehearse presentation materials.
+? 
+
+Underfull \hbox (badness 10000) detected at line 781
+[][]
+ []
+
+
+./Caleb Ram - 6801936 - Mid-term Report.tex:782: LaTeX Error: Lonely \item--per
+haps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.782 \item P
+             roject demonstration and presentation.
+? 
+
+Underfull \hbox (badness 10000) detected at line 782
+[][]
+ []
+
+
+./Caleb Ram - 6801936 - Mid-term Report.tex:783: LaTeX Error: Lonely \item--per
+haps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.783 \item S
+             ubmit final report.
+? 
+
+Underfull \hbox (badness 10000) detected at line 783
+[][]
+ []
+
+
+./Caleb Ram - 6801936 - Mid-term Report.tex:784: LaTeX Error: \begin{document} 
+ended by \end{itemize}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.784 \end{itemize}
+                   
+? 
+./Caleb Ram - 6801936 - Mid-term Report.tex:784: Extra \endgroup.
+\end  ...end#1\endcsname \@checkend {#1}\endgroup 
+                                                  \UseHook {env/#1/after}\if...
+l.784 \end{itemize}
+                   
+? 
+
+
 [34]
+LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <12> not available
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 794.
+
 
 [35]
 
@@ -821,7 +915,15 @@ LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <12> not available
 
 [52]
 
-./Caleb Ram - 6801936 - Mid-term Report.tex:1366: LaTeX Error: Unicode characte
+[53]
+
+[54]
+
+[55]
+
+[56]
+
+./Caleb Ram - 6801936 - Mid-term Report.tex:1415: LaTeX Error: Unicode characte
 r μ (U+03BC)
                not set up for use with LaTeX.
 
@@ -829,55 +931,57 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1366 ... Power Consumption: 80 mA (active), 5 μ
+l.1415 ... Power Consumption: 80 mA (active), 5 μ
                                                   A (deep sleep)
 ? 
 
 
-[53]
+[57]
 
-./Caleb Ram - 6801936 - Mid-term Report.tex:1400: LaTeX Error: \begin{itemize} 
-on input line 1392 ended by \end{document}.
+./Caleb Ram - 6801936 - Mid-term Report.tex:1449: LaTeX Error: \begin{itemize} 
+on input line 1441 ended by \end{document}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1400 \end{document}
+l.1449 \end{document}
                      
 ? 
 
 
-[54] (./Caleb Ram - 6801936 - Mid-term Report.aux)
+[58] (./Caleb Ram - 6801936 - Mid-term Report.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `"Caleb Ram - 6801936 - Mid-term Report".out'
  has not changed.
-(rerunfilecheck)             Checksum: 8F99EFCFC4D739E9312B8C92CAF87139;16471.
+(rerunfilecheck)             Checksum: D42F1D171EBEC892B215430427F00963;17700.
  )
 (\end occurred inside a group at level 1)
 
-### semi simple group (level 1) entered at line 1392 (\begingroup)
+### semi simple group (level 1) entered at line 1441 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 18475 strings out of 473190
- 296787 string characters out of 5715800
- 767551 words of memory out of 5000000
- 41050 multiletter control sequences out of 15000+600000
- 593503 words of font info for 214 fonts, out of 8000000 for 9000
+ 18506 strings out of 473190
+ 297224 string characters out of 5715800
+ 767555 words of memory out of 5000000
+ 41065 multiletter control sequences out of 15000+600000
+ 593906 words of font info for 218 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,17n,117p,1072b,596s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,17n,117p,1268b,596s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhv
-b8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb
-></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on "Caleb Ram - 6801936 - Mid-term Report.pdf" (55 pages, 160438
+/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmtt12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/s
+ftt1200.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvb8a
+.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></
+usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
+Output written on "Caleb Ram - 6801936 - Mid-term Report.pdf" (59 pages, 182445
  bytes).
 PDF statistics:
- 924 PDF objects out of 1000 (max. 8388607)
- 850 compressed objects within 9 object streams
- 209 named destinations out of 1000 (max. 500000)
- 68265 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 991 PDF objects out of 1000 (max. 8388607)
+ 908 compressed objects within 10 object streams
+ 219 named destinations out of 1000 (max. 500000)
+ 69337 words of extra memory for PDF output out of 74296 (max. 10000000)
 
