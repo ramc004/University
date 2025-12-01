@@ -1,79 +1,79 @@
 \babel@toc {british}{}\relax 
 \contentsline {section}{Executive Summary}{1}{section*.1}%
-\contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
-\contentsline {subsection}{\numberline {1.1}Project Motivation}{3}{subsection.1.1}%
-\contentsline {subsection}{\numberline {1.2}Aims and Objectives}{4}{subsection.1.2}%
-\contentsline {subsubsection}{\numberline {1.2.1}Primary Objectives}{4}{subsubsection.1.2.1}%
-\contentsline {subsubsection}{\numberline {1.2.2}Secondary Objectives}{5}{subsubsection.1.2.2}%
-\contentsline {subsection}{\numberline {1.3}Project Scope and Constraints}{5}{subsection.1.3}%
-\contentsline {section}{\numberline {2}Literature Survey and Technology Review}{6}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Smart Lighting Systems and Home Automation}{6}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}LED Technology and Driver Circuits}{6}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Embedded Systems and IoT Platforms}{7}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Machine Learning on Embedded Devices}{7}{subsection.2.4}%
-\contentsline {subsection}{\numberline {2.5}Health Data Integration and Privacy}{7}{subsection.2.5}%
-\contentsline {subsection}{\numberline {2.6}Circadian Rhythm and Lighting Effects}{7}{subsection.2.6}%
-\contentsline {subsection}{\numberline {2.7}Summary of Key Findings}{8}{subsection.2.7}%
-\contentsline {section}{\numberline {3}Requirements Analysis and System Design}{8}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Functional Requirements}{8}{subsection.3.1}%
-\contentsline {subsubsection}{\numberline {3.1.1}Core Functional Requirements}{8}{subsubsection.3.1.1}%
-\contentsline {subsubsection}{\numberline {3.1.2}Additional Functional Requirements}{9}{subsubsection.3.1.2}%
-\contentsline {subsection}{\numberline {3.2}Non-Functional Requirements}{9}{subsection.3.2}%
-\contentsline {subsubsection}{\numberline {3.2.1}Performance Requirements}{9}{subsubsection.3.2.1}%
-\contentsline {subsubsection}{\numberline {3.2.2}Reliability and Safety Requirements}{9}{subsubsection.3.2.2}%
-\contentsline {subsubsection}{\numberline {3.2.3}Usability Requirements}{10}{subsubsection.3.2.3}%
-\contentsline {subsection}{\numberline {3.3}System Architecture}{10}{subsection.3.3}%
-\contentsline {subsubsection}{\numberline {3.3.1}Hardware Architecture}{10}{subsubsection.3.3.1}%
-\contentsline {subsubsection}{\numberline {3.3.2}Firmware Architecture}{11}{subsubsection.3.3.2}%
-\contentsline {subsubsection}{\numberline {3.3.3}Application Architecture}{11}{subsubsection.3.3.3}%
-\contentsline {section}{\numberline {4}Implementation and Progress}{11}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Hardware Development}{11}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Firmware Development}{12}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}iOS Application Development}{12}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}Backend Development}{12}{subsection.4.4}%
-\contentsline {subsection}{\numberline {4.5}Testing and Validation}{13}{subsection.4.5}%
-\contentsline {subsection}{\numberline {4.6}Current Status and Milestones}{13}{subsection.4.6}%
-\contentsline {section}{\numberline {5}Conclusions}{14}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Progress Summary}{14}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Assessment Against Timeline}{14}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Key Learnings}{15}{subsection.5.3}%
-\contentsline {subsection}{\numberline {5.4}Next Steps}{15}{subsection.5.4}%
-\contentsline {subsection}{\numberline {5.5}Estimated Total Cost}{16}{subsection.5.5}%
-\contentsline {subsection}{\numberline {}Table 1: Estimated Total Cost of Project Components and Materials}{16}{table.caption.9}%
-\contentsline {subsection}{\numberline {}Figure 5.5.1: Estimated Cost Pie Chart}{16}{figure.caption.10}%
-\contentsline {subsection}{\numberline {5.6}Gantt chart diagrams}{17}{subsection.5.6}%
-\contentsline {subsection}{\numberline {}Figure 5.6.1: Gantt Chart for 1st Semester}{17}{figure.caption.11}%
-\contentsline {subsection}{\numberline {}Figure 5.6.2: Gantt Chart for 2nd Semester}{17}{figure.caption.12}%
-\contentsline {subsection}{\numberline {5.7}Plan of Final Report Structure}{18}{subsection.5.7}%
-\contentsline {subsubsection}{\numberline {5.7.1}Proposed Chapter Structure}{18}{subsubsection.5.7.1}%
-\contentsline {subsubsection}{\numberline {}Table 2: Proposed Chapter Structure for Final Reports}{18}{section*.14}%
-\contentsline {section}{References}{20}{section*.15}%
-\contentsline {section}{Appendices}{23}{section*.16}%
-\contentsline {subsection}{Appendix A: Health and Safety Assessment}{23}{section*.17}%
-\contentsline {subsubsection}{Hazard Identification and Risk Assessment}{23}{section*.17}%
-\contentsline {subsection}{\numberline {}Table A.1: Hazards and Control Measures}{24}{table.1}%
-\contentsline {subsection}{Appendix B: Ethics Considerations}{27}{section*.18}%
-\contentsline {subsubsection}{Ethical Review Assessment}{27}{section*.19}%
-\contentsline {subsubsection}{Data Privacy and Protection}{27}{section*.20}%
-\contentsline {subsubsection}{Informed Consent}{27}{section*.21}%
-\contentsline {subsubsection}{Transparency and Explainability}{27}{section*.22}%
-\contentsline {subsubsection}{Testing and Evaluation}{27}{section*.23}%
-\contentsline {subsubsection}{Data Security}{28}{section*.24}%
-\contentsline {subsubsection}{Risk-Benefit Analysis}{28}{section*.25}%
-\contentsline {subsubsection}{Assessment Conclusion}{28}{section*.26}%
-\contentsline {subsection}{Appendix C: Project Meetings Log}{29}{section*.27}%
-\contentsline {subsection}{\numberline {}Table C.1: Project Meetings Log}{29}{section*.28}%
-\contentsline {subsection}{Appendix D: Initial Email Correspondence}{31}{section*.29}%
-\contentsline {subsection}{\numberline {}Figure D.1: Project Proposal Email Confirmation}{31}{figure.caption.30}%
-\contentsline {subsection}{Appendix E: Component Specifications}{32}{figure.caption.30}%
-\contentsline {subsection}{\numberline {}Table E.1: ESP32 WROOM 32D Module Specifcations}{32}{table.caption.31}%
-\contentsline {subsection}{\numberline {}Table E.2: BTF-LIGHTING COB LED Strip Specifications}{32}{table.caption.32}%
-\contentsline {subsection}{\numberline {}Table E.3: Hailege BH1750FVI GY-30 Sensor Module Specifications}{33}{table.caption.33}%
-\contentsline {subsection}{\numberline {}Table E.4: Aim-TTi PL-P Series Digital Bench Power Supply Specifications}{33}{table.caption.34}%
-\contentsline {subsection}{\numberline {}Table E.5: Cable Matters Braided USB-C to Micro USB Cable Specifications}{33}{table.caption.35}%
-\contentsline {subsection}{\numberline {}Table E.6: DFRobot Gravity MOSFET PCM Specifications}{34}{table.caption.36}%
-\contentsline {subsection}{\numberline {}Table E.7: Thermal Conductive Double-Sided Adhesive Tape Specifications}{34}{table.caption.37}%
-\contentsline {subsection}{\numberline {}Table E.8: Integral ILPFS171 Aluminium Heat Sink Plate Specifications}{34}{table.caption.38}%
-\contentsline {subsection}{\numberline {}Table E.9: E27 Lamp Holder Base Socket Specifications}{34}{table.caption.39}%
-\contentsline {subsection}{\numberline {}Table E.10: AITRIP DS18B20 Temperature Sensor Module Specifications}{35}{table.caption.40}%
-\contentsline {subsection}{\numberline {}Table E.11: Grouped Bulb Hardware Specifications}{35}{table.caption.41}%
+\contentsline {section}{\numberline {1}Introduction}{5}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Project Motivation}{5}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Aims and Objectives}{6}{subsection.1.2}%
+\contentsline {subsubsection}{\numberline {1.2.1}Primary Objectives}{6}{subsubsection.1.2.1}%
+\contentsline {subsubsection}{\numberline {1.2.2}Secondary Objectives}{7}{subsubsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.3}Project Scope and Constraints}{7}{subsection.1.3}%
+\contentsline {section}{\numberline {2}Literature Survey and Technology Review}{8}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Smart Lighting Systems and Home Automation}{8}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}LED Technology and Driver Circuits}{8}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Embedded Systems and IoT Platforms}{9}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Machine Learning on Embedded Devices}{9}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Health Data Integration and Privacy}{9}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Circadian Rhythm and Lighting Effects}{9}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Summary of Key Findings}{10}{subsection.2.7}%
+\contentsline {section}{\numberline {3}Requirements Analysis and System Design}{10}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Functional Requirements}{10}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}Core Functional Requirements}{10}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}Additional Functional Requirements}{11}{subsubsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.2}Non-Functional Requirements}{11}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Performance Requirements}{11}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}Reliability and Safety Requirements}{11}{subsubsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.3}Usability Requirements}{12}{subsubsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.3}System Architecture}{12}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Hardware Architecture}{12}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2}Firmware Architecture}{13}{subsubsection.3.3.2}%
+\contentsline {subsubsection}{\numberline {3.3.3}Application Architecture}{13}{subsubsection.3.3.3}%
+\contentsline {section}{\numberline {4}Implementation and Progress}{13}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Hardware Development}{13}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Firmware Development}{14}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}iOS Application Development}{14}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Backend Development}{14}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Testing and Validation}{15}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}Current Status and Milestones}{15}{subsection.4.6}%
+\contentsline {section}{\numberline {5}Conclusions}{16}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Progress Summary}{16}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Assessment Against Timeline}{16}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Key Learnings}{17}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Next Steps}{17}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Estimated Total Cost}{18}{subsection.5.5}%
+\contentsline {subsection}{\numberline {}Table 1: Estimated Total Cost of Project Components and Materials}{18}{table.caption.9}%
+\contentsline {subsection}{\numberline {}Figure 5.5.1: Estimated Cost Pie Chart}{18}{figure.caption.10}%
+\contentsline {subsection}{\numberline {5.6}Gantt chart diagrams}{19}{subsection.5.6}%
+\contentsline {subsection}{\numberline {}Figure 5.6.1: Gantt Chart for 1st Semester}{19}{figure.caption.11}%
+\contentsline {subsection}{\numberline {}Figure 5.6.2: Gantt Chart for 2nd Semester}{19}{figure.caption.12}%
+\contentsline {subsection}{\numberline {5.7}Plan of Final Report Structure}{20}{subsection.5.7}%
+\contentsline {subsubsection}{\numberline {5.7.1}Proposed Chapter Structure}{20}{subsubsection.5.7.1}%
+\contentsline {subsubsection}{\numberline {}Table 2: Proposed Chapter Structure for Final Reports}{20}{section*.14}%
+\contentsline {section}{References}{22}{section*.15}%
+\contentsline {section}{Appendices}{25}{section*.16}%
+\contentsline {subsection}{Appendix A: Health and Safety Assessment}{25}{section*.17}%
+\contentsline {subsubsection}{Hazard Identification and Risk Assessment}{25}{section*.17}%
+\contentsline {subsection}{\numberline {}Table A.1: Hazards and Control Measures}{26}{table.1}%
+\contentsline {subsection}{Appendix B: Ethics Considerations}{29}{section*.18}%
+\contentsline {subsubsection}{Ethical Review Assessment}{29}{section*.19}%
+\contentsline {subsubsection}{Data Privacy and Protection}{29}{section*.20}%
+\contentsline {subsubsection}{Informed Consent}{29}{section*.21}%
+\contentsline {subsubsection}{Transparency and Explainability}{29}{section*.22}%
+\contentsline {subsubsection}{Testing and Evaluation}{29}{section*.23}%
+\contentsline {subsubsection}{Data Security}{30}{section*.24}%
+\contentsline {subsubsection}{Risk-Benefit Analysis}{30}{section*.25}%
+\contentsline {subsubsection}{Assessment Conclusion}{30}{section*.26}%
+\contentsline {subsection}{Appendix C: Project Meetings Log}{31}{section*.27}%
+\contentsline {subsection}{\numberline {}Table C.1: Project Meetings Log}{31}{section*.28}%
+\contentsline {subsection}{Appendix D: Initial Email Correspondence}{33}{section*.29}%
+\contentsline {subsection}{\numberline {}Figure D.1: Project Proposal Email Confirmation}{33}{figure.caption.30}%
+\contentsline {subsection}{Appendix E: Component Specifications}{34}{figure.caption.30}%
+\contentsline {subsection}{\numberline {}Table E.1: ESP32 WROOM 32D Module Specifcations}{34}{table.caption.31}%
+\contentsline {subsection}{\numberline {}Table E.2: BTF-LIGHTING COB LED Strip Specifications}{34}{table.caption.32}%
+\contentsline {subsection}{\numberline {}Table E.3: Hailege BH1750FVI GY-30 Sensor Module Specifications}{35}{table.caption.33}%
+\contentsline {subsection}{\numberline {}Table E.4: Aim-TTi PL-P Series Digital Bench Power Supply Specifications}{35}{table.caption.34}%
+\contentsline {subsection}{\numberline {}Table E.5: Cable Matters Braided USB-C to Micro USB Cable Specifications}{35}{table.caption.35}%
+\contentsline {subsection}{\numberline {}Table E.6: DFRobot Gravity MOSFET PCM Specifications}{36}{table.caption.36}%
+\contentsline {subsection}{\numberline {}Table E.7: Thermal Conductive Double-Sided Adhesive Tape Specifications}{36}{table.caption.37}%
+\contentsline {subsection}{\numberline {}Table E.8: Integral ILPFS171 Aluminium Heat Sink Plate Specifications}{36}{table.caption.38}%
+\contentsline {subsection}{\numberline {}Table E.9: E27 Lamp Holder Base Socket Specifications}{36}{table.caption.39}%
+\contentsline {subsection}{\numberline {}Table E.10: AITRIP DS18B20 Temperature Sensor Module Specifications}{37}{table.caption.40}%
+\contentsline {subsection}{\numberline {}Table E.11: Grouped Bulb Hardware Specifications}{37}{table.caption.41}%
