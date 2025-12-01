@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.4.30)  24 NOV 2025 18:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.4.30)  1 DEC 2025 00:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -514,27 +514,64 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
 )
+(/usr/local/texlive/2025/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count339
+\float@exts=\toks30
+\float@box=\box56
+\@float@everytoks=\toks31
+\@floatcapt=\box57
+)
+(/usr/local/texlive/2025/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2024-10-27 v4.22 Multi-page Table package (DPC)
+\LTleft=\skip100
+\LTright=\skip101
+\LTpre=\skip102
+\LTpost=\skip103
+\LTchunksize=\count340
+\LTcapwidth=\dimen178
+\LT@head=\box58
+\LT@firsthead=\box59
+\LT@foot=\box60
+\LT@lastfoot=\box61
+\LT@gbox=\box62
+\LT@cols=\count341
+\LT@rows=\count342
+\c@LT@tables=\count343
+\c@LT@chunks=\count344
+\LT@p@ftn=\toks32
+)
+(/usr/local/texlive/2025/texmf-dist/tex/latex/tools/array.sty
+Package: array 2024/10/17 v2.6g Tabular extension package (FMi)
+\col@sep=\dimen179
+\ar@mcellbox=\box63
+\extrarowheight=\dimen180
+\NC@list=\toks33
+\extratabsurround=\skip104
+\backup@length=\skip105
+\ar@cellbox=\box64
+)
 (/usr/local/texlive/2025/texmf-dist/tex/latex/microtype/microtype.sty
 Package: microtype 2025/02/11 v3.2a Micro-typographical refinements (RS)
-\MT@toks=\toks30
-\MT@tempbox=\box56
-\MT@count=\count339
+\MT@toks=\toks34
+\MT@tempbox=\box65
+\MT@count=\count345
 LaTeX Info: Redefining \noprotrusionifhmode on input line 1087.
 LaTeX Info: Redefining \leftprotrusion on input line 1088.
-\MT@prot@toks=\toks31
+\MT@prot@toks=\toks35
 LaTeX Info: Redefining \rightprotrusion on input line 1107.
 LaTeX Info: Redefining \textls on input line 1449.
-\MT@outer@kern=\dimen178
+\MT@outer@kern=\dimen181
 LaTeX Info: Redefining \microtypecontext on input line 2053.
 LaTeX Info: Redefining \textmicrotypecontext on input line 2070.
-\MT@listname@count=\count340
+\MT@listname@count=\count346
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/microtype/microtype-pdftex.def
 File: microtype-pdftex.def 2025/02/11 v3.2a Definitions specific to pdftex (RS)
 
 LaTeX Info: Redefining \lsstyle on input line 944.
 LaTeX Info: Redefining \lslig on input line 944.
-\MT@outer@space=\skip100
+\MT@outer@space=\skip106
 )
 Package microtype Info: Loading configuration file microtype.cfg.
 
@@ -545,49 +582,49 @@ LaTeX Info: Redefining \microtypesetup on input line 3065.
 )
 (/usr/local/texlive/2025/texmf-dist/tex/latex/titlesec/titlesec.sty
 Package: titlesec 2025/01/04 v2.17 Sectioning titles
-\ttl@box=\box57
-\beforetitleunit=\skip101
-\aftertitleunit=\skip102
-\ttl@plus=\dimen179
-\ttl@minus=\dimen180
-\ttl@toksa=\toks32
-\titlewidth=\dimen181
-\titlewidthlast=\dimen182
-\titlewidthfirst=\dimen183
+\ttl@box=\box66
+\beforetitleunit=\skip107
+\aftertitleunit=\skip108
+\ttl@plus=\dimen182
+\ttl@minus=\dimen183
+\ttl@toksa=\toks36
+\titlewidth=\dimen184
+\titlewidthlast=\dimen185
+\titlewidthfirst=\dimen186
 )
-\mylen=\skip103
+\mylen=\skip109
 LaTeX Font Info:    Trying to load font information for OT1+phv on input line 8
-8.
+9.
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/ot1phv.fd
 File: ot1phv.fd 2020/03/25 scalable font definitions for OT1/phv.
 )
 (/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count341
-\l__pdf_internal_box=\box58
+\l__color_backend_stack_int=\count347
+\l__pdf_internal_box=\box67
 )
 (./Caleb Ram - 6801936 - Mid-term Report.aux)
 \openout1 = `"Caleb Ram - 6801936 - Mid-term Report.aux"'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -623,7 +660,7 @@ LaTeX Font Info:    ... okay on input line 88.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring ON on input line 88.
+Package hyperref Info: Link coloring ON on input line 89.
 (./Caleb Ram - 6801936 - Mid-term Report.out)
 (./Caleb Ram - 6801936 - Mid-term Report.out)
 \@outlinefile=\write3
@@ -632,17 +669,17 @@ Package hyperref Info: Link coloring ON on input line 88.
 
 (/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count342
-\scratchdimen=\dimen184
-\scratchbox=\box59
-\nofMPsegments=\count343
-\nofMParguments=\count344
-\everyMPshowfont=\toks33
-\MPscratchCnt=\count345
-\MPscratchDim=\dimen185
-\MPnumerator=\count346
-\makeMPintoPDFobject=\count347
-\everyMPtoPDFconversion=\toks34
+\scratchcounter=\count348
+\scratchdimen=\dimen187
+\scratchbox=\box68
+\nofMPsegments=\count349
+\nofMParguments=\count350
+\everyMPshowfont=\toks37
+\MPscratchCnt=\count351
+\MPscratchDim=\dimen188
+\MPnumerator=\count352
+\makeMPintoPDFobject=\count353
+\everyMPtoPDFconversion=\toks38
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -653,26 +690,32 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
 Package caption Info: listings package is loaded.
+Package caption Info: longtable package is loaded.
+
+(/usr/local/texlive/2025/texmf-dist/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
+)
 Package caption Info: End \AtBeginDocument code.
-\c@lstlisting=\count348
-LaTeX Info: Redefining \microtypecontext on input line 88.
-Package microtype Info: Applying patch `item' on input line 88.
-Package microtype Info: Applying patch `toc' on input line 88.
-Package microtype Info: Applying patch `eqnum' on input line 88.
+\c@lstlisting=\count354
+LaTeX Info: Redefining \microtypecontext on input line 89.
+Package microtype Info: Applying patch `item' on input line 89.
+Package microtype Info: Applying patch `toc' on input line 89.
+Package microtype Info: Applying patch `eqnum' on input line 89.
 
 
-Package microtype Warning: Unable to apply patch `footnote' on input line 88.
+Package microtype Warning: Unable to apply patch `footnote' on input line 89.
 
-Package microtype Info: Applying patch `verbatim' on input line 88.
-LaTeX Info: Redefining \microtypesetup on input line 88.
+Package microtype Info: Applying patch `verbatim' on input line 89.
+LaTeX Info: Redefining \microtypesetup on input line 89.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 88.
+LaTeX Info: Redefining \showhyphens on input line 89.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -695,7 +738,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.127 \newpage
+l.128 \newpage
                [1
 
 ] (./Caleb Ram - 6801936 - Mid-term Report.toc
@@ -727,6 +770,22 @@ l.127 \newpage
 [11]
 
 [12]
+pdfTeX warning (ext4): destination with the same identifier (name{ref:espressif
+2023-1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.342 ...}{\hypertarget{ref:espressif2023-1}{[6]}}
+                                                  . Integrated wireless capa...
+LaTeX Font Info:    Trying to load font information for TS1+phv on input line 3
+44.
+(/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/ts1phv.fd
+File: ts1phv.fd 2020/03/25 scalable font definitions for TS1/phv.
+)
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `phv' (encoding: TS1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+
 
 [13]
 
@@ -737,52 +796,101 @@ l.127 \newpage
 [16]
 
 [17]
+<figures/EstimatedCostsPieChart.png, id=597, 363.321pt x 218.781pt>
+File: figures/EstimatedCostsPieChart.png Graphic file (type png)
+<use figures/EstimatedCostsPieChart.png>
+Package pdftex.def Info: figures/EstimatedCostsPieChart.png  used on input line
+ 472.
+(pdftex.def)             Requested size: 217.99426pt x 131.2696pt.
 
-[18]
 
-[19]
+[18 <./figures/EstimatedCostsPieChart.png>]
+<figures/ganttchart.png, id=607, 2380.895pt x 978.65625pt>
+File: figures/ganttchart.png Graphic file (type png)
+<use figures/ganttchart.png>
+Package pdftex.def Info: figures/ganttchart.png  used on input line 486.
+(pdftex.def)             Requested size: 364.19667pt x 149.68912pt.
+<figures/ganttchart2.png, id=609, 1560.83125pt x 1137.24875pt>
+File: figures/ganttchart2.png Graphic file (type png)
+<use figures/ganttchart2.png>
+Package pdftex.def Info: figures/ganttchart2.png  used on input line 497.
+(pdftex.def)             Requested size: 364.19667pt x 265.36201pt.
+
+
+[19 <./figures/ganttchart.png> <./figures/ganttchart2.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 534--534
+\OT1/phv/m/n/12 (+20) and Lit-er-at-ure
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 535--535
+[]|\OT1/phv/m/n/12 (+20) 3: Re-quire-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 535--535
+\OT1/phv/m/n/12 (+20) and Sys-tem
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 539--539
+\OT1/phv/m/n/12 (+20) and Fu-ture
+ []
 
 [20]
 
 [21]
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `cmtt' (encoding: OT1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `cmtt' (encoding: TS1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
+LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <12> not available
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 549.
 
 
-[22{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.en
-c}]
-
-./Caleb Ram - 6801936 - Mid-term Report.tex:477: LaTeX Error: \begin{document} 
-ended by \end{itemize}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.477 \end{itemize}
-                   
-? 
-./Caleb Ram - 6801936 - Mid-term Report.tex:477: Extra \endgroup.
-\end  ...end#1\endcsname \@checkend {#1}\endgroup 
-                                                  \UseHook {env/#1/after}\if...
-l.477 \end{itemize}
-                   
-? 
-
+[22]
 
 [23]
 
 [24]
 
-[25]
+Package hyperref Warning: The anchor of a bookmark and its parent's must not
+(hyperref)                be the same. Added a new anchor on input line 640.
 
-[26]
+
+Overfull \hbox (0.64557pt too wide) in paragraph at lines 662--663
+[]|\OT1/phv/b/n/12 (-20) Residual 
+ []
+
+
+Overfull \hbox (39.63762pt too wide) in alignment at lines 658--664
+ [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (0.64557pt too wide) in paragraph at lines 669--670
+[]|\OT1/phv/b/n/12 (-20) Residual 
+ []
+
+
+Overfull \hbox (39.63762pt too wide) in alignment at lines 664--671
+ [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (39.63762pt too wide) in alignment at lines 671--674
+ [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (39.63762pt too wide) in alignment at lines 674--677
+ [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (39.63762pt too wide) in alignment at lines 677--716
+ [] [] [] [] [] 
+ []
+
+
+
+[25] [26]
 
 [27]
 
@@ -791,197 +899,148 @@ l.477 \end{itemize}
 [29]
 
 [30]
-
-[31]
-LaTeX Font Info:    Trying to load font information for TS1+phv on input line 7
-30.
- (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/ts1phv.fd
-File: ts1phv.fd 2020/03/25 scalable font definitions for TS1/phv.
-)
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `phv' (encoding: TS1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
-
+pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has
+ been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.839 \end{longtable}
+                      [31]
 
 [32]
-
-[33]
-
-./Caleb Ram - 6801936 - Mid-term Report.tex:781: LaTeX Error: Lonely \item--per
-haps a missing list environment.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.781 \item P
-             repare and rehearse presentation materials.
-? 
-
-Underfull \hbox (badness 10000) detected at line 781
-[][]
- []
+<figures/Project-Proposal-Email-Confirmation.png, id=749, 1038.88126pt x 421.57
+5pt>
+File: figures/Project-Proposal-Email-Confirmation.png Graphic file (type png)
+<use figures/Project-Proposal-Email-Confirmation.png>
+Package pdftex.def Info: figures/Project-Proposal-Email-Confirmation.png  used 
+on input line 860.
+(pdftex.def)             Requested size: 364.19667pt x 147.78503pt.
 
 
-./Caleb Ram - 6801936 - Mid-term Report.tex:782: LaTeX Error: Lonely \item--per
-haps a missing list environment.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.782 \item P
-             roject demonstration and presentation.
-? 
-
-Underfull \hbox (badness 10000) detected at line 782
-[][]
- []
-
-
-./Caleb Ram - 6801936 - Mid-term Report.tex:783: LaTeX Error: Lonely \item--per
-haps a missing list environment.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.783 \item S
-             ubmit final report.
-? 
-
-Underfull \hbox (badness 10000) detected at line 783
-[][]
- []
-
-
-./Caleb Ram - 6801936 - Mid-term Report.tex:784: LaTeX Error: \begin{document} 
-ended by \end{itemize}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.784 \end{itemize}
-                   
-? 
-./Caleb Ram - 6801936 - Mid-term Report.tex:784: Extra \endgroup.
-\end  ...end#1\endcsname \@checkend {#1}\endgroup 
-                                                  \UseHook {env/#1/after}\if...
-l.784 \end{itemize}
-                   
-? 
-
+[33 <./figures/Project-Proposal-Email-Confirmation.png>]
 
 [34]
-LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <12> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 794.
+Overfull \hbox (21.2581pt too wide) in paragraph at lines 929--945
+ [][] 
+ []
+
+LaTeX Info: Symbol \textrightarrow not provided by
+            font family phv in TS1 encoding.
+            Default family used instead on input line 959.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `cmss' (encoding: OT1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `cmss' (encoding: TS1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+LaTeX Info: Symbol \textrightarrow not provided by
+            font family phv in TS1 encoding.
+            Default family used instead on input line 960.
+
+Overfull \hbox (49.47025pt too wide) in paragraph at lines 998--1013
+ [][] 
+ []
 
 
-[35]
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Underfull \hbox (badness 1454) in paragraph at lines 1097--1097
+\OT1/phv/m/n/12 (+20) ers String Light Dif-fuser
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1101--1102
+[]|\OT1/phv/m/n/12 (+20) Adapter rings for E14
+ []
+
+
+Underfull \hbox (badness 1062) in paragraph at lines 1103--1103
+[]|\OT1/phv/m/n/12 (+20) E27 Lamp Shade Re-du-
+ []
+
+
+Underfull \hbox (badness 1484) in paragraph at lines 1103--1104
+\OT1/phv/m/n/12 (+20) shade fit-ting washer ad-
+ []
+
+
+Underfull \hbox (badness 5924) in paragraph at lines 1105--1105
+[]|\OT1/phv/m/n/12 (+20) Edison Screw ES E27
+ []
+
+
+Underfull \hbox (badness 1448) in paragraph at lines 1105--1105
+\OT1/phv/m/n/12 (+20) Lamp Holder Light Bulb
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1105--1106
+\OT1/phv/m/n/12 (+20) 10mm threaded entry,
+ []
+
+
+Underfull \hbox (badness 6893) in paragraph at lines 1109--1110
+[]|\OT1/phv/m/n/12 (+20) Does NOT fit Bay-onet
+ []
+
+
+Overfull \hbox (49.99994pt too wide) in paragraph at lines 1093--1112
+ [][] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+
+[35{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.en
+c}]
 
 [36]
 
-[37]
-
-[38]
-
-[39]
-
-[40]
-
-[41]
-
-[42]
-
-[43]
-
-[44]
-
-[45]
-
-[46]
-
-[47]
-
-[48]
-
-[49]
-
-[50]
-
-[51]
-
-[52]
-
-[53]
-
-[54]
-
-[55]
-
-[56]
-
-./Caleb Ram - 6801936 - Mid-term Report.tex:1415: LaTeX Error: Unicode characte
-r μ (U+03BC)
-               not set up for use with LaTeX.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1415 ... Power Consumption: 80 mA (active), 5 μ
-                                                  A (deep sleep)
-? 
-
-
-[57]
-
-./Caleb Ram - 6801936 - Mid-term Report.tex:1449: LaTeX Error: \begin{itemize} 
-on input line 1441 ended by \end{document}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1449 \end{document}
-                     
-? 
-
-
-[58] (./Caleb Ram - 6801936 - Mid-term Report.aux)
+[37] (./Caleb Ram - 6801936 - Mid-term Report.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `"Caleb Ram - 6801936 - Mid-term Report".out'
  has not changed.
-(rerunfilecheck)             Checksum: D42F1D171EBEC892B215430427F00963;17700.
- )
-(\end occurred inside a group at level 1)
-
-### semi simple group (level 1) entered at line 1441 (\begingroup)
-### bottom level 
+(rerunfilecheck)             Checksum: 826700F50DCA125FF67FBFF69262A3DC;17849.
+ ) 
 Here is how much of TeX's memory you used:
- 18506 strings out of 473190
- 297224 string characters out of 5715800
- 767555 words of memory out of 5000000
- 41065 multiletter control sequences out of 15000+600000
- 593906 words of font info for 218 fonts, out of 8000000 for 9000
+ 18785 strings out of 473190
+ 302366 string characters out of 5715800
+ 782085 words of memory out of 5000000
+ 41360 multiletter control sequences out of 15000+600000
+ 594558 words of font info for 223 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,17n,117p,1268b,596s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmtt12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/s
-ftt1200.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvb8a
-.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></
-usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on "Caleb Ram - 6801936 - Mid-term Report.pdf" (59 pages, 182389
- bytes).
+ 75i,17n,117p,1089b,632s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb
+></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><
+/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
+usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfss1200.pfb></us
+r/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local
+/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texliv
+e/2025/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
+Output written on "Caleb Ram - 6801936 - Mid-term Report.pdf" (38 pages, 112908
+5 bytes).
 PDF statistics:
- 991 PDF objects out of 1000 (max. 8388607)
- 908 compressed objects within 10 object streams
- 219 named destinations out of 1000 (max. 500000)
- 69337 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 867 PDF objects out of 1000 (max. 8388607)
+ 795 compressed objects within 8 object streams
+ 182 named destinations out of 1000 (max. 500000)
+ 71301 words of extra memory for PDF output out of 74296 (max. 10000000)
 
