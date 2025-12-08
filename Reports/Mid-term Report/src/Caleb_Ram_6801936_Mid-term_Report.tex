@@ -18,7 +18,6 @@
 \usepackage{float}
 \usepackage{longtable}
 \usepackage{array}
-\usepackage{hyperref}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1em}
@@ -119,7 +118,7 @@ This report presents the mid-term progress of developing an AI-based smart bulb 
 
 The system’s core innovation lies in lightweight TinyML that processes user behaviour patterns locally on the ESP32 microcontroller, learning preferred brightness levels, colour temperatures, and timing patterns for different times of day and activities. The AI model detects routines such as morning wake-up times, evening wind-down periods, and room occupancy patterns, automatically adjusting lighting without manual intervention. Integration with Apple HealthKit enables access to sleep data with user consent, correlating lighting preferences with sleep quality and automatically triggering gradual dimming before detected bedtime and natural sunrise simulation for wake-up.
 
-Completed work to date includes a fully functional Swift iOS application deployed to physical devices. Features include user authentication with email verification \href{run:Project Code/AI-Based Smart Bulb for Adaptive Home Automation/AI-Based Smart Bulb for Adaptive Home Automation/RegisterEmailView.swift}{[see RegisterEmailView.swift]}, Bluetooth Low Energy device discovery and connection management  \href{run:Project Code/AI-Based Smart Bulb for Adaptive Home Automation/AI-Based Smart Bulb for Adaptive Home Automation/BLEManager.swift}{[see BLEManager.swift]}, and real-time control of power, brightness, RGB colour, and four lighting effects. A Flask backend provides secure user management and device storage. The system implements dual-mode architecture supporting both physical hardware and software simulation for testing. The BLE communication protocol is fully specified for bidirectional communication between app and hardware, with characteristic UUIDs defined for control commands and status monitoring.
+Completed work to date includes a fully functional Swift iOS application deployed to physical devices. Features include user authentication with email verification \href{run:/Users/calebram/Desktop/University/OneDrive - University of Surrey/Desktop/Year 3 Project/Reports/Mid-term Report/src/Project Code/AI-Based Smart Bulb for Adaptive Home Automation/AI-Based Smart Bulb for Adaptive Home Automation/RegisterEmailView.swift}{[see RegisterEmailView.swift]}, Bluetooth Low Energy device discovery and connection management  \href{run:/Users/calebram/Desktop/University/OneDrive - University of Surrey/Desktop/Year 3 Project/Reports/Mid-term Report/src/Project Code/AI-Based Smart Bulb for Adaptive Home Automation/AI-Based Smart Bulb for Adaptive Home Automation/BLEManager.swift}{[see BLEManager.swift]}, and real-time control of power, brightness, RGB colour, and four lighting effects. A Flask backend provides secure user management and device storage. The system implements dual-mode architecture supporting both physical hardware and software simulation for testing. The BLE communication protocol is fully specified for bidirectional communication between app and hardware, with characteristic UUIDs defined for control commands and status monitoring.
 
 Remaining work includes the ESP32 firmware implementing BLE services and TinyML model for on-device learning, AI algorithm development for pattern recognition and behaviour prediction, physical hardware assembly including LED drivers and thermal management, housing design, HealthKit integration for sleep-aware automation, comprehensive testing of adaptive learning accuracy, and system integration. Multi-room coordination and advanced automation rules will be added if time permits.
 
@@ -131,6 +130,16 @@ The project demonstrates practical application of embedded machine learning, IoT
 \phantomsection
 \hypertarget{TOC}{} 
 \tableofcontents
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{section}{List of Figures}
+\listoffigures
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{section}{List of Tables}
+\listoftables
 
 \clearpage
 \phantomsection
@@ -339,21 +348,21 @@ Web PWA built with React, supporting responsive interfaces and real-time updates
 
 \subsection{Hardware Development}
 
-Component selection and procurement are complete. The ESP32-WROOM-32D module provides dual-core 240MHz processing with 520KB SRAM and 4MB flash, sufficient for TinyML alongside BLE and Wi-Fi  \hyperlink{cite:espressif2023}{\hypertarget{ref:espressif2023-1}{[6]}}. Integrated wireless capabilities reduce board complexity and power consumption.
+Component selection and procurement are complete. The ESP32 Nano S3 module offers a 240 MHz dual core processor with ample SRAM and flash for TinyML workloads alongside BLE and WiFi \hyperlink{cite:espressif2023}{\hypertarget{ref:espressif2023-1}{[6]}}. Its integrated wireless features keep the overall board design simple and help manage power use.
 
 LEDs are Chip-on-Board modules with high CRI ($>$95) and dual warm/cool channels (2700K–6000K) at 300mA/24V, requiring constant-current drivers. Power management uses an isolated 12V/20W AC-DC converter (84\% efficiency, 3kVAC isolation), simplifying mains design while ensuring safety. Thermal simulations indicate junction temperatures below 85°C with aluminium heat sink and convection; housing design optimises heat dissipation and airflow.
 
 \subsection{Firmware Development}
 
-Firmware uses ESP-IDF with FreeRTOS. Multi-task architecture separates BLE, Wi-Fi, LED control, and AI learning. BLE follows GATT with custom UUIDs for power, brightness, RGB, mode selection, and status \href{run:Project Code/AI-Based Smart Bulb for Adaptive Home Automation/AI-Based Smart Bulb for Adaptive Home Automation/BLEManager.swift}{[BLEManager.swift]}.  
+Firmware uses ESP-IDF with FreeRTOS. Multi-task architecture separates BLE, Wi-Fi, LED control, and AI learning. BLE follows GATT with custom UUIDs for power, brightness, RGB, mode selection, and status \href{run:/Users/calebram/Desktop/University/OneDrive - University of Surrey/Desktop/Year 3 Project/Reports/Mid-term Report/src/Project Code/AI-Based Smart Bulb for Adaptive Home Automation/AI-Based Smart Bulb for Adaptive Home Automation/BLEManager.swift}{[BLEManager.swift]}.
 
 LED control uses high-frequency PWM ($>$1kHz) for smooth dimming and flicker-free output, with thermal protection reducing output if limits are approached. AI learning combines time-series analysis and lightweight neural networks to detect recurring patterns (wake/sleep times, occupancy), updating models continuously without manual input.
 
 \subsection{iOS Application Development}
 
-The SwiftUI iOS app follows MVVM with Combine for reactive binding. User authentication includes secure registration with email verification \href{run:Project Code/AI-Based Smart Bulb for Adaptive Home Automation/AI-Based Smart Bulb for Adaptive Home Automation/RegisterEmailView.swift}{[RegisterEmailView.swift]} and bcrypt password storage; login maintains session tokens.  
+The SwiftUI iOS app follows MVVM with Combine for reactive binding. User authentication includes secure registration with email verification \href{run:/Users/calebram/Desktop/University/OneDrive - University of Surrey/Desktop/Year 3 Project/Reports/Mid-term Report/src/Project Code/AI-Based Smart Bulb for Adaptive Home Automation/AI-Based Smart Bulb for Adaptive Home Automation/RegisterEmailView.swift}{[RegisterEmailView.swift]} and bcrypt password storage; login maintains session tokens.
 
-BLE integration via CoreBluetooth enables device discovery and connection management \href{run:Project Code/AI-Based Smart Bulb for Adaptive Home Automation/AI-Based Smart Bulb for Adaptive Home Automation/BLEManager.swift}{[BLEManager.swift]}. Simulator mode allows testing without hardware. UI supports power, brightness, RGB, and effects (solid, fade, rainbow, pulse) with real-time state sync. Settings allow preference configuration, automation rules, and diagnostics.
+BLE integration via CoreBluetooth enables device discovery and connection management \href{run:/Users/calebram/Desktop/University/OneDrive - University of Surrey/Desktop/Year 3 Project/Reports/Mid-term Report/src/Project Code/AI-Based Smart Bulb for Adaptive Home Automation/AI-Based Smart Bulb for Adaptive Home Automation/BLEManager.swift}{[BLEManager.swift]}. Simulator mode allows testing without hardware. UI supports power, brightness, RGB, and effects (solid, fade, rainbow, pulse) with real-time state sync. Settings allow preference configuration, automation rules, and diagnostics.
 
 \subsection{Backend Development}
 
@@ -421,7 +430,6 @@ Progress to date indicates that project objectives are achievable, delivering a 
 
 \begin{table}[h!]
 \caption{Estimated Total Cost of Project Components and Materials}
-\addcontentsline{toc}{subsection}{\protect\numberline{}Table \thetable: Estimated Total Cost of Project Components and Materials}
 \centering
 \begin{tabular}{|l|c|}
 \hline
@@ -429,7 +437,7 @@ Progress to date indicates that project objectives are achievable, delivering a 
 \hline
 \multicolumn{2}{|l|}{\textbf{Hardware Components}} \\
 \hline
-ESP32-WROOM-32D Module (×2) & 13.00 \\
+Arduino Nano ESP32 (×1) & 20.00 \\
 BTF COB LED Strip & 8.00 \\
 MOSFET PWM Control Module (x2) & 20.00 \\
 LED Thermal Conductive Tape & 9.00 \\
@@ -437,15 +445,15 @@ Aluminium Heat Sink & 10.00 \\
 E27 Lamp Base & 5.00 \\
 Temperature Sensor & 4.00 \\
 \hline
-\multicolumn{1}{|r|}{\textbf{Hardware Components Subtotal}} & \textbf{69.00} \\
+\multicolumn{1}{|r|}{\textbf{Hardware Components Subtotal}} & \textbf{76.00} \\
 \hline
 \multicolumn{2}{|l|}{\textbf{Materials and Fabrication}} \\
 \hline
 3D Printing Filament (PETG, 0.5kg) & 12.00 \\
 Thermal Interface Material & 3.00 \\
-Assembly Supplies & 8.00 \\
+Assembly Supplies & 2.00 \\
 \hline
-\multicolumn{1}{|r|}{\textbf{Materials and Fabrication Subtotal}} & \textbf{23.00} \\
+\multicolumn{1}{|r|}{\textbf{Materials and Fabrication Subtotal}} & \textbf{17.00} \\
 \hline
 \multicolumn{2}{|l|}{\textbf{Software and Services}} \\
 \hline
@@ -462,7 +470,7 @@ Additional Testing Materials & 10.00 \\
 \hline
 \multicolumn{1}{|r|}{\textbf{Contingency Subtotal}} & \textbf{25.00} \\
 \hline
-\multicolumn{1}{|r|}{\textbf{Estimated Total Cost}} & \textbf{117.00} \\
+\multicolumn{1}{|r|}{\textbf{Estimated Total Cost}} & \textbf{118.00} \\
 \hline
 \end{tabular}
 \end{table}
@@ -473,7 +481,6 @@ Additional Testing Materials & 10.00 \\
     \caption{Estimated Cost Pie Chart}
     \label{fig:EstimatedCostsPieChart}
 \end{figure}
-\addcontentsline{toc}{subsection}{\protect\numberline{}Figure \thefigure: Estimated Cost Pie Chart}
 
 \noindent
 Figure \ref{fig:EstimatedCostsPieChart} shows an estimated total cost in the form of a pie chart.
@@ -487,7 +494,6 @@ Figure \ref{fig:EstimatedCostsPieChart} shows an estimated total cost in the for
     \caption{Gantt chart 1st Semester}
     \label{fig:Ganttchartfor1stSemester}
 \end{figure}
-\addcontentsline{toc}{subsection}{\protect\numberline{}Figure \thefigure: Gantt Chart for 1st Semester}
 
 \noindent
 Figure \ref{fig:Ganttchartfor1stSemester} shows Semester 1's Gantt chart with the tasks to be completed along with the slack times for each task.
@@ -498,7 +504,6 @@ Figure \ref{fig:Ganttchartfor1stSemester} shows Semester 1's Gantt chart with th
     \caption{Gantt chart 2nd Semester}
     \label{fig:Ganttchartfor2ndSemester}
 \end{figure}
-\addcontentsline{toc}{subsection}{\protect\numberline{}Figure \thefigure: Gantt Chart for 2nd Semester}
 
 \noindent
 Figure \ref{fig:Ganttchartfor2ndSemester} shows Semester 2's Gantt chart with the tasks to be completed along with the slack times for each task.
@@ -513,8 +518,6 @@ The final dissertation will follow standard Electronic Engineering project repor
 
 \begin{longtable}{p{3cm} p{12cm}}
 \caption{Proposed Chapter Structure for Final Report} \\
-\phantomsection
-\addcontentsline{toc}{subsubsection}{\protect\numberline{}Table \thetable: Proposed Chapter Structure for Final Reports} \\
 \hline
 \textbf{Chapter} & \textbf{Content Overview} \\
 \hline
@@ -650,77 +653,222 @@ The final dissertation will follow standard Electronic Engineering project repor
 \vspace{2em}
 
 
-\textbf{\href{run:Forms/Hazards Form.pdf}{Hazard Identification and Risk Assessment}}
+\textbf{\hyperlink{hazard-table-top}{Hazard Identification and Risk Assessment}}
 \addcontentsline{toc}{subsubsection}{Hazard Identification and Risk Assessment}
 \newline
-The formal \href{run:Forms/Hazards Form.pdf}{Undergraduate Project Hazards Assessment Form} is attached, providing a systematic overview of potential hazards involved in this project. Each entry lists the hazard type, whether it will be used or not, its location, and the hazards and precautions explained. The document has been reviewed and signed off by my project supervisor to ensure compliance with laboratory and industry safety standards. Examples of hazards include electrical shock from exposed circuits and burns from hot surfaces such as heat sinks or soldering equipment. Corresponding control measures, such as using insulated tools, heat-resistant gloves, and cable management practices, are detailed in the tables below, allowing for quick reference and practical implementation.
+The formal \hyperlink{hazard-table-top}{Undergraduate Project Hazards Assessment Form} is attached below, providing a systematic overview of potential hazards involved in this project. Each entry lists the hazard type, whether it will be used or not, its location, and the hazards and precautions explained. The document has been reviewed and signed off by my project supervisor to ensure compliance with laboratory and industry safety standards. Examples of hazards include electrical shock from exposed circuits and burns from hot surfaces such as heat sinks or soldering equipment. Corresponding control measures, such as using insulated tools, heat-resistant gloves, and cable management practices, are detailed in the tables below, allowing for quick reference and practical implementation.
+
+\newpage
+
+\hypertarget{hazard-table-top}{}
+
+\begin{center}
+    \textbf{SCHOOL OF ELECTRONICS AND PHYSICAL SCIENCES}
+
+    \textbf{Undergraduate Project Hazards Assessment Form}
+
+    (to be completed jointly by student/academic supervisor)
+\end{center}
+
+\noindent
+Student Caleb Ram \hfill Project No 028\_1
+
+\noindent
+Project Title AI Base Smart Bulb System for Adaptive Home Automation
+
+\noindent
+\begin{minipage}[t]{\textwidth}
+    Location(s) for experimental work (list all) 16AB04 06AB04 18AB04 6dAB04 11AB04\\
+    \phantom{Location(s) for experimental work (list all) }Home(50 Vale Road KT4 7EA)
+\end{minipage}
+
+\vspace{0.5em}
+\noindent
+Complete the table below. Up to date risk assessments must be available which cover the hazards of a project, and necessary procedures and precautions explained to the student.
+
+\vspace{0.5em}
+
+\begin{longtable}{|>{\raggedright\arraybackslash}p{4.2cm}|>{\raggedright\arraybackslash}p{2.2cm}|>{\raggedright\arraybackslash}p{4.2cm}|>{\raggedright\arraybackslash}p{4.6cm}|}
+    \caption{Undergraduate Project Hazards Assessment Form}
+    \label{tab:hazards-assessment} \\
+    \hline
+    \textbf{Which of these hazards are involved in the project?} & \textbf{Delete as applicable} & \textbf{Location of risk assessments} & \textbf{Hazards \& precautions explained} \\
+    \hline
+    \endfirsthead
+
+    \multicolumn{4}{c}{\tablename\ \thetable\ -- \textit{Continued from previous page}} \\
+    \hline
+    \textbf{Which of these hazards are involved in the project?} & \textbf{Delete as applicable} & \textbf{Location of risk assessments} & \textbf{Hazards \& precautions explained} \\
+    \hline
+    \endhead
+
+    \multicolumn{4}{r}{\textit{Continued on next page}} \\
+    \endfoot
+
+    \endlastfoot
+
+    \textbf{Biohazards} & \textbf{NO} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & No biohazards present \\
+    \hline
+
+    \textbf{Electrical work} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Fire or overloading Isolate power, use insulation, verify connections safely \\
+    \hline
+
+    \textbf{Extreme temperatures} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Heated components or soldering irons Avoid burns by using gloves and heat-resistant mats \\
+    \hline
+
+    \textbf{Flammable or explosive substances} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Solvents or aerosol sprays Keep away from sparks and open flames. \\
+    \hline
+
+    \textbf{Ionising radiation} & \textbf{NO} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & No ionising radiation present \\
+    \hline
+
+    \textbf{Knives / cutting tools} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Sharp blades used in prototyping Handle carefully and wear gloves \\
+    \hline
+
+    \textbf{Lasers} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Eye or skin injury from laser exposure Keep cover closed, wear safety goggles \\
+    \hline
+
+    \textbf{Lifting equipment} & \textbf{NO} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & No lifting equipment \\
+    \hline
+
+    \textbf{Machinery} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Avoid moving parts Follow safety procedures \\
+    \hline
+
+    \textbf{Manual handling} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Heavy items like power supplies Use correct posture \\
+    \hline
+
+    \textbf{Microwave radiation} & \textbf{NO} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & No microwave radiation present \\
+    \hline
+
+    \textbf{Noise} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Drills, extractor fans Wear ear protection when using drills for long periods of time \\
+    \hline
+
+    \textbf{Non-ionising radiation (eg UV, IR, RF)} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Wi-Fi avoid prolonged close exposure, normal use is safe IR lamps do not stare directly \\
+    \hline
+
+    \textbf{Non-ionising radiation (eg UV, IR, RF)} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & use protective shields UV light (lab lamps): wear goggles, limit exposure time \\
+    \hline
+
+    \textbf{Power tools} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Soldering iron, use heat-resistant mat, avoid contact, unplug when not in use Drills, wear safety glasses, secure workpiece, keep hands clear \\
+    \hline
+
+    \textbf{Pressure vessels/systems} & \textbf{NO} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & No pressure vessels or pressure systems \\
+    \hline
+
+    \textbf{Substances hazardous to health eg chemicals, dusts} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Small amounts of soldering fumes, cleaning chemicals, or dust Use extractor fan, gloves, and masks \\
+    \hline
+
+    \textbf{Vacuum systems} & \textbf{NO} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & No vacuum systems \\
+    \hline
+
+    \textbf{Working at height} & \textbf{NO} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & No need to work at height using a ladder for example \\
+    \hline
+
+    \textbf{Other:} (please describe) Electrical components and small tools & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Handle safely, follow instructions \\
+    \hline
+\end{longtable}
+
+\newpage
+
+\noindent
+The student has discussed this project with the academic supervisor, and:
+\begin{itemize}
+    \item Understands the nature of hazards associated with the project
+    \item Has been instructed in the precautions and procedures to be used to minimise risk from these hazards and the actions to be taken in the event of an accident
+    \item Has attended all appropriate lectures on laboratory safety and procedures during their undergraduate course
+    \item Will ask the supervisor to clarify any H\&S matters of which they are unsure
+\end{itemize}
+
+\vspace{0.5em}
+\noindent
+Supervisor Name\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots Signature\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots Date\ldots\ldots\ldots\ldots\ldots
+
+\vspace{0.5em}
+\noindent
+Student Name Caleb Ram \hspace{1cm} Signature Caleb Ram \hspace{1cm} Date 12/11/25
+
+\vspace{1em}
+\begin{center}
+    \textbf{NOW RETURN THIS FORM TO THE TEACHING LABORATORY MANAGER}
+\end{center}
+
+\vspace{0.5em}
+\begin{flushright}
+    6th September 2005
+\end{flushright}
+
+
+\newpage
 
 \begin{longtable}{|>{\raggedright\arraybackslash}p{3.5cm}|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{1.5cm}|>{\raggedright\arraybackslash}p{4.5cm}|>{\raggedright\arraybackslash}p{1.7cm}|}
-\caption{Hazards and Control Measures}
-\addcontentsline{toc}{subsection}{\protect\numberline{}Table \thetable: Hazards and Control Measures} \\
-\hline
-\textbf{Hazard} & \textbf{Description} & \textbf{Risk Level} & \textbf{Control Measures} & \textbf{Residual Risk} \\
-\hline
-\endfirsthead
+    \caption{Hazards and Control Measures}
+    \addcontentsline{toc}{subsection}{\protect\numberline{}Table \thetable: Hazards and Control Measures} \\
+    \hline
+    \textbf{Hazard} & \textbf{Description} & \textbf{Risk Level} & \textbf{Control Measures} & \textbf{Residual Risk} \\
+    \hline
+    \endfirsthead
 
-\multicolumn{5}{c}
-{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
-\hline
-\textbf{Hazard} & \textbf{Description} & \textbf{Risk Level} & \textbf{Control Measures} & \textbf{Residual Risk} \\
-\hline
-\endhead
+    \multicolumn{5}{c}
+    {{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+    \hline
+    \textbf{Hazard} & \textbf{Description} & \textbf{Risk Level} & \textbf{Control Measures} & \textbf{Residual Risk} \\
+    \hline
+    \endhead
 
-\hline \multicolumn{5}{r}{{Continued on next page}} \\
-\endfoot
+    \hline \multicolumn{5}{r}{{Continued on next page}} \\
+    \endfoot
 
-\hline
-\endlastfoot
+    \hline
+    \endlastfoot
 
-Electrical Shock from Mains Voltage & Working with 230V AC mains voltage during power supply integration and testing presents risk of electric shock causing injury or death. \rule{0pt}{3ex} & High & - Work with power disconnected except during testing  
-- Use isolation transformer  
-- One-hand rule when probing live circuits  
-- Use insulated tools  
-- RCD protection on test bench  
-- Maintain creepage/clearance distances  
-- Double insulation / earthing of exposed parts  
-- Supervisor present during initial mains testing & Low \\
-\hline
-Thermal Burns from Heat Sink and LED & LED and heat sink reach elevated temperatures during operation, potentially causing burns on contact. \rule{0pt}{3ex} & Medium & - Warning labels on hot surfaces  
-- Cooling-off period before handling  
-- Temperature monitored during testing  
-- Housing design prevents accidental contact  
-- Thermal cutoff protection in firmware & Low \\
-\hline
-Fire Risk from Thermal Runaway or Component Failure & Inadequate thermal management or component failure could cause excessive heating leading to fire. \rule{0pt}{3ex} & Medium & - Conservative thermal design with safety margins  
-- Firmware thermal protection  
-- Non-flammable housing materials  
-- Testing on non-flammable surfaces with extinguisher ready  
-- Thermal fuses for overheat protection  
-- Supervised prototype operation & Low \\
-\hline
-Soldering Fumes and Chemical Exposure & Soldering produces fumes containing rosin and flux compounds that may cause respiratory irritation. \rule{0pt}{3ex} & Low & - Fume extraction during soldering  
-- Well-ventilated workspace  
-- Use lead-free solder  
-- Frequent breaks during extended soldering & Very Low \\
-\hline
-Eye Damage from LED Light Exposure & Direct viewing of high-brightness LED may cause temporary or permanent eye damage. \rule{0pt}{3ex} & Low & - Indirect viewing or diffusers  
-- Avoid direct gaze at LED  
-- Warning labels for eye safety  
-- Limit brightness to safe levels & Very Low \\
-\hline
-Sharp Tools and Components & Use of cutting tools, component leads, and heat sink fins may cause cuts or punctures. \rule{0pt}{3ex} & Low & - Use safety glasses and gloves  
-- Proper tool handling and storage  
-- Trim component leads carefully  
-- First aid kit readily available & Very Low \\
-\hline
+    Electrical Shock from Mains Voltage & Working with 230V AC mains voltage during power supply integration and testing presents risk of electric shock causing injury or death. \rule{0pt}{3ex} & High & - Work with power disconnected except during testing
+    - Use isolation transformer
+    - One-hand rule when probing live circuits
+    - Use insulated tools
+    - RCD protection on test bench
+    - Maintain creepage/clearance distances
+    - Double insulation / earthing of exposed parts
+    - Supervisor present during initial mains testing & Low \\
+    \hline
+    Thermal Burns from Heat Sink and LED & LED and heat sink reach elevated temperatures during operation, potentially causing burns on contact. \rule{0pt}{3ex} & Medium & - Warning labels on hot surfaces
+    - Cooling-off period before handling
+    - Temperature monitored during testing
+    - Housing design prevents accidental contact
+    - Thermal cutoff protection in firmware & Low \\
+    \hline
+    Fire Risk from Thermal Runaway or Component Failure & Inadequate thermal management or component failure could cause excessive heating leading to fire. \rule{0pt}{3ex} & Medium & - Conservative thermal design with safety margins
+    - Firmware thermal protection
+    - Non-flammable housing materials
+    - Testing on non-flammable surfaces with extinguisher ready
+    - Thermal fuses for overheat protection
+    - Supervised prototype operation & Low \\
+    \hline
+    Soldering Fumes and Chemical Exposure & Soldering produces fumes containing rosin and flux compounds that may cause respiratory irritation. \rule{0pt}{3ex} & Low & - Fume extraction during soldering
+    - Well-ventilated workspace
+    - Use lead-free solder
+    - Frequent breaks during extended soldering & Very Low \\
+    \hline
+    Eye Damage from LED Light Exposure & Direct viewing of high-brightness LED may cause temporary or permanent eye damage. \rule{0pt}{3ex} & Low & - Indirect viewing or diffusers
+    - Avoid direct gaze at LED
+    - Warning labels for eye safety
+    - Limit brightness to safe levels & Very Low \\
+    \hline
+    Sharp Tools and Components & Use of cutting tools, component leads, and heat sink fins may cause cuts or punctures. \rule{0pt}{3ex} & Low & - Use safety glasses and gloves
+    - Proper tool handling and storage
+    - Trim component leads carefully
+    - First aid kit readily available & Very Low \\
+    \hline
 \end{longtable}
+
+
+
 
 \newpage
 \textbf{Declaration}
 
 I confirm that I have read and understood this health and safety assessment. I will follow all specified control measures and report any incidents or near-misses to my supervisor immediately. I understand that deviation from approved procedures may result in disciplinary action and project suspension.
 
-Signatures of both myself and my supervisor are provided in the \href{run:Forms/Hazards Form.pdf}{attached document}.
+Signatures of both myself and my supervisor are provided in the \href{run:/Users/calebram/Desktop/University/OneDrive - University of Surrey/Desktop/Year 3 Project/Reports/Mid-term Report/src/Forms/Hazards Form.pdf}{attached document}.
 
 \newpage
 
@@ -792,9 +940,7 @@ While the system may be shared with a small number of users for informal usabili
 \setcounter{table}{0} 
 \renewcommand{\thetable}{C.\arabic{table}}
 \begin{longtable}{|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{9cm}|}
-\caption{Summary of Project Meetings with Supervisor}
-\phantomsection
-\addcontentsline{toc}{subsection}{\protect\numberline{}Table \thetable: Project Meetings Log} \\
+\caption{Summary of Project Meetings with Supervisor} \\
 \hline
 \textbf{Meeting / Category} & \textbf{Details} \\
 \hline
@@ -819,8 +965,6 @@ While the system may be shared with a small number of users for informal usabili
 & \textbf{Discussion Points:} Project proposal presented and discussed; Scope refinement focusing on achievable objectives within timeframe; Discussion of technical challenges particularly thermal management \\
 & \textbf{Actions:} Student: Complete literature review, order initial components, set up development environment; Supervisor: Provide feedback on project scope and recommended reading materials \\
 \hline
-
-\newpage
 
 \textbf{Meeting 2 – Progress Review and Technical Discussion} &
 \textit{Date:} 17 November 2025 \\
@@ -861,7 +1005,6 @@ The emails have communications between the author and project supervisor Dr. Ahm
     \caption{Project Proposal Email Confirmation with Dr. Ahmed Elzanaty}
     \label{fig:Project-Proposal-Email-Confirmation}
 \end{figure}
-\addcontentsline{toc}{subsection}{\protect\numberline{}Figure \thefigure: Project Proposal Email Confirmation}
 
 \noindent
 Figure \ref{fig:Project-Proposal-Email-Confirmation} shows the email screenshot documenting the initial project proposal and confirmation with project supervisor Dr. Ahmed Elzanaty, serving as verification of project initiation and start date.
@@ -875,14 +1018,13 @@ Figure \ref{fig:Project-Proposal-Email-Confirmation} shows the email screenshot 
 \renewcommand{\thetable}{E.\arabic{table}}
 
 \begin{table}[h!]
-\caption{\href{https://documentation.espressif.com/esp32_datasheet_en.pdf}{ESP32 WROOM 32D Module Specifications}}
-\addcontentsline{toc}{subsection}{\protect\numberline{}Table \thetable: ESP32 WROOM 32D Module Specifcations} 
+\caption{\href{https://docs.arduino.cc/resources/datasheets/ABX00083-datasheet.pdf}{Arduino Nano ESP32 Specifications}}
 \centering
 \begin{tabular}{l l}
 \hline
 \textbf{Specification} & \textbf{Details} \\
 \hline
-Module & ESP32 WROOM 32D \\
+Module & ESP32 Nano S3 \\
 Processor & Dual core Xtensa LX6, 240 MHz \\
 Memory & 520 KB SRAM, 4 MB Flash \\
 Wireless & Wi Fi 802.11 b g n, Bluetooth 4.2 and BLE \\
@@ -890,8 +1032,8 @@ GPIO & 34 programmable pins \\
 Peripherals & SPI, I2C, I2S, UART, ADC, DAC, PWM \\
 Operating Voltage & 3.0 to 3.6 V \\
 Power Consumption & 80 mA active, 5 $\mu$A deep sleep \\
-Product & ESP32 WROOM 32D DevKitC \\
-Documentation & \href{https://documentation.espressif.com/esp32_datasheet_en.pdf}{ESP32 Series Datasheet Version 5.2} \\
+Product & ESP32 Nano S3 \\
+Documentation & \href{https://docs.arduino.cc/resources/datasheets/ABX00083-datasheet.pdf}{Arduino Nano ESP32 Datasheet} \\
 \hline
 \end{tabular}
 \end{table}
@@ -901,7 +1043,6 @@ Documentation & \href{https://documentation.espressif.com/esp32_datasheet_en.pdf
 
 \begin{table}[h!]
 \caption{BTF-LIGHTING COB CCT High Density FCOB LED Strip Specifications}
-\addcontentsline{toc}{subsection}{\protect\numberline{}Table \thetable: BTF-LIGHTING COB LED Strip Specifications}
 \centering
 \begin{tabular}{l l}
 \hline
@@ -924,7 +1065,6 @@ Product & BTF-LIGHTING COB LED Strip \\
 
 \begin{table}[h!]
 \caption{\href{https://www.handsontec.com/dataspecs/sensor/BH1750\%20Light\%20Sensor.pdf}{Hailege BH1750FVI GY-30 Module Specifications}}
-\addcontentsline{toc}{subsection}{\protect\numberline{}Table \thetable: Hailege BH1750FVI GY-30 Sensor Module Specifications}
 \centering
 \begin{tabular}{l l}
 \hline
@@ -948,7 +1088,6 @@ Documentation & \href{https://www.handsontec.com/dataspecs/sensor/BH1750\%20Ligh
 
 \begin{table}[h!]
 \caption{\href{https://static.rapidonline.com/pdf/85-1321.pdf}{Aim-TTi PL-P Series Digital Bench Power Supply Specifications}}
-\addcontentsline{toc}{subsection}{\protect\numberline{}Table \thetable: Aim-TTi PL-P Series Digital Bench Power Supply Specifications}
 \centering
 \begin{tabular}{l l}
 \hline
@@ -972,7 +1111,6 @@ Documentation & \href{https://static.rapidonline.com/pdf/85-1321.pdf}{Power Supp
 
 \begin{table}[h!]
 \caption{Cable Matters Braided USB-C to Micro USB Cable Specifications}
-\addcontentsline{toc}{subsection}{\protect\numberline{}Table \thetable: Cable Matters Braided USB-C to Micro USB Cable Specifications}
 \centering
 \begin{tabular}{l l}
 \hline
@@ -993,7 +1131,6 @@ Product & Cable Matters Braided USB-C to Micro USB Cord \\
 
 \begin{table}[h!]
 \caption{\href{https://wiki.dfrobot.com/Gravity__MOSFET_Power_Controller_SKU__DFR0457}{DFRobot Gravity MOSFET Power Controller Module Specifications}}
-\addcontentsline{toc}{subsection}{\protect\numberline{}Table \thetable: DFRobot Gravity MOSFET PCM Specifications}
 \centering
 \begin{tabular}{l l}
 \hline
@@ -1014,7 +1151,6 @@ Documentation & \href{https://wiki.dfrobot.com/Gravity__MOSFET_Power_Controller_
 
 \begin{table}[h!]
 \caption{Thermal Conductive Double-Sided Adhesive Tape Specifications}
-\addcontentsline{toc}{subsection}{\protect\numberline{}Table \thetable: Thermal Conductive Double-Sided Adhesive Tape Specifications}
 \centering
 \begin{tabular}{l l}
 \hline
@@ -1032,7 +1168,6 @@ Product & 10mm x 25m Thermal Conductive Double-Sided Adhesive Tape \\
 
 \begin{table}[h!]
 \caption{Integral ILPFS171 Aluminium Heat Sink Plate Specifications}
-\addcontentsline{toc}{subsection}{\protect\numberline{}Table \thetable: Integral ILPFS171 Aluminium Heat Sink Plate Specifications}
 \centering
 \begin{tabular}{l l}
 \hline
@@ -1049,7 +1184,6 @@ Product & Integral ILPFS171 Aluminium Heat Sink Plate \\\hline
 
 \begin{table}[h!]
 \caption{Pence \& Moon Collective E27 Lamp Holder Base Socket Specifications}
-\addcontentsline{toc}{subsection}{\protect\numberline{}Table \thetable: E27 Lamp Holder Base Socket Specifications}
 \centering
 \begin{tabular}{l l}
 \hline
@@ -1066,7 +1200,6 @@ Product & Pence \& Moon Collective E27 Lamp Holder Base Socket \\\hline
 
 \begin{table}[h!]
 \caption{AITRIP DS18B20 Temperature Sensor Module Specifications}
-\addcontentsline{toc}{subsection}{\protect\numberline{}Table \thetable: AITRIP DS18B20 Temperature Sensor Module Specifications}
 \centering
 \begin{tabular}{l l}
 \hline
@@ -1088,7 +1221,6 @@ Product & AITRIP DS18B20 Temperature Sensor Module \\
 
 \begin{table}[h!]
 \caption{Grouped Bulb Hardware Specifications}
-\addcontentsline{toc}{subsection}{\protect\numberline{}Table \thetable: Grouped Bulb Hardware Specifications}
 \centering
 \begin{tabular}{|p{5cm}|p{3cm}|p{3cm}|p{5cm}|}
 \hline
@@ -1110,5 +1242,10 @@ E27 Edison Screw Lamp Holder Extra Shade Ring 48mm, Brass & 1 pc & Brass & Does 
 \hline
 \end{tabular}
 \end{table}
+
+\newpage
+\phantomsection
+\subsection*{Appendix F: Source Code}
+
 
 \end{document}
