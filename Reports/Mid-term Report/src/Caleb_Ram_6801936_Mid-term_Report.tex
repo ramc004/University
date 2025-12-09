@@ -30,8 +30,8 @@
 \titlespacing*{\subsection}{0pt}{1.5em}{0.75em}
 \titlespacing*{\subsubsection}{0pt}{1.25em}{0.5em}
 
-\setcounter{tocdepth}{3}
-\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
 
 \newdateformat{ukdate}{%
 \dayofweekname{\THEDAY}{\THEMONTH}{\THEYEAR}~\ordinaldate{\THEDAY}~\monthname[\THEMONTH]~\THEYEAR
@@ -665,7 +665,7 @@ The formal \hyperlink{hazard-table-top}{Undergraduate Project Hazards Assessment
 \begin{center}
     \textbf{SCHOOL OF ELECTRONICS AND PHYSICAL SCIENCES}
 
-    \textbf{Undergraduate Project Hazards Assessment Form}
+    Undergraduate Project Hazards Assessment Form
 
     (to be completed jointly by student/academic supervisor)
 \end{center}
@@ -674,12 +674,12 @@ The formal \hyperlink{hazard-table-top}{Undergraduate Project Hazards Assessment
 Student Caleb Ram \hfill Project No 028\_1
 
 \noindent
-Project Title AI Base Smart Bulb System for Adaptive Home Automation
+Project Title \hfill AI Base Smart Bulb System for Adaptive Home Automation
 
 \noindent
 \begin{minipage}[t]{\textwidth}
-    Location(s) for experimental work (list all) 16AB04 06AB04 18AB04 6dAB04 11AB04\\
-    \phantom{Location(s) for experimental work (list all) }Home(50 Vale Road KT4 7EA)
+    Location(s) for experimental work (list all) \hfill 16AB04 06AB04 18AB04 6dAB04 11AB04\\
+    \phantom{Location(s) for experimental work (list all)(   )} Home(50 Vale Road KT4 7EA)
 \end{minipage}
 
 \vspace{0.5em}
@@ -781,28 +781,33 @@ The student has discussed this project with the academic supervisor, and:
 
 \vspace{0.5em}
 \noindent
-Supervisor Name\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots Signature\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots Date\ldots\ldots\ldots\ldots\ldots
+Supervisor~Name\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots Signature\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots Date\ldots\ldots\ldots\ldots\ldots
 
 \vspace{0.5em}
 \noindent
-Student Name Caleb Ram \hspace{1cm} Signature Caleb Ram \hspace{1cm} Date 12/11/25
+Student Name Caleb Ram \hspace{1cm} Signature Caleb Ram \hspace{1cm} Date 12/11/2025
 
 \vspace{1em}
 \begin{center}
-    \textbf{NOW RETURN THIS FORM TO THE TEACHING LABORATORY MANAGER}
+    NOW RETURN THIS FORM TO THE TEACHING LABORATORY MANAGER
 \end{center}
 
 \vspace{0.5em}
 \begin{flushright}
-    6th September 2005
+    \textit {6th September 2005}
 \end{flushright}
 
+\textbf{Hazards and Control Measures}
+\phantomsection
+\addcontentsline{toc}{subsubsection}{Hazards and Control Measures}
+\label{sec:hazards-control-measures}
 
+The table below provides a comprehensive breakdown of identified hazards, their associated risk levels, and the specific control measures implemented to mitigate these risks. Each hazard has been assessed according to its potential severity and likelihood, with risk levels categorized as High, Medium, Low, or Very Low. Control measures follow the hierarchy of controls, prioritizing elimination and engineering controls where possible, followed by administrative controls and personal protective equipment. The residual risk column indicates the remaining level of risk after all control measures have been properly implemented. This systematic approach ensures that all project activities are conducted safely and in compliance with university health and safety requirements.
 \newpage
 
+\phantomsection
 \begin{longtable}{|>{\raggedright\arraybackslash}p{3.5cm}|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{1.5cm}|>{\raggedright\arraybackslash}p{4.5cm}|>{\raggedright\arraybackslash}p{1.7cm}|}
-    \caption{Hazards and Control Measures}
-    \addcontentsline{toc}{subsection}{\protect\numberline{}Table \thetable: Hazards and Control Measures} \\
+    \caption{Hazards and Control Measures} \\
     \hline
     \textbf{Hazard} & \textbf{Description} & \textbf{Risk Level} & \textbf{Control Measures} & \textbf{Residual Risk} \\
     \hline
@@ -1243,9 +1248,121 @@ E27 Edison Screw Lamp Holder Extra Shade Ring 48mm, Brass & 1 pc & Brass & Does 
 \end{tabular}
 \end{table}
 
+
 \newpage
+\thispagestyle{empty}
+\null
+\newpage
+
+\thispagestyle{empty}
+\null
+\newpage
+
 \phantomsection
 \subsection*{Appendix F: Source Code}
+\addcontentsline{toc}{subsection}{Appendix F: Source Code}
 
+\setcounter{table}{0}
+\renewcommand{\thetable}{F.\arabic{table}}
+
+This \href{https://github.com/ramc004/University}{AI Based Smart Bulb for Adaptive Home Automation App} consists of three main components: a Flask backend server in Python, an iOS and an iPadOS app in SwiftUI, and support for both real ESP32 hardware and simulated devices. The Flask server handles user authentication with email verification via Gmail SMTP and stores user accounts and bulb associations in a SQLite database. The iOS and iPadOS app provides registration and login flows with email verification codes, discovers nearby smart bulbs via Bluetooth Low Energy, and controls bulb settings like power, brightness, color, and effects. The system includes a simulator mode toggle in the settings that lets users test the app without physical hardware by generating fake bulbs with persistent IDs instead of scanning for real Bluetooth devices. The backend tracks whether each bulb is simulated or real and filters bulbs accordingly when the app requests them. All views communicate through UserDefaults for session management, NotificationCenter for mode switching, and HTTP requests to the Flask API for data persistence, while the BLE manager handles device discovery, connection, and control with characteristic UUIDs that match the ESP32 firmware.
+
+
+\subsubsection*{Backend Files (Python/Flask)}
+\addcontentsline{toc}{subsubsection}{Backend Files (Python/Flask)}
+
+\paragraph*{app.py}\mbox{}\\
+\addcontentsline{toc}{paragraph}{app.py}
+This Flask server provides the complete backend API for user authentication and bulb management. It handles user registration with password hashing, email verification via SMTP, login authentication, and password reset functionality. The server manages a SQLite database storing user accounts and their associated smart bulbs, including a simulator mode flag to distinguish between real ESP32 hardware and simulated devices for testing. It can be found under Project Code, backend, \href{https://github.com/ramc004/University/blob/main/Project\%20Code/backend/app.py}{"app.py"}
+
+\paragraph*{send\_verification\_email.py}\mbox{}\\
+\addcontentsline{toc}{paragraph}{send\_verification\_email.py}
+
+This utility module sends 6-digit verification codes to users via email during registration and password reset flows. It connects to Gmail's SMTP server using credentials stored in hello.txt and constructs email messages with the verification code. The function returns a boolean indicating success or failure of the email delivery.
+
+\newpage
+\paragraph*{hello.txt}\mbox{}\\
+\addcontentsline{toc}{paragraph}{hello.txt}
+This file contains the Gmail app password used for SMTP authentication when sending verification emails, but it has not been included in this report for security reasons. To create it, enable 2-factor authentication on Gmail and generate the 16-character app password. Then change the sender email to email used and update hello.txt to new password.
+
+\newpage
+\addtocontents{toc}{\protect\newpage}
+
+\subsubsection*{Swift Files}
+\addcontentsline{toc}{subsubsection}{Swift Files}
+
+\paragraph*{OS App entry point}
+\addcontentsline{toc}{paragraph}{OS App entry point}
+
+\subparagraph*{AI\_Based\_Smart\_Bulb\_for\_Adaptive\_Home\_AutomationApp.swift}\mbox{}\\
+\addcontentsline{toc}{subparagraph}{AI\_Based\_Smart\_Bulb\_for\_Adaptive\_Home\_AutomationApp.swift}
+This is the main entry point for the iOS application using SwiftUI's App protocol. It defines the app structure and sets WelcomeView as the initial root view displayed when the app launches. This file follows the standard SwiftUI app lifecycle pattern introduced in iOS 14+.
+
+\paragraph*{Configuration}
+\addcontentsline{toc}{paragraph}{Configuration}
+
+\subparagraph*{APIConfig.swift}\mbox{}\\
+\addcontentsline{toc}{subparagraph}{APIConfig.swift}
+This configuration file centralises the backend server URL for all API calls throughout the app. It uses conditional compilation to automatically select localhost (127.0.0.1) when running in the iOS Simulator or the Mac's local network IP address (192.168.1.45) when running on physical devices. This simplifies switching between development and device testing environments.
+
+\paragraph*{Authentication Flow (in user journey order)}
+\addcontentsline{toc}{paragraph}{Authentication Flow}
+
+\subparagraph*{WelcomeView.swift}\mbox{}\\
+\addcontentsline{toc}{subparagraph}{WelcomeView.swift}
+This view presents the app's landing page with a gradient background and navigation options for registration and login. It defines the ModernButtonStyle used throughout the app, featuring rounded rectangles with shadows, opacity changes, and scale animations on press. The view serves as the entry point to the authentication flow with visually appealing buttons for Register and Login.
+
+\subparagraph*{RegisterEmailView.swift}\mbox{}\\
+\addcontentsline{toc}{subparagraph}{RegisterEmailView.swift}
+This view handles the first step of user registration by collecting and validating the email address. It performs real-time validation checking for username presence, @ symbol, domain validity, and email availability by querying the backend. Once all validation rules pass, it generates a 6-digit verification code, sends it via the backend's email service, and navigates to the password creation step.
+
+\subparagraph*{RegisterPasswordView.swift}\mbox{}\\
+\addcontentsline{toc}{subparagraph}{RegisterPasswordView.swift}
+This view completes the registration process by collecting the verification code and creating a secure password. It implements a countdown timer (5 minutes) for code expiration with the ability to resend expired codes. Password validation enforces rules for length (8+ characters), uppercase letters, numbers, and special characters, with real-time feedback showing which requirements are met before allowing registration.
+
+\subparagraph*{LoginView.swift}\mbox{}\\
+\addcontentsline{toc}{subparagraph}{LoginView.swift}
+This view provides the login interface with email and password fields, including a show/hide password toggle. It communicates with the Flask backend to authenticate users and stores the user's email in UserDefaults upon successful login for session management. The view also includes a "Forgot Password" flow that verifies email existence and sends a reset code.
+
+\subparagraph*{ResetPasswordView.swift}\mbox{}\\
+\addcontentsline{toc}{subparagraph}{ResetPasswordView.swift}
+This view allows users to reset their password by entering a 6-digit verification code and creating a new password. It includes a countdown timer for code expiration (5 minutes) with resend functionality and enforces the same password validation rules as registration. Upon successful password reset, it displays a success message in the LoginView and navigates back.
+
+\paragraph*{Main App Views}
+\addcontentsline{toc}{paragraph}{Main App Views}
+
+\subparagraph*{HomeView.swift}\mbox{}\\
+\addcontentsline{toc}{subparagraph}{HomeView.swift}
+This is the main dashboard view displaying the user's saved smart bulbs in a scrollable list with navigation to settings, add bulb, and individual bulb control screens. It loads bulbs from the backend filtered by simulator mode (showing only simulated or only real bulbs based on the current setting) and displays appropriate empty states with guidance. The view includes a logout confirmation dialog and refreshes the bulb list when simulator mode changes via NotificationCenter.
+
+\subparagraph*{SettingsView.swift}\mbox{}\\
+\addcontentsline{toc}{subparagraph}{SettingsView.swift}
+This view provides a toggle for simulator mode with detailed explanations of its purpose and usage. It persists the simulator mode preference to UserDefaults and broadcasts changes via NotificationCenter to update all BLE managers throughout the app. The view includes helpful information about Bluetooth limitations in the iOS Simulator and displays the currently logged-in user's email.
+
+\subparagraph*{AddBulbView.swift}\mbox{}\\
+\addcontentsline{toc}{subparagraph}{AddBulbView.swift}
+This view handles discovering and adding new smart bulbs through Bluetooth scanning or simulator mode. It displays a list of discovered bulbs with signal strength indicators (or simulated badges), allows users to name each bulb and assign it to a room, and saves the bulb to the backend database with the is\_simulated flag. The view responds to simulator mode changes by clearing the list and restarting the scan with the appropriate mode.
+
+\subparagraph*{SavedBulbControlView.swift}\mbox{}\\
+\addcontentsline{toc}{subparagraph}{SavedBulbControlView.swift}
+This comprehensive control view manages all interactions with a single smart bulb including power toggle, brightness slider, RGB color picker, and four effect modes (Solid, Fade, Rainbow, Pulse). It handles connection to both real BLE devices and simulated bulbs, validates that the bulb type matches the current simulator mode setting, and provides options to edit the bulb's name/room or remove it from the user's account. The view displays appropriate connection states and error messages when hardware mode mismatches occur.
+
+\paragraph*{Core Bluetooth Logic}
+\addcontentsline{toc}{paragraph}{Core Bluetooth Logic}
+
+\subparagraph*{BLEManager.swift}\mbox{}\\
+\addcontentsline{toc}{subparagraph}{BLEManager.swift}
+This core class manages all Bluetooth Low Energy communication and device simulation, conforming to CBCentralManagerDelegate and CBPeripheralDelegate protocols. It maintains lists of discovered bulbs, handles connections to both real ESP32 hardware and simulated devices, and provides functions to control power, brightness, color, and effect modes. The manager reads simulator mode from UserDefaults, creates persistent simulated bulb UUIDs, and routes all control commands to either BLE characteristics or simulated state updates depending on the current mode.
+
+\paragraph*{UI Components}
+\addcontentsline{toc}{paragraph}{UI Components}
+
+\subparagraph*{BulbUIComponents.swift}\mbox{}\\
+\addcontentsline{toc}{subparagraph}{BulbUIComponents.swift}
+This file defines reusable UI components for bulb control interfaces including BulbVisualView (animated lightbulb with color glow), QuickColorButton (preset color buttons), and EffectButton (mode selection buttons). These components accept state or configuration parameters and provide consistent styling across different views. The BulbVisualView animates smoothly between on/off states and displays the current color and brightness visually.
+
+\subparagraph*{CircularButtonStyle.swift}\mbox{}\\
+\addcontentsline{toc}{subparagraph}{CircularButtonStyle.swift}
+This file defines a custom button style for circular icon buttons used throughout the app's navigation headers. It creates 44x44 circular buttons with customizable background and foreground colors, drop shadows, and press animations. The style applies opacity changes and scale effects when buttons are pressed for tactile feedback.
 
 \end{document}

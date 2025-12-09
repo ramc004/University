@@ -1,63 +1,90 @@
 \babel@toc {british}{}\relax 
 \contentsline {section}{Executive Summary}{1}{section*.1}%
-\contentsline {section}{List of Figures}{4}{section*.3}%
-\contentsline {section}{List of Tables}{5}{section*.4}%
-\contentsline {section}{\numberline {1}Introduction}{6}{section.1}%
-\contentsline {subsection}{\numberline {1.1}Project Motivation}{6}{subsection.1.1}%
-\contentsline {subsection}{\numberline {1.2}Aims and Objectives}{7}{subsection.1.2}%
-\contentsline {subsubsection}{\numberline {1.2.1}Primary Objectives}{7}{subsubsection.1.2.1}%
-\contentsline {subsubsection}{\numberline {1.2.2}Secondary Objectives}{8}{subsubsection.1.2.2}%
-\contentsline {subsection}{\numberline {1.3}Project Scope and Constraints}{8}{subsection.1.3}%
-\contentsline {section}{\numberline {2}Literature Survey and Technology Review}{9}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Smart Lighting Systems and Home Automation}{9}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}LED Technology and Driver Circuits}{9}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Embedded Systems and IoT Platforms}{10}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Machine Learning on Embedded Devices}{10}{subsection.2.4}%
-\contentsline {subsection}{\numberline {2.5}Health Data Integration and Privacy}{10}{subsection.2.5}%
-\contentsline {subsection}{\numberline {2.6}Circadian Rhythm and Lighting Effects}{10}{subsection.2.6}%
-\contentsline {subsection}{\numberline {2.7}Summary of Key Findings}{11}{subsection.2.7}%
-\contentsline {section}{\numberline {3}Requirements Analysis and System Design}{11}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Functional Requirements}{11}{subsection.3.1}%
-\contentsline {subsubsection}{\numberline {3.1.1}Core Functional Requirements}{11}{subsubsection.3.1.1}%
-\contentsline {subsubsection}{\numberline {3.1.2}Additional Functional Requirements}{12}{subsubsection.3.1.2}%
-\contentsline {subsection}{\numberline {3.2}Non-Functional Requirements}{12}{subsection.3.2}%
-\contentsline {subsubsection}{\numberline {3.2.1}Performance Requirements}{12}{subsubsection.3.2.1}%
-\contentsline {subsubsection}{\numberline {3.2.2}Reliability and Safety Requirements}{12}{subsubsection.3.2.2}%
-\contentsline {subsubsection}{\numberline {3.2.3}Usability Requirements}{13}{subsubsection.3.2.3}%
-\contentsline {subsection}{\numberline {3.3}System Architecture}{13}{subsection.3.3}%
-\contentsline {subsubsection}{\numberline {3.3.1}Hardware Architecture}{13}{subsubsection.3.3.1}%
-\contentsline {subsubsection}{\numberline {3.3.2}Firmware Architecture}{14}{subsubsection.3.3.2}%
-\contentsline {subsubsection}{\numberline {3.3.3}Application Architecture}{14}{subsubsection.3.3.3}%
-\contentsline {section}{\numberline {4}Implementation and Progress}{14}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Hardware Development}{14}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Firmware Development}{15}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}iOS Application Development}{15}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}Backend Development}{15}{subsection.4.4}%
-\contentsline {subsection}{\numberline {4.5}Testing and Validation}{16}{subsection.4.5}%
-\contentsline {subsection}{\numberline {4.6}Current Status and Milestones}{16}{subsection.4.6}%
-\contentsline {section}{\numberline {5}Conclusions}{17}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Progress Summary}{17}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Assessment Against Timeline}{17}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Key Learnings}{18}{subsection.5.3}%
-\contentsline {subsection}{\numberline {5.4}Next Steps}{18}{subsection.5.4}%
-\contentsline {subsection}{\numberline {5.5}Estimated Total Cost}{19}{subsection.5.5}%
-\contentsline {subsection}{\numberline {5.6}Gantt chart diagrams}{20}{subsection.5.6}%
-\contentsline {subsection}{\numberline {5.7}Plan of Final Report Structure}{21}{subsection.5.7}%
-\contentsline {subsubsection}{\numberline {5.7.1}Proposed Chapter Structure}{21}{subsubsection.5.7.1}%
-\contentsline {section}{References}{23}{section*.16}%
-\contentsline {section}{Appendices}{26}{section*.17}%
-\contentsline {subsection}{Appendix A: Health and Safety Assessment}{26}{section*.18}%
-\contentsline {subsubsection}{Hazard Identification and Risk Assessment}{26}{section*.18}%
-\contentsline {subsection}{\numberline {}Table A.2: Hazards and Control Measures}{31}{table.2}%
-\contentsline {subsection}{Appendix B: Ethics Considerations}{34}{section*.19}%
-\contentsline {subsubsection}{Ethical Review Assessment}{34}{section*.20}%
-\contentsline {subsubsection}{Data Privacy and Protection}{34}{section*.21}%
-\contentsline {subsubsection}{Informed Consent}{34}{section*.22}%
-\contentsline {subsubsection}{Transparency and Explainability}{34}{section*.23}%
-\contentsline {subsubsection}{Testing and Evaluation}{34}{section*.24}%
-\contentsline {subsubsection}{Data Security}{35}{section*.25}%
-\contentsline {subsubsection}{Risk-Benefit Analysis}{35}{section*.26}%
-\contentsline {subsubsection}{Assessment Conclusion}{35}{section*.27}%
-\contentsline {subsection}{Appendix C: Project Meetings Log}{36}{section*.28}%
-\contentsline {subsection}{Appendix D: Initial Email Correspondence}{38}{section*.29}%
-\contentsline {subsection}{Appendix E: Component Specifications}{39}{figure.caption.30}%
+\contentsline {section}{List of Figures}{5}{section*.3}%
+\contentsline {section}{List of Tables}{6}{section*.4}%
+\contentsline {section}{\numberline {1}Introduction}{7}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Project Motivation}{7}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Aims and Objectives}{8}{subsection.1.2}%
+\contentsline {subsubsection}{\numberline {1.2.1}Primary Objectives}{8}{subsubsection.1.2.1}%
+\contentsline {subsubsection}{\numberline {1.2.2}Secondary Objectives}{9}{subsubsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.3}Project Scope and Constraints}{9}{subsection.1.3}%
+\contentsline {section}{\numberline {2}Literature Survey and Technology Review}{10}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Smart Lighting Systems and Home Automation}{10}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}LED Technology and Driver Circuits}{10}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Embedded Systems and IoT Platforms}{11}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Machine Learning on Embedded Devices}{11}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Health Data Integration and Privacy}{11}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Circadian Rhythm and Lighting Effects}{11}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Summary of Key Findings}{12}{subsection.2.7}%
+\contentsline {section}{\numberline {3}Requirements Analysis and System Design}{12}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Functional Requirements}{12}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}Core Functional Requirements}{12}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}Additional Functional Requirements}{13}{subsubsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.2}Non-Functional Requirements}{13}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Performance Requirements}{13}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}Reliability and Safety Requirements}{13}{subsubsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.3}Usability Requirements}{14}{subsubsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.3}System Architecture}{14}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Hardware Architecture}{14}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2}Firmware Architecture}{15}{subsubsection.3.3.2}%
+\contentsline {subsubsection}{\numberline {3.3.3}Application Architecture}{15}{subsubsection.3.3.3}%
+\contentsline {section}{\numberline {4}Implementation and Progress}{15}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Hardware Development}{15}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Firmware Development}{16}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}iOS Application Development}{16}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Backend Development}{16}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Testing and Validation}{17}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}Current Status and Milestones}{17}{subsection.4.6}%
+\contentsline {section}{\numberline {5}Conclusions}{18}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Progress Summary}{18}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Assessment Against Timeline}{18}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Key Learnings}{19}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Next Steps}{19}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Estimated Total Cost}{20}{subsection.5.5}%
+\contentsline {subsection}{\numberline {5.6}Gantt chart diagrams}{21}{subsection.5.6}%
+\contentsline {subsection}{\numberline {5.7}Plan of Final Report Structure}{22}{subsection.5.7}%
+\contentsline {subsubsection}{\numberline {5.7.1}Proposed Chapter Structure}{22}{subsubsection.5.7.1}%
+\contentsline {section}{References}{24}{section*.16}%
+\contentsline {section}{Appendices}{27}{section*.17}%
+\contentsline {subsection}{Appendix A: Health and Safety Assessment}{27}{section*.18}%
+\contentsline {subsubsection}{Hazard Identification and Risk Assessment}{27}{section*.18}%
+\contentsline {subsubsection}{Hazards and Control Measures}{31}{section*.19}%
+\contentsline {subsection}{Appendix B: Ethics Considerations}{35}{section*.21}%
+\contentsline {subsubsection}{Ethical Review Assessment}{35}{section*.22}%
+\contentsline {subsubsection}{Data Privacy and Protection}{35}{section*.23}%
+\contentsline {subsubsection}{Informed Consent}{35}{section*.24}%
+\contentsline {subsubsection}{Transparency and Explainability}{35}{section*.25}%
+\contentsline {subsubsection}{Testing and Evaluation}{35}{section*.26}%
+\contentsline {subsubsection}{Data Security}{36}{section*.27}%
+\contentsline {subsubsection}{Risk-Benefit Analysis}{36}{section*.28}%
+\contentsline {subsubsection}{Assessment Conclusion}{36}{section*.29}%
+\contentsline {subsection}{Appendix C: Project Meetings Log}{37}{section*.30}%
+\contentsline {subsection}{Appendix D: Initial Email Correspondence}{39}{section*.31}%
+\contentsline {subsection}{Appendix E: Component Specifications}{40}{figure.caption.32}%
+\contentsline {subsection}{Appendix F: Source Code}{44}{section*.44}%
+\contentsline {subsubsection}{Backend Files (Python/Flask)}{44}{section*.45}%
+\contentsline {paragraph}{app.py}{44}{section*.45}%
+\contentsline {paragraph}{send\_verification\_email.py}{44}{section*.45}%
+\contentsline {paragraph}{hello.txt}{45}{section*.45}%
+\newpage 
+\contentsline {subsubsection}{Swift Files}{46}{section*.45}%
+\contentsline {paragraph}{OS App entry point}{46}{section*.46}%
+\contentsline {subparagraph}{AI\_Based\_Smart\_Bulb\_for\_Adaptive\_Home\_AutomationApp.swift}{46}{section*.46}%
+\contentsline {paragraph}{Configuration}{46}{section*.46}%
+\contentsline {subparagraph}{APIConfig.swift}{46}{section*.47}%
+\contentsline {paragraph}{Authentication Flow}{46}{section*.47}%
+\contentsline {subparagraph}{WelcomeView.swift}{46}{section*.48}%
+\contentsline {subparagraph}{RegisterEmailView.swift}{46}{section*.48}%
+\contentsline {subparagraph}{RegisterPasswordView.swift}{47}{section*.48}%
+\contentsline {subparagraph}{LoginView.swift}{47}{section*.48}%
+\contentsline {subparagraph}{ResetPasswordView.swift}{47}{section*.48}%
+\contentsline {paragraph}{Main App Views}{47}{section*.48}%
+\contentsline {subparagraph}{HomeView.swift}{47}{section*.49}%
+\contentsline {subparagraph}{SettingsView.swift}{47}{section*.49}%
+\contentsline {subparagraph}{AddBulbView.swift}{48}{section*.49}%
+\contentsline {subparagraph}{SavedBulbControlView.swift}{48}{section*.49}%
+\contentsline {paragraph}{Core Bluetooth Logic}{48}{section*.49}%
+\contentsline {subparagraph}{BLEManager.swift}{48}{section*.50}%
+\contentsline {paragraph}{UI Components}{48}{section*.50}%
+\contentsline {subparagraph}{BulbUIComponents.swift}{49}{section*.51}%
+\contentsline {subparagraph}{CircularButtonStyle.swift}{49}{section*.51}%
