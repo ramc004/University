@@ -4,6 +4,8 @@ struct HomeView: View {
     @State private var showLogoutPopup = false
     @State private var userBulbs: [SavedBulb] = []
     @State private var isLoadingBulbs = false
+    @State private var serverOnline = true
+    @State private var errorMessage = ""
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
@@ -41,6 +43,7 @@ struct HomeView: View {
                             .font(.system(size: 20, weight: .bold))
                     }
                     .buttonStyle(CircularIconButtonStyle(backgroundColor: .green, foregroundColor: .white))
+                    .disabled(!serverOnline)
                 }
                 .padding(.horizontal)
                 .padding(.top, 30)
@@ -51,9 +54,30 @@ struct HomeView: View {
                         .font(.largeTitle)
                         .bold()
 
-                    // Show current mode
+                    // Show current mode or server status
                     let simulatorMode = UserDefaults.standard.bool(forKey: "simulatorMode")
-                    if UserDefaults.standard.object(forKey: "simulatorMode") == nil || simulatorMode {
+                    if !serverOnline {
+                        HStack(spacing: 6) {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .font(.caption)
+                            Text("Server Offline")
+                                .font(.caption)
+                            Button("Retry") {
+                                loadUserBulbs()
+                            }
+                            .font(.caption)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(6)
+                        }
+                        .foregroundColor(.red)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(Color.red.opacity(0.1))
+                        .cornerRadius(8)
+                    } else if UserDefaults.standard.object(forKey: "simulatorMode") == nil || simulatorMode {
                         HStack(spacing: 6) {
                             Image(systemName: "play.circle.fill")
                                 .font(.caption)
@@ -74,6 +98,22 @@ struct HomeView: View {
                 .padding(.horizontal)
                 .padding(.top, 20)
                 
+                // Error message
+                if !errorMessage.isEmpty {
+                    HStack(spacing: 10) {
+                        Image(systemName: "exclamationmark.circle.fill")
+                            .foregroundColor(.red)
+                        Text(errorMessage)
+                            .font(.caption)
+                            .foregroundColor(.red)
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color.red.opacity(0.1))
+                    .cornerRadius(8)
+                    .padding(.horizontal)
+                }
+                
                 // Loading indicator or bulb list
                 if isLoadingBulbs {
                     Spacer()
@@ -89,27 +129,35 @@ struct HomeView: View {
                 } else if userBulbs.isEmpty {
                     Spacer()
                     VStack(spacing: 20) {
-                        Image(systemName: "lightbulb.slash")
+                        Image(systemName: serverOnline ? "lightbulb.slash" : "wifi.slash")
                             .font(.system(size: 60))
                             .foregroundColor(.gray)
                         
-                        Text("No Bulbs Added Yet")
+                        Text(serverOnline ? "No Bulbs Added Yet" : "Cannot Load Bulbs")
                             .font(.title2)
                             .bold()
                         
-                        let simulatorMode = UserDefaults.standard.bool(forKey: "simulatorMode")
-                        if UserDefaults.standard.object(forKey: "simulatorMode") == nil || simulatorMode {
-                            Text("Tap the + button above to add simulated bulbs for testing")
+                        if !serverOnline {
+                            Text("Server connection required to load your bulbs")
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
                                 .multilineTextAlignment(.center)
                                 .padding(.horizontal, 40)
                         } else {
-                            Text("Tap the + button above to add your first ESP32 smart bulb")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                                .multilineTextAlignment(.center)
-                                .padding(.horizontal, 40)
+                            let simulatorMode = UserDefaults.standard.bool(forKey: "simulatorMode")
+                            if UserDefaults.standard.object(forKey: "simulatorMode") == nil || simulatorMode {
+                                Text("Tap the + button above to add simulated bulbs for testing")
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.horizontal, 40)
+                            } else {
+                                Text("Tap the + button above to add your first ESP32 smart bulb")
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.horizontal, 40)
+                            }
                         }
                     }
                     .frame(maxWidth: .infinity)
@@ -176,6 +224,7 @@ struct HomeView: View {
         }
         
         isLoadingBulbs = true
+        errorMessage = ""
         
         // Get current simulator mode
         var simulatorMode = UserDefaults.standard.bool(forKey: "simulatorMode")
@@ -186,24 +235,17 @@ struct HomeView: View {
         
         print("📱 Loading bulbs - Simulator Mode: \(simulatorMode)")
         
-        guard let url = URL(string: "\(APIConfig.baseURL)/get_bulbs") else { return }
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        // Pass simulator_mode to backend to filter bulbs
-        request.httpBody = try? JSONSerialization.data(withJSONObject: [
+        NetworkManager.shared.post(endpoint: "/get_bulbs", body: [
             "email": userEmail,
             "simulator_mode": simulatorMode
-        ])
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            DispatchQueue.main.async {
-                isLoadingBulbs = false
+        ]) { result in
+            isLoadingBulbs = false
+            
+            switch result {
+            case .success(let json):
+                serverOnline = true
                 
-                if let data = data,
-                   let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-                   let bulbsData = json["bulbs"] as? [[String: Any]] {
-                    
+                if let bulbsData = json["bulbs"] as? [[String: Any]] {
                     userBulbs = bulbsData.compactMap { dict in
                         guard let bulbId = dict["bulb_id"] as? String,
                               let bulbName = dict["bulb_name"] as? String else {
@@ -225,8 +267,17 @@ struct HomeView: View {
                     let modeText = simulatorMode ? "SIMULATED" : "REAL"
                     print("✅ Loaded \(userBulbs.count) \(modeText) bulbs from database")
                 }
+                
+            case .failure(let error):
+                if case .serverUnavailable = error {
+                    serverOnline = false
+                    errorMessage = "Server is offline. Please start the Flask server."
+                } else {
+                    errorMessage = error.userMessage
+                }
+                userBulbs = []
             }
-        }.resume()
+        }
     }
     
     func navigateToRootView() {

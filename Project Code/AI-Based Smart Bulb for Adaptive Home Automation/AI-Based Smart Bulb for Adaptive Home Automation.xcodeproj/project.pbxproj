@@ -29,22 +29,9 @@
 		7E7B2E632ECCF0370042D5D0 /* AI-Based Smart Bulb for Adaptive Home AutomationUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AI-Based Smart Bulb for Adaptive Home AutomationUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		7EF004B22ED3A52E00ADD9BF /* Exceptions for "AI-Based Smart Bulb for Adaptive Home Automation" folder in "AI-Based Smart Bulb for Adaptive Home Automation" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"AI-Based-Smart-Bulb-for-Adaptive-Home-Automation-Info.plist",
-			);
-			target = 7E7B2E4B2ECCF0340042D5D0 /* AI-Based Smart Bulb for Adaptive Home Automation */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		7E7B2E4E2ECCF0340042D5D0 /* AI-Based Smart Bulb for Adaptive Home Automation */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				7EF004B22ED3A52E00ADD9BF /* Exceptions for "AI-Based Smart Bulb for Adaptive Home Automation" folder in "AI-Based Smart Bulb for Adaptive Home Automation" target */,
-			);
 			path = "AI-Based Smart Bulb for Adaptive Home Automation";
 			sourceTree = "<group>";
 		};
