@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from email.message import EmailMessage
 import smtplib
 import sqlite3
@@ -8,9 +9,43 @@ from datetime import datetime
 
 app = Flask(__name__)
 
+# =============================================================================
+# DEPLOYMENT CONFIGURATION
+# =============================================================================
+
+# Check if running on Render.com
+IS_PRODUCTION = os.environ.get('RENDER') == 'true'
+
+# Database configuration - use persistent storage on Render
+if IS_PRODUCTION:
+    DATA_DIR = '/opt/render/project/.data'
+    os.makedirs(DATA_DIR, exist_ok=True)
+    DB_NAME = os.path.join(DATA_DIR, 'users.db')
+    print(f"Production mode: Using database at {DB_NAME}")
+else:
+    DB_NAME = 'users.db'
+    print(f"Development mode: Using database at {DB_NAME}")
+
+# Email configuration from environment variables
+GMAIL_USER = os.environ.get('GMAIL_USER', 'ramcaleb50@gmail.com')
+GMAIL_APP_PASSWORD = os.environ.get('GMAIL_APP_PASSWORD')
+
+# Enable CORS for production (needed for iOS app to connect)
+CORS(app, resources={
+    r"/*": {
+        "origins": "*",
+        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Authorization"]
+    }
+})
+
+# =============================================================================
+# ORIGINAL FUNCTIONS - UPDATED TO USE CONFIGURED DB_NAME
+# =============================================================================
+
 # Initialise the database and create required tables
 def init_db():
-    conn = sqlite3.connect('users.db')
+    conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
     
     # Main user table storing login credentials
@@ -58,6 +93,58 @@ def hash_password(password):
 def verify_password(stored_hash, provided_password):
     return stored_hash == hash_password(provided_password)
 
+# =============================================================================
+# HEALTH CHECK ENDPOINT (for uptime monitoring)
+# =============================================================================
+
+@app.route('/health', methods=['GET'])
+def health_check():
+    """Health check endpoint for uptime monitoring services like UptimeRobot"""
+    try:
+        # Test database connection
+        conn = sqlite3.connect(DB_NAME)
+        conn.execute('SELECT 1')
+        conn.close()
+        
+        return jsonify({
+            "status": "healthy",
+            "database": "connected",
+            "environment": "production" if IS_PRODUCTION else "development",
+            "timestamp": datetime.utcnow().isoformat()
+        }), 200
+    except Exception as e:
+        return jsonify({
+            "status": "unhealthy",
+            "error": str(e),
+            "timestamp": datetime.utcnow().isoformat()
+        }), 500
+
+@app.route('/api/info', methods=['GET'])
+def api_info():
+    """API information endpoint"""
+    return jsonify({
+        "name": "Smart Bulb API",
+        "version": "1.0.0",
+        "environment": "production" if IS_PRODUCTION else "development",
+        "endpoints": {
+            "/health": "Health check",
+            "/api/info": "API information",
+            "/send_code": "Send verification code",
+            "/check_email": "Check email availability",
+            "/register": "User registration",
+            "/login": "User login",
+            "/reset_password": "Password reset",
+            "/add_bulb": "Add bulb to account",
+            "/get_bulbs": "Get user's bulbs",
+            "/update_bulb": "Update bulb details",
+            "/delete_bulb": "Delete bulb from account"
+        }
+    }), 200
+
+# =============================================================================
+# ORIGINAL ENDPOINTS - UPDATED TO USE DB_NAME
+# =============================================================================
+
 # Send a six digit verification code to the user
 @app.route('/send_code', methods=['POST'])
 def send_code():
@@ -75,11 +162,17 @@ def send_code():
     code = code.strip()
 
     try:
-        # Read app password for Gmail from file
-        with open("hello.txt", "r") as f:
-            email_password = f.read().strip()
+        # Get email password from environment variable in production, or file in development
+        if IS_PRODUCTION:
+            if not GMAIL_APP_PASSWORD:
+                return jsonify({'status': 'error', 'message': 'Email service not configured'}), 500
+            email_password = GMAIL_APP_PASSWORD
+        else:
+            # Read app password for Gmail from file (local development only)
+            with open("hello.txt", "r") as f:
+                email_password = f.read().strip()
 
-        email_sender = "ramcaleb50@gmail.com"
+        email_sender = GMAIL_USER
         sender_display_name = "Caleb's Home Automation System"
         # Build email message
         msg = EmailMessage()
@@ -129,7 +222,7 @@ def check_email():
         return jsonify({'status': 'error', 'message': 'Email is required'}), 400
     
     try:
-        conn = sqlite3.connect('users.db')
+        conn = sqlite3.connect(DB_NAME)
         c = conn.cursor()
         c.execute('SELECT id FROM users WHERE email = ?', (email,))
         user = c.fetchone()
@@ -167,7 +260,7 @@ def register():
         return jsonify({'status': 'error', 'message': 'Password must be at least 8 characters'}), 400
     
     try:
-        conn = sqlite3.connect('users.db')
+        conn = sqlite3.connect(DB_NAME)
         c = conn.cursor()
 
         # Prevent duplicate accounts
@@ -207,7 +300,7 @@ def login():
         return jsonify({'status': 'error', 'message': 'Email and password are required'}), 400
     
     try:
-        conn = sqlite3.connect('users.db')
+        conn = sqlite3.connect(DB_NAME)
         c = conn.cursor()
         c.execute('SELECT password_hash FROM users WHERE email = ?', (email,))
         user = c.fetchone()
@@ -247,7 +340,7 @@ def reset_password():
         return jsonify({'status': 'error', 'message': 'Password must be at least 8 characters'}), 400
     
     try:
-        conn = sqlite3.connect('users.db')
+        conn = sqlite3.connect(DB_NAME)
         c = conn.cursor()
 
         # Ensure the account exists
@@ -287,7 +380,7 @@ def add_bulb():
         return jsonify({'status': 'error', 'message': 'Email, bulb_id, and bulb_name are required'}), 400
     
     try:
-        conn = sqlite3.connect('users.db')
+        conn = sqlite3.connect(DB_NAME)
         c = conn.cursor()
 
         # Ensure user exists
@@ -327,7 +420,7 @@ def get_bulbs():
         return jsonify({'status': 'error', 'message': 'Email is required'}), 400
     
     try:
-        conn = sqlite3.connect('users.db')
+        conn = sqlite3.connect(DB_NAME)
         c = conn.cursor()
         
         # Choose real or simulated bulbs based on mode
@@ -383,7 +476,7 @@ def update_bulb():
         return jsonify({'status': 'error', 'message': 'At least one field to update is required'}), 400
     
     try:
-        conn = sqlite3.connect('users.db')
+        conn = sqlite3.connect(DB_NAME)
         c = conn.cursor()
         
         updates = []
@@ -428,7 +521,7 @@ def delete_bulb():
         return jsonify({'status': 'error', 'message': 'Email and bulb_id are required'}), 400
     
     try:
-        conn = sqlite3.connect('users.db')
+        conn = sqlite3.connect(DB_NAME)
         c = conn.cursor()
         c.execute('DELETE FROM bulbs WHERE user_email = ? AND bulb_id = ?', (user_email, bulb_id))
         
@@ -446,10 +539,22 @@ def delete_bulb():
         print(f"Delete bulb error: {e}")
         return jsonify({'status': 'error', 'message': 'Failed to delete bulb'}), 500
 
-# Delete a bulb from the user account
+# =============================================================================
+# APPLICATION STARTUP
+# =============================================================================
+
 if __name__ == "__main__":
     init_db()
     print("\n" + "="*50)
     print("Flask Server Starting...")
+    print(f"Environment: {'PRODUCTION (Render)' if IS_PRODUCTION else 'DEVELOPMENT'}")
+    print(f"Database: {DB_NAME}")
     print("="*50 + "\n")
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    
+    # Get port from environment (Render sets this)
+    port = int(os.environ.get('PORT', 5000))
+    
+    # In production, gunicorn handles the app
+    # This is only for local development
+    if not IS_PRODUCTION:
+        app.run(debug=True, host='0.0.0.0', port=port)
