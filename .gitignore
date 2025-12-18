@@ -1,0 +1,29 @@
+# Backups
+BACKUPS/
+University/BACKUPS/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+
+# Secrets
+hello.txt
+
+# macOS
+.DS_Store
+
+# Reports (PDFs can be large)
+*.pdf
+
+# Large files
+out/
