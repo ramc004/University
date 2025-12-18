@@ -1,10 +1,16 @@
-import Foundation
-
 struct APIConfig {
-    // Change this to your Mac's IP address
-    #if targetEnvironment(simulator)
-    static let baseURL = "http://127.0.0.1:5000"
-    #else
-    static let baseURL = "https://enrique-unspying-addilyn.ngrok-free.dev" // Your Mac's IP
-    #endif
+    // Toggle this for testing production
+    static let useProduction = false
+    
+    static var baseURL: String {
+#if targetEnvironment(simulator)
+        return "http://127.0.0.1:5000"        // Local development
+#else
+#if DEBUG
+        return "https://your-ngrok.ngrok-free.dev"  // ngrok (mobile data)
+#else
+        return "https://year-3-project.onrender.com" // Production
+#endif
+#endif
+    }
 }
