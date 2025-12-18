@@ -16,32 +16,27 @@ IS_PRODUCTION = os.environ.get('RENDER') == 'true'
 
 # Database configuration
 if IS_PRODUCTION:
-    # Use PostgreSQL on Render (free tier)
     DATABASE_URL = os.environ.get('DATABASE_URL')
     if DATABASE_URL:
-        # Use PostgreSQL
         import psycopg2
-        from psycopg2.extras import RealDictCursor
         DB_TYPE = 'postgresql'
         print(f"Production mode: Using PostgreSQL database")
     else:
-        # Fallback to SQLite (but data won't persist on free tier)
         import sqlite3
         DB_TYPE = 'sqlite'
         DB_NAME = 'users.db'
-        print(f"Production mode: Using SQLite (WARNING: Data won't persist on restarts)")
+        print(f"Production mode: Using SQLite (WARNING: Data won't persist)")
 else:
-    # Local development - use SQLite
     import sqlite3
     DB_TYPE = 'sqlite'
     DB_NAME = 'users.db'
     print(f"Development mode: Using SQLite at {DB_NAME}")
 
-# Email configuration from environment variables
+# Email configuration
 GMAIL_USER = os.environ.get('GMAIL_USER', 'ramcaleb50@gmail.com')
 GMAIL_APP_PASSWORD = os.environ.get('GMAIL_APP_PASSWORD')
 
-# Enable CORS for production
+# Enable CORS for all origins (ngrok, localhost, Render)
 CORS(app, resources={
     r"/*": {
         "origins": "*",
@@ -51,7 +46,7 @@ CORS(app, resources={
 })
 
 # =============================================================================
-# DATABASE HELPER FUNCTIONS
+# DATABASE FUNCTIONS
 # =============================================================================
 
 def get_db_connection():
@@ -67,11 +62,10 @@ def get_db_connection():
 def init_db():
     """Initialize database tables"""
     conn = get_db_connection()
+    c = conn.cursor()
     
     if DB_TYPE == 'postgresql':
-        c = conn.cursor()
-        
-        # Main user table
+        # PostgreSQL syntax
         c.execute('''
             CREATE TABLE IF NOT EXISTS users (
                 id SERIAL PRIMARY KEY,
@@ -81,7 +75,6 @@ def init_db():
             )
         ''')
         
-        # Bulbs table
         c.execute('''
             CREATE TABLE IF NOT EXISTS bulbs (
                 id SERIAL PRIMARY KEY,
@@ -96,11 +89,8 @@ def init_db():
                 UNIQUE(user_email, bulb_id)
             )
         ''')
-        
-    else:  # SQLite
-        c = conn.cursor()
-        
-        # Main user table
+    else:
+        # SQLite syntax
         c.execute('''
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -110,7 +100,6 @@ def init_db():
             )
         ''')
         
-        # Bulbs table
         c.execute('''
             CREATE TABLE IF NOT EXISTS bulbs (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -125,6 +114,13 @@ def init_db():
                 UNIQUE(user_email, bulb_id)
             )
         ''')
+        
+        # Add is_simulated column if it doesn't exist (migration)
+        try:
+            c.execute('ALTER TABLE bulbs ADD COLUMN is_simulated INTEGER DEFAULT 0')
+            print("Added is_simulated column to bulbs table")
+        except sqlite3.OperationalError:
+            pass  # Column already exists
     
     conn.commit()
     conn.close()
@@ -180,20 +176,7 @@ def api_info():
         "name": "Smart Bulb API",
         "version": "1.0.0",
         "database": DB_TYPE,
-        "environment": "production" if IS_PRODUCTION else "development",
-        "endpoints": {
-            "/health": "Health check",
-            "/api/info": "API information",
-            "/send_code": "Send verification code",
-            "/check_email": "Check email availability",
-            "/register": "User registration",
-            "/login": "User login",
-            "/reset_password": "Password reset",
-            "/add_bulb": "Add bulb to account",
-            "/get_bulbs": "Get user's bulbs",
-            "/update_bulb": "Update bulb details",
-            "/delete_bulb": "Delete bulb from account"
-        }
+        "environment": "production" if IS_PRODUCTION else "development"
     }), 200
 
 # =============================================================================
@@ -264,6 +247,8 @@ def check_email():
     data = request.get_json()
     email = data.get('email', '').strip()
     
+    print(f"Checking email: {email}")
+    
     if not email:
         return jsonify({'status': 'error', 'message': 'Email is required'}), 400
     
@@ -283,8 +268,10 @@ def check_email():
         conn.close()
         
         if user:
+            print(f"Email {email} is already registered")
             return jsonify({'status': 'success', 'available': False})
         else:
+            print(f"Email {email} is available")
             return jsonify({'status': 'success', 'available': True})
     
     except Exception as e:
@@ -296,6 +283,8 @@ def register():
     data = request.get_json()
     email = data.get('email', '').strip()
     password = data.get('password', '')
+    
+    print(f"Registration attempt for: {email}")
     
     if not email or not password:
         return jsonify({'status': 'error', 'message': 'Email and password are required'}), 400
@@ -316,6 +305,7 @@ def register():
             if cur.fetchone():
                 cur.close()
                 conn.close()
+                print(f"Registration failed: {email} already exists")
                 return jsonify({'status': 'error', 'message': 'Email already registered'}), 409
             
             cur.execute('INSERT INTO users (email, password_hash) VALUES (%s, %s)', (email, password_hash))
@@ -326,13 +316,14 @@ def register():
             c.execute('SELECT id FROM users WHERE email = ?', (email,))
             if c.fetchone():
                 conn.close()
+                print(f"Registration failed: {email} already exists")
                 return jsonify({'status': 'error', 'message': 'Email already registered'}), 409
             
             c.execute('INSERT INTO users (email, password_hash) VALUES (?, ?)', (email, password_hash))
             conn.commit()
         
         conn.close()
-        print(f"User registered: {email}")
+        print(f"User registered successfully: {email}")
         return jsonify({'status': 'success', 'message': 'User registered successfully'})
     
     except Exception as e:
@@ -344,6 +335,8 @@ def login():
     data = request.get_json()
     email = data.get('email', '').strip()
     password = data.get('password', '')
+    
+    print(f"Login attempt for: {email}")
     
     if not email or not password:
         return jsonify({'status': 'error', 'message': 'Email and password are required'}), 400
@@ -364,13 +357,16 @@ def login():
         conn.close()
 
         if not user:
+            print(f"Login failed: {email} not found")
             return jsonify({'status': 'error', 'message': 'Email not registered'}), 404
         
         stored_hash = user[0] if DB_TYPE == 'postgresql' else user['password_hash']
         
         if verify_password(stored_hash, password):
+            print(f"Login successful: {email}")
             return jsonify({'status': 'success', 'message': 'Login successful'})
         else:
+            print(f"Login failed: incorrect password for {email}")
             return jsonify({'status': 'error', 'message': 'Incorrect password'}), 401
     
     except Exception as e:
@@ -382,6 +378,8 @@ def reset_password():
     data = request.get_json()
     email = data.get('email', '').strip()
     new_password = data.get('password', '')
+    
+    print(f"Password reset for: {email}")
     
     if not email or not new_password:
         return jsonify({'status': 'error', 'message': 'Email and password are required'}), 400
@@ -399,6 +397,7 @@ def reset_password():
             if not cur.fetchone():
                 cur.close()
                 conn.close()
+                print(f"Reset failed: {email} not found")
                 return jsonify({'status': 'error', 'message': 'Email not registered'}), 404
             
             cur.execute('UPDATE users SET password_hash = %s WHERE email = %s', (password_hash, email))
@@ -409,12 +408,14 @@ def reset_password():
             c.execute('SELECT id FROM users WHERE email = ?', (email,))
             if not c.fetchone():
                 conn.close()
+                print(f"Reset failed: {email} not found")
                 return jsonify({'status': 'error', 'message': 'Email not registered'}), 404
             
             c.execute('UPDATE users SET password_hash = ? WHERE email = ?', (password_hash, email))
             conn.commit()
         
         conn.close()
+        print(f"Password reset successful: {email}")
         return jsonify({'status': 'success', 'message': 'Password reset successful'})
     
     except Exception as e:
@@ -429,6 +430,8 @@ def add_bulb():
     bulb_name = data.get('bulb_name', '').strip()
     room_name = data.get('room_name', '').strip()
     is_simulated = data.get('is_simulated', False)
+    
+    print(f"Adding bulb '{bulb_name}' for {user_email} (simulated: {is_simulated})")
     
     if not user_email or not bulb_id or not bulb_name:
         return jsonify({'status': 'error', 'message': 'Email, bulb_id, and bulb_name are required'}), 400
@@ -448,6 +451,7 @@ def add_bulb():
             if cur.fetchone():
                 cur.close()
                 conn.close()
+                print(f"Bulb already added: {bulb_name}")
                 return jsonify({'status': 'error', 'message': 'Bulb already added'}), 409
             
             cur.execute('INSERT INTO bulbs (user_email, bulb_id, bulb_name, room_name, is_simulated) VALUES (%s, %s, %s, %s, %s)',
@@ -464,6 +468,7 @@ def add_bulb():
             c.execute('SELECT id FROM bulbs WHERE user_email = ? AND bulb_id = ?', (user_email, bulb_id))
             if c.fetchone():
                 conn.close()
+                print(f"Bulb already added: {bulb_name}")
                 return jsonify({'status': 'error', 'message': 'Bulb already added'}), 409
             
             c.execute('INSERT INTO bulbs (user_email, bulb_id, bulb_name, room_name, is_simulated) VALUES (?, ?, ?, ?, ?)',
@@ -471,6 +476,7 @@ def add_bulb():
             conn.commit()
         
         conn.close()
+        print(f"Bulb added: {bulb_name}")
         return jsonify({'status': 'success', 'message': 'Bulb added successfully'})
     
     except Exception as e:
@@ -490,13 +496,11 @@ def get_bulbs():
         conn = get_db_connection()
         
         if simulator_mode:
-            query = '''SELECT bulb_id, bulb_name, room_name, added_at, last_seen, is_simulated 
-                      FROM bulbs WHERE user_email = {} AND is_simulated = 1 
-                      ORDER BY added_at DESC'''
+            query = 'SELECT bulb_id, bulb_name, room_name, added_at, last_seen, is_simulated FROM bulbs WHERE user_email = {} AND is_simulated = 1 ORDER BY added_at DESC'
+            print(f"Simulator Mode ON - Loading SIMULATED bulbs for {user_email}")
         else:
-            query = '''SELECT bulb_id, bulb_name, room_name, added_at, last_seen, is_simulated 
-                      FROM bulbs WHERE user_email = {} AND (is_simulated = 0 OR is_simulated IS NULL)
-                      ORDER BY added_at DESC'''
+            query = 'SELECT bulb_id, bulb_name, room_name, added_at, last_seen, is_simulated FROM bulbs WHERE user_email = {} AND (is_simulated = 0 OR is_simulated IS NULL) ORDER BY added_at DESC'
+            print(f"Real Hardware Mode - Loading REAL bulbs for {user_email}")
         
         if DB_TYPE == 'postgresql':
             query = query.format('%s')
@@ -521,8 +525,10 @@ def get_bulbs():
                 'last_seen': str(row[4]),
                 'is_simulated': is_sim
             })
+            print(f"  - {row[1]} (simulated: {is_sim})")
         
         conn.close()
+        print(f"Retrieved {len(bulbs)} bulbs (simulator_mode={simulator_mode})")
         return jsonify({'status': 'success', 'bulbs': bulbs})
     
     except Exception as e:
@@ -562,7 +568,7 @@ def update_bulb():
         params.extend([user_email, bulb_id])
         
         if DB_TYPE == 'postgresql':
-            placeholders = [f'%s' for _ in range(len(params))]
+            placeholders = ['%s' for _ in range(len(params))]
             update_str = ', '.join([u.format(placeholders[i]) for i, u in enumerate(updates)])
             query = f"UPDATE bulbs SET {update_str} WHERE user_email = %s AND bulb_id = %s"
             
@@ -586,6 +592,7 @@ def update_bulb():
         if rowcount == 0:
             return jsonify({'status': 'error', 'message': 'Bulb not found'}), 404
         
+        print(f"Bulb updated: {bulb_id}")
         return jsonify({'status': 'success', 'message': 'Bulb updated successfully'})
     
     except Exception as e:
@@ -621,6 +628,7 @@ def delete_bulb():
         if rowcount == 0:
             return jsonify({'status': 'error', 'message': 'Bulb not found'}), 404
         
+        print(f"Bulb deleted: {bulb_id}")
         return jsonify({'status': 'success', 'message': 'Bulb deleted successfully'})
     
     except Exception as e:
@@ -640,6 +648,4 @@ if __name__ == "__main__":
     print("="*50 + "\n")
     
     port = int(os.environ.get('PORT', 5000))
-    
-    if not IS_PRODUCTION:
-        app.run(debug=True, host='0.0.0.0', port=port)
+    app.run(debug=True, host='0.0.0.0', port=port)
