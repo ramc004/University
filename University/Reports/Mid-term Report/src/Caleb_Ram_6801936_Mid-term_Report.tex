@@ -1,0 +1,1417 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[a4paper,margin=2.5cm,bottom=3cm]{geometry}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[colorlinks=true,allcolors=black]{hyperref}
+\usepackage{setspace}
+\usepackage[british]{babel}
+\usepackage{tocloft}
+\usepackage{fancyhdr}
+\usepackage{datetime}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{chngcntr}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage[printonlyused]{acronym}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+\usepackage{microtype}
+\raggedright
+
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{2em}{1em}
+\titlespacing*{\subsection}{0pt}{1.5em}{0.75em}
+\titlespacing*{\subsubsection}{0pt}{1.25em}{0.5em}
+
+\setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
+
+\newdateformat{ukdate}{%
+    \dayofweekname{\THEDAY}{\THEMONTH}{\THEYEAR}~\ordinaldate{\THEDAY}~\monthname[\THEMONTH]~\THEYEAR
+}
+
+\newdate{projectstart}{02}{10}{2025}
+\newdate{midtermdue}{02}{01}{2026}
+
+\pagestyle{fancy}
+\fancypagestyle{plain}{\pagestyle{fancy}}
+\fancyhf{}
+\fancyfoot[L]{\raisebox{6pt}{Caleb Ram}}
+\fancyfoot[C]{\raisebox{-12pt}{\thepage}}
+\fancyfoot[R]{\raisebox{6pt}{Started: \displaydate{projectstart}, Due: \displaydate{midtermdue}}\\[6pt]\hyperlink{TOC}{\fbox{\tiny \textsf{Back to TOC}}}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\setlength{\footskip}{50pt}
+
+\renewcommand{\cftsecfont}{\normalfont}
+\renewcommand{\cftsubsecfont}{\normalfont}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsecpagefont}{\normalfont}
+\renewcommand{\cftsubsecpagefont}{\normalfont}
+
+\renewcommand{\listfigurename}{Figures}
+\newlength{\mylen}
+\renewcommand{\cftfigpresnum}{\figurename\enspace}
+\renewcommand{\cftfigaftersnum}{:}
+\settowidth{\mylen}{\cftfigpresnum\cftfigaftersnum}
+\addtolength{\cftfignumwidth}{\mylen}
+\setlength{\cftfigindent}{4.5em}
+\renewcommand{\cftfigfont}{\normalfont\small}
+\renewcommand{\cftfigpagefont}{\normalfont\small}
+
+\counterwithin{figure}{subsection}
+\renewcommand{\thefigure}{\thesubsection.\arabic{figure}}
+\makeatletter
+\@addtoreset{figure}{subsection}
+\makeatother
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+    backgroundcolor=\color{gray!10},
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!60!black},
+    stringstyle=\color{red}
+}
+
+\begin{document}
+    \onehalfspacing
+
+    \begin{titlepage}
+        \thispagestyle{fancy}
+        \centering
+        \vspace*{\fill}
+        {\Huge \textbf{AI-Based Smart Bulb for Adaptive Home Automation}}\\[0.8cm]
+        {\LARGE \textbf{Mid-Term Progress Report}}\\[1.5cm]
+        {\Large by Caleb Ram}\\[0.5cm]
+        {\large Student ID: 6801936}\\[0.3cm]
+        {\large Supervisor: Dr Ahmed Elzanaty}\\[0.5cm]
+        {\large Started: \displaydate{projectstart}}\\[0.3cm]
+        {\large Submission: \ukdate\today}\\[2cm]
+        {\large MEng in Electronic Engineering with Computer Systems}\\[0.3cm]
+        {\large Faculty of Engineering and Physical Sciences}\\[0.3cm]
+        {\large University of Surrey}\\[0.5cm]
+        \vspace*{\fill}
+    \end{titlepage}
+
+    \clearpage
+    \pagenumbering{arabic}
+    \setcounter{page}{1}
+
+    \thispagestyle{fancy}
+    \phantomsection
+    \section*{Executive Summary}
+    \addcontentsline{toc}{section}{Executive Summary}
+
+    This report presents the mid-term progress of developing an \ac{AI}-based smart bulb system for adaptive home automation. The project aims to create a complete smart lighting solution incorporating custom \ac{ESP}32 hardware, embedded programming, and on-device machine learning that learns user lighting preferences and adapts to daily routines without cloud connectivity.
+
+    The system’s core innovation lies in lightweight TinyML that processes user behaviour patterns locally on the \ac{ESP}32 microcontroller, learning preferred brightness levels, colour temperatures, and timing patterns for different times of day and activities. The \ac{AI} model detects routines such as morning wake-up times, evening wind-down periods, and room occupancy patterns, automatically adjusting lighting without manual intervention. Integration with Apple HealthKit enables access to sleep data with user consent, correlating lighting preferences with sleep quality and automatically triggering gradual dimming before detected bedtime and natural sunrise simulation for wake-up.
+
+    Completed work to date includes a fully functional Swift iOS application deployed to physical devices. Features include user authentication with email verification \href{run:/Users/calebram/Desktop/University/OneDrive - University of Surrey/Desktop/Year 3 Project/Reports/Mid-term Report/src/Project Code/AI-Based Smart Bulb for Adaptive Home Automation/AI-Based Smart Bulb for Adaptive Home Automation/RegisterEmailView.swift}{[see RegisterEmailView.swift]}, Bluetooth Low Energy device discovery and connection management  \href{run:/Users/calebram/Desktop/University/OneDrive - University of Surrey/Desktop/Year 3 Project/Reports/Mid-term Report/src/Project Code/AI-Based Smart Bulb for Adaptive Home Automation/AI-Based Smart Bulb for Adaptive Home Automation/BLEManager.swift}{[see BLEManager.swift]}, and real-time control of power, brightness, \ac{RGB} colour, and four lighting effects. A Flask backend provides secure user management and device storage. The system implements dual-mode architecture supporting both physical hardware and software simulation for testing. The \ac{BLE} communication protocol is fully specified for bidirectional communication between app and hardware, with characteristic UUIDs defined for control commands and status monitoring.
+
+    Remaining work includes the \ac{ESP}32 firmware implementing \ac{BLE} services and TinyML model for on-device learning, \ac{AI} algorithm development for pattern recognition and behaviour prediction, physical hardware assembly including \ac{LED} drivers and thermal management, housing design, HealthKit integration for sleep-aware automation, comprehensive testing of adaptive learning accuracy, and system integration. Multi-room coordination and advanced automation rules will be added if time permits.
+
+    The project demonstrates practical application of embedded machine learning, \ac{IoT} communications, behavioural pattern recognition, and privacy-preserving \ac{AI} with emphasis on local processing, user autonomy, and intelligent automation.
+
+    \newpage
+
+    \vspace{0.4cm}
+    \phantomsection
+    \hypertarget{TOC}{}
+    \tableofcontents
+
+    \clearpage
+    \phantomsection
+    \addcontentsline{toc}{section}{List of Figures}
+    \listoffigures
+
+    \clearpage
+    \phantomsection
+    \addcontentsline{toc}{section}{List of Tables}
+    \listoftables
+
+    \clearpage
+    \phantomsection
+    \addcontentsline{toc}{section}{Acronyms}
+    \section*{Acronyms}
+    \begin{acronym}[HTTPS]
+        \acro{ADC}{Analogue-to-Digital Converter}
+        \acro{AI}{Artificial Intelligence}
+        \acro{API}{Application Programming Interface}
+        \acro{BLE}{Bluetooth Low Energy}
+        \acro{CCT}{Correlated Colour Temperature}
+        \acro{COB}{Chip-on-Board}
+        \acro{CRI}{Colour Rendering Index}
+        \acro{CSRF}{Cross-Site Request Forgery}
+        \acro{DAC}{Digital-to-Analogue Converter}
+        \acro{DC}{Direct Current}
+        \acro{ESP}{Espressif Systems}
+        \acro{GATT}{Generic Attribute Profile}
+        \acro{GDPR}{General Data Protection Regulation}
+        \acro{GPIO}{General Purpose Input/Output}
+        \acro{HTTP}{Hypertext Transfer Protocol}
+        \acro{HTTPS}{Hypertext Transfer Protocol Secure}
+        \acro{IDE}{Integrated Development Environment}
+        \acro{IoT}{Internet of Things}
+        \acro{LED}{Light-Emitting Diode}
+        \acro{ML}{Machine Learning}
+        \acro{MQTT}{Message Queuing Telemetry Transport}
+        \acro{OS}{Operating System}
+        \acro{PCB}{Printed Circuit Board}
+        \acro{PETG}{Polyethylene Terephthalate Glycol}
+        \acro{PWA}{Progressive Web Application}
+        \acro{PWM}{Pulse Width Modulation}
+        \acro{RAM}{Random Access Memory}
+        \acro{RCD}{Residual Current Device}
+        \acro{RGB}{Red Green Blue}
+        \acro{SMTP}{Simple Mail Transfer Protocol}
+        \acro{SPI}{Serial Peripheral Interface}
+        \acro{SQL}{Structured Query Language}
+        \acro{SRAM}{Static Random Access Memory}
+        \acro{SSL}{Secure Sockets Layer}
+        \acro{TLS}{Transport Layer Security}
+        \acro{UART}{Universal Asynchronous Receiver-Transmitter}
+        \acro{UI}{User Interface}
+        \acro{URL}{Uniform Resource Locator}
+        \acro{USB}{Universal Serial Bus}
+        \acro{UV}{Ultraviolet}
+        \acro{XSS}{Cross-Site Scripting}
+    \end{acronym}
+
+    \clearpage
+    \phantomsection
+
+    \newpage
+
+    \phantomsection
+    \section{Introduction}
+
+    \subsection{Project Motivation}
+
+    Modern home automation systems often require manual input to control lighting, relying on preset schedules or basic motion detection. These approaches fail to adapt to dynamic human behaviour and circadian rhythms, leading to inefficient energy use and suboptimal lighting that can negatively affect sleep quality and wellbeing \hyperlink{cite:cajochen2011}{\hypertarget{ref:cajochen2011-1}{[1]}}. Commercial smart bulbs frequently require cloud connectivity, raising privacy concerns and dependency on internet access \hyperlink{cite:zeng2017}{\hypertarget{ref:zeng2017-1}{[2]}}.
+
+    Light exposure strongly influences circadian rhythms. Inappropriate evening lighting suppresses melatonin, delaying sleep onset and reducing sleep quality \hyperlink{cite:chang2015}{\hypertarget{ref:chang2015-1}{[3]}}. Gradual light simulating natural sunrise can enhance morning alertness \hyperlink{cite:moorede2020}{\hypertarget{ref:moorede2020-1}{[4]}}. Most individuals lack automated systems that adjust lighting based on personal schedules and physiology.
+
+    This project develops a smart bulb system that learns user behaviour through on-device \ac{AI}, integrates with health platforms to access sleep data, and operates autonomously without cloud dependency. Using TinyML, all data is processed locally to preserve privacy while supporting healthy circadian rhythms and energy efficiency \hyperlink{cite:warden2019}{\hypertarget{ref:warden2019-1}{[5]}}.
+
+    The project also addresses \ac{IoT} challenges including thermal management of high-power LEDs, electrical safety, wireless protocol implementation, and efficient embedded \ac{AI} design, providing end-to-end experience from hardware through firmware to cross-platform applications.
+
+    \newpage
+
+    \subsection{Aims and Objectives}
+
+    The primary aim is to design, build, and evaluate a functional \ac{AI}-based smart bulb prototype that adapts lighting to user behaviour and health data while maintaining local data processing.
+    \subsubsection{Primary Objectives}
+
+    \textbf{Hardware Development:} Design and construct a smart bulb system with \ac{LED} elements, power management, wireless modules, and safe housing. This involves teardown of commercial products or full custom assembly, focusing on thermal management and electrical safety.
+
+    \textbf{Embedded Systems Implementation:} Develop \ac{ESP}32 firmware to control \ac{LED} brightness and colour, implement Wi-Fi and Bluetooth protocols, manage power, and execute lightweight machine learning for behaviour recognition, ensuring real-time responsiveness \hyperlink{cite:espressif2023}{\hypertarget{ref:espressif2023-1}{[6]}}.
+
+    \textbf{\ac{AI} and Learning System:} Implement TinyML on-device to identify user patterns like wake times, bedtimes, and room usage, adapting automatically without external servers \hyperlink{cite:banbury2021}{\hypertarget{ref:banbury2021-1}{[7]}}.
+
+    \textbf{Health Data Integration:} Build iOS app using Swift and HealthKit to access sleep data with consent, triggering wind-down dimming and morning light simulation, ensuring privacy compliance \hyperlink{cite:apple2023}{\hypertarget{ref:apple2023-1}{[8]}}.
+
+    \textbf{Cross-Platform Interface Development:} Create intuitive interfaces for iOS and web-based \ac{PWA}, enabling real-time device control and preference configuration via protocols like WebSockets \hyperlink{cite:grigorik2013}{\hypertarget{ref:grigorik2013-1}{[9]}}.
+
+    \newpage
+
+    \subsubsection{Secondary Objectives}
+
+    \textbf{Enhanced \ac{AI} Capabilities:} Extend learning to predict lighting needs based on context and implement reinforcement learning from user feedback \hyperlink{cite:sutton2018}{\hypertarget{ref:sutton2018-1}{[10]}}.
+
+    \textbf{Multi-Room Coordination:} Enable multiple bulbs to coordinate lighting across rooms, maintaining consistent preferences.
+
+    \textbf{Advanced Health Features:} Integrate additional metrics (e.g., activity, heart rate) to optimise lighting and alertness via circadian models \hyperlink{cite:skeldon2017}{\hypertarget{ref:skeldon2017-1}{[11]}}.
+
+    \subsection{Project Scope and Constraints}
+
+    The project covers hardware design, software implementation, testing, and evaluation. The prototype demonstrates all primary features with documentation of design choices and performance.
+
+    Constraints include:
+
+    \textbf{Hardware:} Use readily available components within budget; prototyping boards and 3D-printed housing may limit material options and thermal solutions.
+
+    \textbf{Safety:} Maintain isolation between mains and low-voltage circuits. Follow safety principles though full regulatory testing is out of scope \hyperlink{cite:iec60598}{\hypertarget{ref:iec60598-1}{[12]}}.
+
+    \textbf{Computational Limitations:} Algorithms must run within \ac{ESP}32 resources (dual-core 240 MHz, 520 KB \ac{RAM}), favouring lightweight models \hyperlink{cite:ray2019}{\hypertarget{ref:ray2019-1}{[13]}}.
+
+    \textbf{Platform:} iOS HealthKit integration; web interface for Android without health data. Cross-platform differences reflect real \ac{API} constraints.
+
+    \textbf{Time Constraints:} Project must fit within academic year; secondary objectives are optional enhancements.
+
+
+    \phantomsection
+    \section{Literature Survey and Technology Review}
+
+    \subsection{Smart Lighting Systems and Home Automation}
+
+    Smart lighting has evolved through \ac{LED} technology, wireless communications, and embedded computing. Traditional lighting relied on switches or timers, while modern smart bulbs integrate sensors, processors, and connectivity for automated behaviour \hyperlink{cite:guo2010}{\hypertarget{ref:guo2010-1}{[14]}}.
+
+    Commercial platforms like Philips Hue, LIFX, and Nanoleaf employ hub-based or direct Wi-Fi architectures, offering dimming, colour adjustment, scheduling, and smartphone control \hyperlink{cite:gomez2012}{\hypertarget{ref:gomez2012-1}{[15]}}. Most require cloud connectivity and lack transparent on-device learning.
+
+    Research highlights that successful smart home systems balance automation with user control, avoiding excessive complexity and loss of agency \hyperlink{cite:caird2008}{\hypertarget{ref:caird2008-1}{[16]}}. This guides the project philosophy: learned behaviours remain modifiable and user-transparent.
+
+    \subsection{\ac{LED} Technology and Driver Circuits}
+
+    LEDs offer high efficiency, long lifetime, compact size, and precise controllability \hyperlink{cite:schubert2006}{\hypertarget{ref:schubert2006-1}{[17]}}. Unlike incandescent bulbs, LEDs support tunable white or full \ac{RGB} colour through multi-channel designs.
+
+    Drivers must supply constant current for stable output, with switching-mode supplies preferred for heat management \hyperlink{cite:erickson2007}{\hypertarget{ref:erickson2007-1}{[18]}}. Pulse-width modulation enables flicker-free dimming, and thermal management is critical; junction temperature affects efficiency, colour, and lifetime. 3D-printed housings require careful design or metal inserts for adequate heat dissipation \hyperlink{cite:christensen2009}{\hypertarget{ref:christensen2009-1}{[19]}}.
+
+    \newpage
+
+    \subsection{Embedded Systems and \ac{IoT} Platforms}
+
+    \ac{ESP}32 is a popular \ac{IoT} platform combining dual-core processing, Wi-Fi, Bluetooth, and rich peripherals. ESP-IDF provides a real-time development environment supporting multithreading \hyperlink{cite:maier2017}{\hypertarget{ref:maier2017-1}{[20]}}.
+
+    Wi-Fi offers high bandwidth but higher power consumption; \ac{BLE} is lower power with reduced range. \ac{MQTT} provides lightweight publish-subscribe messaging suitable for constrained devices \hyperlink{cite:hunkeler2008}{\hypertarget{ref:hunkeler2008-1}{[21]}}. FreeRTOS ensures concurrent task execution for time-critical operations like communication and dimming \hyperlink{cite:barry2009}{\hypertarget{ref:barry2009-1}{[22]}}.
+
+    \subsection{Machine Learning on Embedded Devices}
+
+    TinyML enables machine learning on microcontrollers with limited memory and processing, using model compression, quantisation, and efficient algorithms \hyperlink{cite:warden2019}{\hypertarget{ref:warden2019-2}{[5]}}.
+
+    Time-series analysis, clustering, simple neural networks, decision trees, and online learning are suitable for smart bulb pattern recognition \hyperlink{cite:gama2014}{\hypertarget{ref:gama2014-1}{[23]}}. Recurring user patterns like wake times, bedtimes, and occupancy can be detected via lightweight statistical methods or hybrid rule-based approaches \hyperlink{cite:rabiner1989}{\hypertarget{ref:rabiner1989-1}{[24]}}.
+
+    \subsection{Health Data Integration and Privacy}
+
+    HealthKit provides APIs for sleep and fitness data, requiring explicit user consent \hyperlink{cite:apple2023}{\hypertarget{ref:apple2023-2}{[8]}}. Privacy frameworks like \ac{GDPR} demand data minimisation and local processing \hyperlink{cite:voigt2017}{\hypertarget{ref:voigt2017-1}{[25]}}. Techniques like federated learning and differential privacy can enhance protection, but on-device learning already reduces exposure risk \hyperlink{cite:mcmahan2017}{\hypertarget{ref:mcmahan2017-1}{[26]}}.
+
+    \subsection{Circadian Rhythm and Lighting Effects}
+
+    Light entrains circadian rhythms; evening blue light delays sleep, morning blue light improves alertness \hyperlink{cite:cajochen2011}{\hypertarget{ref:cajochen2011-2}{[1]}}. Colour temperature affects biological responses: warm white (2700–3000K) for evening, cool white (5000–6500K) for morning \hyperlink{cite:souman2018}{\hypertarget{ref:souman2018-1}{[27]}}. Gradual dimming or brightening supports sleep transitions and natural awakening \hyperlink{cite:moorede2020}{\hypertarget{ref:moorede2020-2}{[4]}}.
+
+    \subsection{Summary of Key Findings}
+
+    Smart lighting is mature commercially but often lacks on-device learning and relies on the cloud. Health data integration for adaptive lighting is emerging with limited local processing solutions. Feasibility is supported by \ac{ESP}32, embedded frameworks, TinyML, and HealthKit APIs. Key challenges include thermal management, embedded algorithm design, and user interface transparency.
+
+    This project addresses these gaps by combining on-device \ac{AI}, health integration, and privacy-preserving architecture, offering a practical system demonstrating adaptive, user-centric home automation.
+
+    \phantomsection
+    \section{Requirements Analysis and System Design}
+
+    \subsection{Functional Requirements}
+
+    \subsubsection{Core Functional Requirements}
+
+    \textbf{FR1 - Basic Lighting Control:} Adjustable \ac{LED} brightness 0–100\% with smooth dimming; colour temperature 2700–6500K with 100K granularity.
+
+    \textbf{FR2 - Wireless Connectivity:} Support Wi-Fi (IEEE 802.11 b/g/n) and \ac{BLE} for control. Initial setup via \ac{BLE} when Wi-Fi is unconfigured.
+
+    \textbf{FR3 - Schedule Management:} Users define time-based schedules with brightness and colour for different days.
+
+    \textbf{FR4 - Behaviour Learning:} Automatically detect recurring patterns in manual adjustments and room usage without explicit training.
+
+    \textbf{FR5 - Adaptive Automation:} Adjust lighting automatically based on learned patterns; changes gradual and non-disruptive.
+
+    \textbf{FR6 - Health Data Integration:} Access HealthKit sleep data with consent to trigger wind-down and wake-up modes.
+
+    \textbf{FR7 - Wind-Down Mode:} Gradually reduce brightness and shift to warm white before sleep (default 30 min).
+
+    \textbf{FR8 - Wake-Up Mode:} Gradually increase brightness and shift to cool white before wake time (default 20 min).
+
+    \textbf{FR9 - Manual Override:} All automation overridable without affecting long-term learning.
+
+    \textbf{FR10 - Cross-Platform Control:} Control via iOS app and web \ac{PWA}; feature parity except HealthKit on iOS.
+
+    \subsubsection{Additional Functional Requirements}
+
+    \textbf{FR11 - Away Mode:} Simulate occupancy using learned patterns with random variation.
+
+    \textbf{FR12 - Energy Monitoring:} Track and report energy usage for user insights.
+
+    \textbf{FR13 - Local Operation:} Core functions operate without internet, using local network only.
+
+    \subsection{Non-Functional Requirements}
+
+    \subsubsection{Performance Requirements}
+
+    \textbf{NFR1 - Response Time:} Commands produce visible changes within 200 ms.
+
+    \textbf{NFR2 - Dimming Smoothness:} Smooth brightness and colour transitions; \newline \ac{PWM} $>$500 Hz.
+
+    \textbf{NFR3 - Learning Speed:} Daily patterns detected within a week; \newline less frequent patterns over time.
+
+    \textbf{NFR4 - Power Efficiency:} $\ge 80\%$ conversion efficiency; standby $\le 0.5$ W.
+
+    \subsubsection{Reliability and Safety Requirements}
+
+    \textbf{NFR5 - Electrical Safety:} \newline Minimum 4mm creepage, grounded or insulated exposed parts.
+
+    \textbf{NFR6 - Thermal Protection:} \ac{LED} junction temperature below max; \newline thermal throttling when needed.
+
+    \textbf{NFR7 - Fault Tolerance:} Recover from failures automatically; \newline persistent storage preserves models and settings.
+
+    \textbf{NFR8 - Data Privacy:} All data stored locally; \newline external transmission requires explicit consent.
+
+    \subsubsection{Usability Requirements}
+
+    \textbf{NFR9 - Setup Simplicity:} Initial setup completable within 5 minutes; \newline no router changes required.
+
+    \textbf{NFR10 - Interface Intuitiveness:} Adjustments achievable within two taps/clicks; platform-specific guidelines followed.
+
+    \textbf{NFR11 - Automation Transparency:} Users can view learned patterns and understand automated actions in natural language.
+
+    \subsection{System Architecture}
+
+    The architecture separates hardware, firmware, and applications with clear interfaces for inter-layer communication.
+
+    \subsubsection{Hardware Architecture}
+
+    \ac{ESP}32 microcontroller manages \ac{LED} drivers, wireless communications, and power interfaces. AC input 110–240V with isolated supply for LEDs (12/24V) and 3.3V control.
+
+    \ac{LED} drivers use constant-current buck converters with \ac{PWM} from \ac{ESP}32 \ac{GPIO}. Separate channels control warm and cool white LEDs; \ac{RGB} extension possible.
+
+    Thermal management via aluminium heat sink and convection-optimized 3D-printed housing. Temperature sensor enables firmware-based thermal protection.
+
+    Wi-Fi and \ac{BLE} integrated, with optional external antenna for development.
+
+    \subsubsection{Firmware Architecture}
+
+    Multi-threaded FreeRTOS design separates tasks for communication, learning, dimming, and sensors. Time-critical tasks preempt background ones.
+
+    Communication task manages Wi-Fi/\ac{BLE} and \ac{MQTT}/\ac{BLE} protocols. State changes propagate through internal events.
+
+    Learning task updates pattern models during low-priority intervals; persistent storage preserves models.
+
+    Dimming task generates \ac{PWM} for smooth transitions; anti-flicker algorithms maintain stability.
+
+    \subsubsection{Application Architecture}
+
+    iOS app uses SwiftUI with HealthKit integration. Communication via \ac{BLE} for setup and Wi-Fi for control; mDNS for automatic device discovery.
+
+    Web \ac{PWA} built with React, supporting responsive interfaces and real-time updates via WebSocket.
+
+    \phantomsection
+    \section{Implementation and Progress}
+
+    \subsection{Hardware Development}
+
+    Component selection and procurement are complete. The \ac{ESP}32 Nano S3 module offers a 240 MHz dual core processor with ample \ac{SRAM} and flash for TinyML workloads alongside \ac{BLE} and WiFi \hyperlink{cite:espressif2023}{\hypertarget{ref:espressif2023-1}{[6]}}. Its integrated wireless features keep the overall board design simple and help manage power use.
+
+    LEDs are Chip-on-Board modules with high \ac{CRI} ($>$95) and dual warm/cool channels (2700K–6000K) at 300mA/24V, requiring constant-current drivers. Power management uses an isolated 12V/20W AC-\ac{DC} converter (84\% efficiency, 3kVAC isolation), simplifying mains design while ensuring safety. Thermal simulations indicate junction temperatures below 85°C with aluminium heat sink and convection; housing design optimises heat dissipation and airflow.
+
+    \subsection{Firmware Development}
+
+    Firmware uses ESP-IDF with FreeRTOS. Multi-task architecture separates \ac{BLE}, Wi-Fi, \ac{LED} control, and \ac{AI} learning. \ac{BLE} follows \ac{GATT} with custom UUIDs for power, brightness, \ac{RGB}, mode selection, and status \href{run:/Users/calebram/Desktop/University/OneDrive - University of Surrey/Desktop/Year 3 Project/Reports/Mid-term Report/src/Project Code/AI-Based Smart Bulb for Adaptive Home Automation/AI-Based Smart Bulb for Adaptive Home Automation/BLEManager.swift}{[BLEManager.swift]}.
+
+    \ac{LED} control uses high-frequency \ac{PWM} ($>$1kHz) for smooth dimming and flicker-free output, with thermal protection reducing output if limits are approached. \ac{AI} learning combines time-series analysis and lightweight neural networks to detect recurring patterns (wake/sleep times, occupancy), updating models continuously without manual input.
+
+    \subsection{iOS Application Development}
+
+    The SwiftUI iOS app follows MVVM with Combine for reactive binding. User authentication includes secure registration with email verification \href{run:/Users/calebram/Desktop/University/OneDrive - University of Surrey/Desktop/Year 3 Project/Reports/Mid-term Report/src/Project Code/AI-Based Smart Bulb for Adaptive Home Automation/AI-Based Smart Bulb for Adaptive Home Automation/RegisterEmailView.swift}{[RegisterEmailView.swift]} and bcrypt password storage; login maintains session tokens.
+
+    \ac{BLE} integration via CoreBluetooth enables device discovery and connection management \href{run:/Users/calebram/Desktop/University/OneDrive - University of Surrey/Desktop/Year 3 Project/Reports/Mid-term Report/src/Project Code/AI-Based Smart Bulb for Adaptive Home Automation/AI-Based Smart Bulb for Adaptive Home Automation/BLEManager.swift}{[BLEManager.swift]}. Simulator mode allows testing without hardware. \ac{UI} supports power, brightness, \ac{RGB}, and effects (solid, fade, rainbow, pulse) with real-time state sync. Settings allow preference configuration, automation rules, and diagnostics.
+
+    \subsection{Backend Development}
+
+    Flask backend manages users and devices using SQLite with SQLAlchemy. RESTful \ac{API} endpoints implement JWT authentication; email verification integrates \ac{SMTP}. Database normalises accounts, device registrations, and logs with referential integrity. Security measures include input validation, \ac{SQL} injection/\ac{XSS}/\ac{CSRF} protection, bcrypt hashing, \ac{HTTPS}, and rate limiting. Regular backups ensure user control of data.
+
+    \newpage
+
+    \subsection{Testing and Validation}
+
+    Testing spans all components. iOS testing verifies \ac{BLE}, \ac{UI}, and authentication on physical devices; simulator enables continuous integration. Backend unit and integration tests cover \ac{API} endpoints, database operations, and registration/device pairing flows. Security testing validates protections against vulnerabilities.
+
+    \subsection{Current Status and Milestones}
+
+    Progress aligns with the timeline, with component selection, iOS app core development, and simulator testing completed. Thermal management challenges addressed through component choice and housing design. Dual-mode architecture supports both simulation and real hardware, accelerating development.
+
+    Risk assessments ensure electrical safety via certified modules and isolation; thermal performance confirmed via simulation and prototype testing. The project is on track to deliver a functional adaptive smart bulb system integrating firmware, hardware, \ac{AI} learning, and user applications.
+
+    \newpage
+
+    \phantomsection
+    \section{Conclusions}
+
+    \setcounter{table}{0}
+    \renewcommand{\thetable}{\arabic{table}}
+
+    \subsection{Progress Summary}
+
+    Significant progress has been made in the first term. Hardware selection and procurement are complete, and initial \ac{ESP}32 bulb planning has highlighted thermal management requirements.
+
+    Firmware development established core \ac{LED} control and Bluetooth communication, with a simulator mode enabling iOS app testing before physical hardware. Preliminary pattern learning algorithms have been prototyped using simulated usage data.
+
+    A functional iOS application has been developed for iPhone and iPad, with communication infrastructure verified in simulator mode. Preliminary testing confirms core system functionality, with refinement needed for thermal performance and learning algorithm optimisation. The project remains on schedule with a clear plan to complete remaining objectives.
+
+    \subsection{Assessment Against Timeline}
+
+    Project milestones, including component selection, iOS app development, and simulator testing, have been met. Software progressed efficiently due to established frameworks, while hardware development accounted for thermal challenges.
+
+    The mid-term report submission provides a milestone to review progress and refine priorities. Overall, the project is on track to complete core functionality and \ac{AI} feature integration as planned.
+
+    \newpage
+
+    \subsection{Key Learnings}
+
+    \textbf{Thermal Management:} Early tests emphasised monitoring \ac{ESP}32 and \ac{LED} heat, guiding housing ventilation design.
+
+    \textbf{Safety Considerations:} Understanding electrical safety principles and using pre-certified power modules ensures safe development.
+
+    \textbf{Embedded Resource Constraints:} Firmware efficiency and careful algorithm planning are essential given \ac{ESP}32 memory and processing limits.
+
+    \textbf{Communication Protocols:} Early \ac{BLE} implementation demonstrated the importance of protocol selection for device discovery and control.
+
+    \textbf{Prototyping Value:} Simulator and app prototypes enabled early testing, identifying connectivity and control issues prior to physical hardware availability.
+
+    \subsection{Next Steps}
+
+    Immediate priorities include finalising 3D housing design, validating thermal performance, completing \ac{PCB} assembly, and testing core bulb functions. Firmware refinement will focus on learning algorithms, error handling, and diagnostics. \ac{AI} and advanced automation integration will follow once core functionality is stable.
+
+    iOS interface improvements and simulator testing will continue, with optional web app development if time allows. Backend server reliability and security will be reviewed. February will focus on extended system testing, real-world deployment, and adjustment of automation algorithms based on observed usage. March will conclude with final report completion, system validation, demonstration preparation, and presentation.
+
+    Progress to date indicates that project objectives are achievable, delivering a fully functional adaptive smart bulb system with privacy-preserving design and end-to-end integration.
+
+    \newpage
+
+    \subsection {Estimated Total Cost}
+
+    \begin{table}[h!]
+        \caption{Estimated Total Cost of Project Components and Materials}
+        \centering
+        \begin{tabular}{|l|c|}
+            \hline
+            \textbf{Category / Item} & \textbf{Cost (£)} \\
+            \hline
+            \multicolumn{2}{|l|}{\textbf{Hardware Components}} \\
+            \hline
+            Arduino Nano \ac{ESP}32 (×1) & 20.00 \\
+            BTF \ac{COB} \ac{LED} Strip & 8.00 \\
+            MOSFET \ac{PWM} Control Module (x2) & 20.00 \\
+            \ac{LED} Thermal Conductive Tape & 9.00 \\
+            Aluminium Heat Sink & 10.00 \\
+            E27 Lamp Base & 5.00 \\
+            Temperature Sensor & 4.00 \\
+            \hline
+            \multicolumn{1}{|r|}{\textbf{Hardware Components Subtotal}} & \textbf{76.00} \\
+            \hline
+            \multicolumn{2}{|l|}{\textbf{Materials and Fabrication}} \\
+            \hline
+            3D Printing Filament (\ac{PETG}, 0.5kg) & 12.00 \\
+            Thermal Interface Material & 3.00 \\
+            Assembly Supplies & 2.00 \\
+            \hline
+            \multicolumn{1}{|r|}{\textbf{Materials and Fabrication Subtotal}} & \textbf{17.00} \\
+            \hline
+            \multicolumn{2}{|l|}{\textbf{Software and Services}} \\
+            \hline
+            Apple Developer Account & 0.00 \\
+            Cloud Services & 0.00 \\
+            Development Software & 0.00 \\
+            \hline
+            \multicolumn{1}{|r|}{\textbf{Software and Services Subtotal}} & \textbf{0.00} \\
+            \hline
+            \multicolumn{2}{|l|}{\textbf{Contingency}} \\
+            \hline
+            Component Replacements & 15.00 \\
+            Additional Testing Materials & 10.00 \\
+            \hline
+            \multicolumn{1}{|r|}{\textbf{Contingency Subtotal}} & \textbf{25.00} \\
+            \hline
+            \multicolumn{1}{|r|}{\textbf{Estimated Total Cost}} & \textbf{118.00} \\
+            \hline
+        \end{tabular}
+    \end{table}
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[scale=0.6]{figures/EstimatedCostsPieChart.png}
+        \caption{Estimated Cost Pie Chart}
+        \label{fig:EstimatedCostsPieChart}
+    \end{figure}
+
+    \noindent
+    Figure \ref{fig:EstimatedCostsPieChart} shows an estimated total cost in the form of a pie chart.
+
+    \newpage
+
+    \subsection{Gantt chart  diagrams}
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/ganttchart.png}
+        \caption{Gantt chart 1st Semester}
+        \label{fig:Ganttchartfor1stSemester}
+    \end{figure}
+
+    \noindent
+    Figure \ref{fig:Ganttchartfor1stSemester} shows Semester 1's Gantt chart with the tasks to be completed along with the slack times for each task.
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/ganttchart2.png}
+        \caption{Gantt chart 2nd Semester}
+        \label{fig:Ganttchartfor2ndSemester}
+    \end{figure}
+
+    \noindent
+    Figure \ref{fig:Ganttchartfor2ndSemester} shows Semester 2's Gantt chart with the tasks to be completed along with the slack times for each task.
+
+    \newpage
+
+    \phantomsection
+    \subsection{Plan of Final Report Structure}
+    The final dissertation will follow standard Electronic Engineering project report structure, expanding upon this mid-term report with complete implementation details, comprehensive testing results, and thorough evaluation.
+
+    \subsubsection{Proposed Chapter Structure}
+
+    \begin{longtable}{p{3cm} p{12cm}}
+        \caption{Proposed Chapter Structure for Final Report} \\
+        \hline
+        \textbf{Chapter} & \textbf{Content Overview} \\
+        \hline
+        \endfirsthead
+        \multicolumn{2}{c}%
+        {{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+        \hline
+        \textbf{Chapter} & \textbf{Content Overview} \\
+        \hline
+        \endhead
+        \hline \multicolumn{2}{r}{{Continued on next page}} \\
+        \endfoot
+        \hline
+        \endlastfoot
+
+        1: Introduction & Project motivation and context; Problem statement and significance; Aims and objectives; Project scope and constraints; Report structure overview; Contributions and achievements \\
+        2: Background and Literature Review & Smart home automation systems; \ac{LED} technology and driver circuits; Embedded systems and \ac{IoT} platforms; Machine learning on embedded devices; Health data integration and privacy; Circadian rhythm and lighting effects; Summary of existing approaches and identified gaps \\
+        3: Requirements Analysis and System Design & Functional and non-functional requirements; System architecture overview; Hardware architecture and component selection; Firmware architecture and software design; Application architecture and interface design; Communication protocols and data flows; Security and privacy considerations; Use case scenarios \\
+        4: Implementation & Hardware implementation details; Circuit design and \ac{PCB} layout; Housing design and thermal management; Firmware implementation; \ac{LED} control and \ac{PWM} generation; Wireless communication implementation; Learning algorithm implementation; iOS application development; Web application development; Backend services implementation; Implementation challenges and solutions \\
+        5: Testing and Evaluation & Testing methodology and procedures; Functional testing results; Performance evaluation; Power consumption analysis; Thermal performance testing; Learning algorithm evaluation; Usability testing; Security analysis; Reliability and long-term testing; Comparison with requirements \\
+        6: Results and Discussion & System performance summary; Learning algorithm effectiveness; User experience evaluation; Energy efficiency analysis; Comparison with existing solutions; Limitations and constraints; Success criteria assessment; Discussion of findings \\
+        7: Conclusions and Future Work & Summary of achievements; Objectives fulfilment assessment; Contributions to field; Lessons learned; Future enhancements and extensions; Alternative approaches; Broader implications; Final remarks \\
+    \end{longtable}
+
+    \newpage
+
+    \phantomsection
+    \section*{References}
+    \addcontentsline{toc}{section}{References}
+
+    \vspace{0.4em}
+    \hypertarget{cite:cajochen2011}{}[\href{https://doi.org/10.1152/japplphysiol.00165.2011}{1}] C. Cajochen, S. Frey, D. Anders, J. Späti, M. Bues, A. Pross, R. Mager, A. Wirz-Justice, and O. Stefani, ``Evening exposure to a light-emitting diodes (\ac{LED})-backlit computer screen affects circadian physiology and cognitive performance,'' \textit{Journal of Applied Physiology}, vol. 110, no. 5, pp. 1432--1438, May 2011. \hyperlink{ref:cajochen2011-1}{$\uparrow$}\hyperlink{ref:cajochen2011-2}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:zeng2017}{}[\href{https://www.usenix.org/conference/soups2017/technical-sessions/presentation/zeng}{2}] E. Zeng, S. Mare, and F. Roesner, ``End user security and privacy concerns with smart homes,'' in \textit{Proceedings of the Thirteenth Symposium on Usable Privacy and Security (SOUPS 2017)}, Santa Clara, CA, USA, Jul. 2017, pp. 65--80. \hyperlink{ref:zeng2017-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:chang2015}{}[\href{https://doi.org/10.1073/pnas.1418490112}{3}] A.-M. Chang, D. Aeschbach, J. F. Duffy, and C. A. Czeisler, ``Evening use of light-emitting eReaders negatively affects sleep, circadian timing, and next-morning alertness,'' \textit{Proceedings of the National Academy of Sciences}, vol. 112, no. 4, pp. 1232--1237, Jan. 2015. \hyperlink{ref:chang2015-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:moorede2020}{}[\href{https://doi.org/10.1177/0748730420923164}{4}] M. Moore-Ede, A. Heitmann, and R. Guttkuhn, ``Circadian potency spectrum with extended exposure to polychromatic white \ac{LED} light under workplace conditions,'' \textit{Journal of Biological Rhythms}, vol. 35, no. 4, pp. 405--415, Aug. 2020. \hyperlink{ref:moorede2020-1}{$\uparrow$}\hyperlink{ref:moorede2020-2}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:warden2019}{}[\href{https://tinymlbook.com/wp-content/uploads/2020/01/tflite_micro_preview.pdf}{5}] P. Warden and D. Situnayake, \textit{TinyML: Machine Learning with TensorFlow Lite on Arduino and Ultra-Low-Power Microcontrollers}, 1st ed. Sebastopol, CA, USA: O'Reilly Media, 2019. \hyperlink{ref:warden2019-1}{$\uparrow$}\hyperlink{ref:warden2019-2}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:espressif2023}{}[\href{https://docs.espressif.com/projects/esp-idf/}{6}] Espressif Systems, \textit{ESP-IDF Programming Guide}, 2023. [Accessed: Nov. 15, 2025]. \hyperlink{ref:espressif2023-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:banbury2021}{}[\href{https://arxiv.org/abs/2003.04821}{7}] C. Banbury, V. J. Reddi, M. Lam, W. Fu, A. Fazel, J. Holleman, X. Huang, R. Hurtado, D. Kanter, A. Lokhmotov, D. Patterson, D. Pau, J.-S. Seo, J. Sieracki, U. Thakker, M. Verhelst, and P. Yadav, ``Benchmarking TinyML systems: Challenges and direction,'' \textit{arXiv preprint arXiv:2003.04821}, 2021. \hyperlink{ref:banbury2021-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:apple2023}{}[\href{https://developer.apple.com/documentation/healthkit}{8}] Apple Inc., \textit{HealthKit Framework Documentation}, 2023. [Accessed: Nov. 15, 2025]. \hyperlink{ref:apple2023-1}{$\uparrow$}\hyperlink{ref:apple2023-2}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:grigorik2013}{}[\href{https://www.oreilly.com/library/view/high-performance-browser/9781449344757/}{9}] I. Grigorik, \textit{High Performance Browser Networking}, 1st ed. Sebastopol, CA, USA: O'Reilly Media, 2013. \hyperlink{ref:grigorik2013-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:sutton2018}{}[\href{http://incompleteideas.net/book/the-book-2nd.html}{10}] R. S. Sutton and A. G. Barto, \textit{Reinforcement Learning: An Introduction}, 2nd ed. Cambridge, MA, USA: MIT Press, 2018. \hyperlink{ref:sutton2018-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:skeldon2017}{}[\href{https://doi.org/10.1016/j.cub.2019.03.014}{11}] A. C. Skeldon and D.-J. Dijk, ``School start times and daylight saving time confuse California lawmakers,'' \textit{Current Biology}, vol. 27, no. 18, pp. R1139--R1140, Sep. 2017. \hyperlink{ref:skeldon2017-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:iec60598}{}[\href{https://www.elecenghub.com/NewSamples/IEC/154617614/IEC-60598-1-2020-1.pdf}{12}] International Electrotechnical Commission, ``IEC 60598-1:2020 Luminaires - Part 1: General requirements and tests,'' \textit{IEC Standards}, 2020. \hyperlink{ref:iec60598-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:ray2019}{}[\href{https://doi.org/10.1016/j.jksuci.2021.11.019}{13}] P. P. Ray, ``A review on TinyML: State-of-the-art and prospects,'' \textit{Journal of King Saud University - Computer and Information Sciences}, vol. 34, no. 4, pp. 1595--1623, Apr. 2022. \hyperlink{ref:ray2019-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:guo2010}{}[\href{https://www.researchgate.net/publication/334242651_Photobiomodulation_for_Alzheimer's_Disease_Has_the_Light_Dawned}{14}] X. Guo, S. H. Lin, M. R. Hamblin, and J. Xu, ``Photobiomodulation in Alzheimer's disease,'' in \textit{Photobiomodulation, Photomedicine, and Laser Surgery}, vol. 38, no. 10, pp. 589--597, Oct. 2010. \hyperlink{ref:guo2010-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:gomez2012}{}[\href{https://doi.org/10.3390/s120911734}{15}] C. Gomez, J. Oller, and J. Paradells, ``Overview and evaluation of Bluetooth Low Energy: An emerging low-power wireless technology,'' \textit{Sensors}, vol. 12, no. 9, pp. 11734--11753, Sep. 2012. \hyperlink{ref:gomez2012-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:caird2008}{}[\href{https://www.researchgate.net/publication/23551642_USER-CENTRED_IMPROVEMENTS_TO_ENERGY_EFFICIENCY_PRODUCTS_AND_RENEWABLE_ENERGY_SYSTEMS_RESEARCH_ON_HOUSEHOLD_ADOPTION_AND_USE}{16}] S. Caird and R. Roy, ``User-centred improvements to energy efficiency products and renewable energy systems: Research on household adoption and use,'' \textit{International Journal of Innovation and Sustainable Development}, vol. 3, nos. 1--2, pp. 77--91, 2008. \hyperlink{ref:caird2008-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:schubert2006}{}[\href{https://api.pageplace.de/preview/DT0400.9780511343537_A23677373/preview-9780511343537_A23677373.pdf}{17}] E. F. Schubert, \textit{Light-Emitting Diodes}, 2nd ed. Cambridge, UK: Cambridge University Press, 2006. \hyperlink{ref:schubert2006-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:erickson2007}{}[\href{https://fmipa.umri.ac.id/wp-content/uploads/2016/03/R._Erickson_Fundamentals_of_Power_Electronics_pBookZZ.org_.pdf}{18}] R. W. Erickson and D. Maksimović, \textit{Fundamentals of Power Electronics}, 2nd ed. New York, NY, USA: Springer, 2007. \hyperlink{ref:erickson2007-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:christensen2009}{}[\href{https://inis.iaea.org/records/gcq4c-ksr34}{19}] A. Christensen and S. Graham, ``Thermal effects in packaging high power light emitting diode arrays,'' \textit{Applied Thermal Engineering}, vol. 29, nos. 2--3, pp. 364--371, Feb. 2009. \hyperlink{ref:christensen2009-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:maier2017}{}[\href{https://www.zeitgeistlab.ca/doc/doc_images/07224704.pdf}{20}] M. Maier, M. Chowdhury, B. P. Rimal, and D. P. Van, ``The audacity of fiber-wireless (FiWi) networks: Revisited for clouds and cloudlets,'' \textit{China Communications}, vol. 12, no. 8, pp. 33--45, Aug. 2015. \hyperlink{ref:maier2017-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:hunkeler2008}{}[\href{https://doi.org/10.1109/COMSWA.2008.4554519}{21}] U. Hunkeler, H. L. Truong, and A. Stanford-Clark, ``\ac{MQTT}-S - A publish/subscribe protocol for Wireless Sensor Networks,'' in \textit{Proc. 3rd International Conference on Communication Systems Software and Middleware (COMSWARE 2008)}, Bangalore, India, Jan. 2008, pp. 791--798. \hyperlink{ref:hunkeler2008-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:barry2009}{}[\href{https://www.freertos.org/Documentation/02-Kernel/07-Books-and-manual/01-RTOS_book}{22}] R. Barry, \textit{Using the FreeRTOS Real Time Kernel: A Practical Guide}, 1st ed. Seattle, WA, USA: Amazon Digital Services, 2009. \hyperlink{ref:barry2009-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:gama2014}{}[\href{https://dl.acm.org/doi/10.1145/2523813}{23}] J. Gama, I. Žliobaitė, A. Bifet, M. Pechenizkiy, and A. Bouchachia, ``A survey on concept drift adaptation,'' \textit{ACM Computing Surveys}, vol. 46, no. 4, pp. 1--37, Mar. 2014. \hyperlink{ref:gama2014-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:rabiner1989}{}[\href{https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=18626}{24}] L. R. Rabiner, ``A tutorial on hidden Markov models and selected applications in speech recognition,'' \textit{Proceedings of the IEEE}, vol. 77, no. 2, pp. 257--286, Feb. 1989. \hyperlink{ref:rabiner1989-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:voigt2017}{}[\href{https://doi.org/10.1007/978-3-319-57959-7}{25}] P. Voigt and A. von dem Bussche, \textit{The EU General Data Protection Regulation (\ac{GDPR}): A Practical Guide}, 1st ed. Cham, Switzerland: Springer, 2017. \hyperlink{ref:voigt2017-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:mcmahan2017}{}[\href{https://proceedings.mlr.press/v54/mcmahan17a/mcmahan17a.pdf}{26}] H. B. McMahan, E. Moore, D. Ramage, S. Hampson, and B. A. y Arcas, ``Communication-efficient learning of deep networks from decentralized data,'' in \textit{Proc. 20th International Conference on Artificial Intelligence and Statistics (AISTATS)}, Fort Lauderdale, FL, USA, Apr. 2017, pp. 1273--1282. \hyperlink{ref:mcmahan2017-1}{$\uparrow$}
+
+    \vspace{0.4em}
+    \hypertarget{cite:souman2018}{}[\href{https://pubmed.ncbi.nlm.nih.gov/28912014/}{27}] J. L. Souman, A. M. Tinga, S. C. J. Te Pas, R. van Ee, and B. N. S. Vlaskamp, ``Acute alerting effects of light: A systematic literature review,'' \textit{Behavioural Brain Research}, vol. 337, pp. 228--239, Jan. 2018. \hyperlink{ref:souman2018-1}{$\uparrow$}
+
+
+    \newpage
+
+    \phantomsection
+    \section*{Appendices}
+    \addcontentsline{toc}{section}{Appendices}
+
+    \setcounter{table}{0}
+    \renewcommand{\thetable}{A.\arabic{table}}
+
+    \subsection*{Appendix A: Health and Safety Assessment}
+    \addcontentsline{toc}{subsection}{Appendix A: Health and Safety Assessment}
+
+    \textbf{Project Title:} \ac{AI}-Based Smart Bulb for Adaptive Home Automation
+
+    \textbf{Student Name:} Caleb Ram
+
+    \textbf{Student ID:} 6801936
+
+    \textbf{Supervisor:} Dr Ahmed Elzanaty
+
+    \vspace{2em}
+
+
+    \textbf{\hyperlink{hazard-table-top}{Hazard Identification and Risk Assessment}}
+    \addcontentsline{toc}{subsubsection}{Hazard Identification and Risk Assessment}
+    \newline
+    The formal \hyperlink{hazard-table-top}{Undergraduate Project Hazards Assessment Form} is attached below, providing a systematic overview of potential hazards involved in this project. Each entry lists the hazard type, whether it will be used or not, its location, and the hazards and precautions explained. The document has been reviewed and signed off by my project supervisor to ensure compliance with laboratory and industry safety standards. Examples of hazards include electrical shock from exposed circuits and burns from hot surfaces such as heat sinks or soldering equipment. Corresponding control measures, such as using insulated tools, heat-resistant gloves, and cable management practices, are detailed in the tables below, allowing for quick reference and practical implementation.
+
+    \newpage
+
+    \hypertarget{hazard-table-top}{}
+
+    \begin{center}
+        \textbf{SCHOOL OF ELECTRONICS AND PHYSICAL SCIENCES}
+
+        Undergraduate Project Hazards Assessment Form
+
+        (to be completed jointly by student/academic supervisor)
+    \end{center}
+
+    \noindent
+    Student Caleb Ram \hfill Project No 028\_1
+
+    \noindent
+    Project Title \hfill \ac{AI} Base Smart Bulb System for Adaptive Home Automation
+
+    \noindent
+    \begin{minipage}[t]{\textwidth}
+        Location(s) for experimental work (list all) \hfill 16AB04 06AB04 18AB04 6dAB04 11AB04\\
+        \phantom{Location(s) for experimental work (list all)(   )} Home(50 Vale Road KT4 7EA)
+    \end{minipage}
+
+    \vspace{0.5em}
+    \noindent
+    Complete the table below. Up to date risk assessments must be available which cover the hazards of a project, and necessary procedures and precautions explained to the student.
+
+    \vspace{0.5em}
+
+    \begin{longtable}{|>{\raggedright\arraybackslash}p{4.2cm}|>{\raggedright\arraybackslash}p{2.2cm}|>{\raggedright\arraybackslash}p{4.2cm}|>{\raggedright\arraybackslash}p{4.6cm}|}
+        \caption{Undergraduate Project Hazards Assessment Form}
+        \label{tab:hazards-assessment} \\
+        \hline
+        \textbf{Which of these hazards are involved in the project?} & \textbf{Delete as applicable} & \textbf{Location of risk assessments} & \textbf{Hazards \& precautions explained} \\
+        \hline
+        \endfirsthead
+
+        \multicolumn{4}{c}{\tablename\ \thetable\ -- \textit{Continued from previous page}} \\
+        \hline
+        \textbf{Which of these hazards are involved in the project?} & \textbf{Delete as applicable} & \textbf{Location of risk assessments} & \textbf{Hazards \& precautions explained} \\
+        \hline
+        \endhead
+
+        \multicolumn{4}{r}{\textit{Continued on next page}} \\
+        \endfoot
+
+        \endlastfoot
+
+        \textbf{Biohazards} & \textbf{NO} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & No biohazards present \\
+        \hline
+
+        \textbf{Electrical work} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Fire or overloading Isolate power, use insulation, verify connections safely \\
+        \hline
+
+        \textbf{Extreme temperatures} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Heated components or soldering irons Avoid burns by using gloves and heat-resistant mats \\
+        \hline
+
+        \textbf{Flammable or explosive substances} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Solvents or aerosol sprays Keep away from sparks and open flames. \\
+        \hline
+
+        \textbf{Ionising radiation} & \textbf{NO} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & No ionising radiation present \\
+        \hline
+
+        \textbf{Knives / cutting tools} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Sharp blades used in prototyping Handle carefully and wear gloves \\
+        \hline
+
+        \textbf{Lasers} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Eye or skin injury from laser exposure Keep cover closed, wear safety goggles \\
+        \hline
+
+        \textbf{Lifting equipment} & \textbf{NO} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & No lifting equipment \\
+        \hline
+
+        \textbf{Machinery} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Avoid moving parts Follow safety procedures \\
+        \hline
+
+        \textbf{Manual handling} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Heavy items like power supplies Use correct posture \\
+        \hline
+
+        \textbf{Microwave radiation} & \textbf{NO} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & No microwave radiation present \\
+        \hline
+
+        \textbf{Noise} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Drills, extractor fans Wear ear protection when using drills for long periods of time \\
+        \hline
+
+        \textbf{Non-ionising radiation (eg \ac{UV}, IR, RF)} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Wi-Fi avoid prolonged close exposure, normal use is safe IR lamps do not stare directly \\
+        \hline
+
+        \textbf{Non-ionising radiation (eg \ac{UV}, IR, RF)} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & use protective shields \ac{UV} light (lab lamps): wear goggles, limit exposure time \\
+        \hline
+
+        \textbf{Power tools} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Soldering iron, use heat-resistant mat, avoid contact, unplug when not in use Drills, wear safety glasses, secure workpiece, keep hands clear \\
+        \hline
+
+        \textbf{Pressure vessels/systems} & \textbf{NO} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & No pressure vessels or pressure systems \\
+        \hline
+
+        \textbf{Substances hazardous to health eg chemicals, dusts} & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Small amounts of soldering fumes, cleaning chemicals, or dust Use extractor fan, gloves, and masks \\
+        \hline
+
+        \textbf{Vacuum systems} & \textbf{NO} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & No vacuum systems \\
+        \hline
+
+        \textbf{Working at height} & \textbf{NO} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & No need to work at height using a ladder for example \\
+        \hline
+
+        \textbf{Other:} (please describe) Electrical components and small tools & \textbf{YES} & 16AB04 06AB04 18AB04 6dAB04 11AB04 Home & Handle safely, follow instructions \\
+        \hline
+    \end{longtable}
+
+    \newpage
+
+    \noindent
+    The student has discussed this project with the academic supervisor, and:
+    \begin{itemize}
+        \item Understands the nature of hazards associated with the project
+        \item Has been instructed in the precautions and procedures to be used to minimise risk from these hazards and the actions to be taken in the event of an accident
+        \item Has attended all appropriate lectures on laboratory safety and procedures during their undergraduate course
+        \item Will ask the supervisor to clarify any H\&S matters of which they are unsure
+    \end{itemize}
+
+    \vspace{0.5em}
+    \noindent
+    Supervisor~Name\ldots\ldots\ldots\ldots\ldots Signature\ldots\ldots\ldots\ldots\ldots Date\ldots\ldots\ldots\ldots\ldots\ldots
+
+    \vspace{0.5em}
+    \noindent
+    Student Name Caleb Ram \hspace{1cm} Signature Caleb Ram \hspace{1cm} Date 12/11/2025
+
+    \vspace{1em}
+    \begin{center}
+        NOW RETURN THIS FORM TO THE TEACHING LABORATORY MANAGER
+    \end{center}
+
+    \vspace{0.5em}
+    \begin{flushright}
+        \textit {6th September 2005}
+    \end{flushright}
+
+    \textbf{Hazards and Control Measures}
+    \phantomsection
+    \addcontentsline{toc}{subsubsection}{Hazards and Control Measures}
+    \label{sec:hazards-control-measures}
+
+    The table below provides a comprehensive breakdown of identified hazards, their associated risk levels, and the specific control measures implemented to mitigate these risks. Each hazard has been assessed according to its potential severity and likelihood, with risk levels categorized as High, Medium, Low, or Very Low. Control measures follow the hierarchy of controls, prioritizing elimination and engineering controls where possible, followed by administrative controls and personal protective equipment. The residual risk column indicates the remaining level of risk after all control measures have been properly implemented. This systematic approach ensures that all project activities are conducted safely and in compliance with university health and safety requirements.
+    \newpage
+
+    \phantomsection
+    \begin{longtable}{|>{\raggedright\arraybackslash}p{3.5cm}|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{1.5cm}|>{\raggedright\arraybackslash}p{4.5cm}|>{\raggedright\arraybackslash}p{1.7cm}|}
+        \caption{Hazards and Control Measures} \\
+        \hline
+        \textbf{Hazard} & \textbf{Description} & \textbf{Risk Level} & \textbf{Control Measures} & \textbf{Residual Risk} \\
+        \hline
+        \endfirsthead
+
+        \multicolumn{5}{c}
+        {{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+        \hline
+        \textbf{Hazard} & \textbf{Description} & \textbf{Risk Level} & \textbf{Control Measures} & \textbf{Residual Risk} \\
+        \hline
+        \endhead
+
+        \hline \multicolumn{5}{r}{{Continued on next page}} \\
+        \endfoot
+
+        \hline
+        \endlastfoot
+
+        Electrical Shock from Mains Voltage & Working with 230V AC mains voltage during power supply integration and testing presents risk of electric shock causing injury or death. \rule{0pt}{3ex} & High & - Work with power disconnected except during testing
+        - Use isolation transformer
+        - One-hand rule when probing live circuits
+        - Use insulated tools
+        - \ac{RCD} protection on test bench
+        - Maintain creepage/clearance distances
+        - Double insulation / earthing of exposed parts
+        - Supervisor present during initial mains testing & Low \\
+        \hline
+        Thermal Burns from Heat Sink and \ac{LED} & \ac{LED} and heat sink reach elevated temperatures during operation, potentially causing burns on contact. \rule{0pt}{3ex} & Medium & - Warning labels on hot surfaces
+        - Cooling-off period before handling
+        - Temperature monitored during testing
+        - Housing design prevents accidental contact
+        - Thermal cutoff protection in firmware & Low \\
+        \hline
+        Fire Risk from Thermal Runaway or Component Failure & Inadequate thermal management or component failure could cause excessive heating leading to fire. \rule{0pt}{3ex} & Medium & - Conservative thermal design with safety margins
+        - Firmware thermal protection
+        - Non-flammable housing materials
+        - Testing on non-flammable surfaces with extinguisher ready
+        - Thermal fuses for overheat protection
+        - Supervised prototype operation & Low \\
+        \hline
+        Soldering Fumes and Chemical Exposure & Soldering produces fumes containing rosin and flux compounds that may cause respiratory irritation. \rule{0pt}{3ex} & Low & - Fume extraction during soldering
+        - Well-ventilated workspace
+        - Use lead-free solder
+        - Frequent breaks during extended soldering & Very Low \\
+        \hline
+        Eye Damage from \ac{LED} Light Exposure & Direct viewing of high-brightness \ac{LED} may cause temporary or permanent eye damage. \rule{0pt}{3ex} & Low & - Indirect viewing or diffusers
+        - Avoid direct gaze at \ac{LED}
+        - Warning labels for eye safety
+        - Limit brightness to safe levels & Very Low \\
+        \hline
+        Sharp Tools and Components & Use of cutting tools, component leads, and heat sink fins may cause cuts or punctures. \rule{0pt}{3ex} & Low & - Use safety glasses and gloves
+        - Proper tool handling and storage
+        - Trim component leads carefully
+        - First aid kit readily available & Very Low \\
+        \hline
+    \end{longtable}
+
+
+
+
+    \newpage
+    \textbf{Declaration}
+
+    I confirm that I have read and understood this health and safety assessment. I will follow all specified control measures and report any incidents or near-misses to my supervisor immediately. I understand that deviation from approved procedures may result in disciplinary action and project suspension.
+
+    Signatures of both myself and my supervisor are provided in the \href{run:/Users/calebram/Desktop/University/OneDrive - University of Surrey/Desktop/Year 3 Project/Reports/Mid-term Report/src/Forms/Hazards Form.pdf}{attached document}.
+
+    \newpage
+
+    \phantomsection
+    \subsection*{Appendix B: Ethics Considerations}
+    \addcontentsline{toc}{subsection}{Appendix B: Ethics Considerations}
+    \textbf{Project Title:} \ac{AI}-Based Smart Bulb for Adaptive Home Automation
+
+    \textbf{Ethical Review Assessment}
+    \phantomsection
+    \addcontentsline{toc}{subsubsection}{Ethical Review Assessment}
+
+    This project involves collection and processing of personal health data through Apple HealthKit integration. The following ethical considerations have been identified and addressed:
+
+    \textbf{Data Privacy and Protection}
+    \phantomsection
+    \addcontentsline{toc}{subsubsection}{Data Privacy and Protection}
+
+    All health data processing occurs locally on user-owned devices. No health data is transmitted to external servers, cloud services, or third parties. HealthKit permissions requested explicitly with clear explanation of how data will be used. Users maintain complete control over data access and can revoke permissions at any time.
+
+    \textbf{Informed Consent}
+    \phantomsection
+    \addcontentsline{toc}{subsubsection}{Informed Consent}
+
+    Application clearly explains what data is collected, how it is used, and what benefits automation provides. Technical language avoided in favour of clear, understandable descriptions. Users must explicitly grant permission before any health data access occurs. Consent can be withdrawn at any time without affecting basic lighting control functionality.
+
+    \textbf{Transparency and Explainability}
+    \phantomsection
+    \addcontentsline{toc}{subsubsection}{Transparency and Explainability}
+
+    System makes learned behaviour patterns visible to users through application interface. Users can understand why automation actions occur based on displayed patterns. All automated behaviours can be overridden or disabled by user preference. System does not make autonomous decisions that cannot be explained or controlled by users.
+
+    \textbf{Testing and Evaluation}
+    \phantomsection
+    \addcontentsline{toc}{subsubsection}{Testing and Evaluation}
+
+    Any user testing will be conducted with appropriate informed consent documentation. Participants will be provided with information sheets explaining study purpose, procedures, data handling, and right to withdraw. No vulnerable populations will be involved in testing. Testing will be limited to adults capable of informed consent.
+
+    \newpage
+
+    \textbf{Data Security}
+    \phantomsection
+    \addcontentsline{toc}{subsubsection}{Data Security}
+
+    While data remains local, appropriate security measures implemented including encrypted storage of sensitive configuration data, authentication for remote access if implemented, and secure communication protocols (\ac{TLS}/\ac{SSL}) for network communications.
+
+    \textbf{Risk-Benefit Analysis}
+    \phantomsection
+    \addcontentsline{toc}{subsubsection}{Risk-Benefit Analysis}
+
+    Primary risk involves inappropriate lighting automation disrupting user comfort or sleep. This risk is mitigated through manual override capabilities, gradual automation engagement, and user control over all system behaviours. Benefits include improved sleep quality, energy efficiency, and convenience, with users making informed decision about acceptable trade-offs.
+
+    \textbf{Assessment Conclusion}
+    \phantomsection
+    \addcontentsline{toc}{subsubsection}{Assessment Conclusion}
+
+    No ethics review is required for this project, as it does not involve human participants, human data, human tissue, or any identifiable personal information. All data processing occurs locally on user-controlled devices, and no external transmission of data takes place.
+
+    The project design follows privacy-by-design principles and complies with relevant data protection regulations including \ac{GDPR} principles of data minimisation, purpose limitation, and user consent.
+
+    While the system may be shared with a small number of users for informal usability testing, this does not involve collection of personal data or sensitive information, and therefore no formal ethics review is required.
+
+    \newpage
+
+    \phantomsection
+    \subsection*{Appendix C: Project Meetings Log}
+    \addcontentsline{toc}{subsection}{Appendix C: Project Meetings Log}
+
+    \setcounter{table}{0}
+    \renewcommand{\thetable}{C.\arabic{table}}
+    \begin{longtable}{|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{9cm}|}
+        \caption{Summary of Project Meetings with Supervisor} \\
+        \hline
+        \textbf{Meeting / Category} & \textbf{Details} \\
+        \hline
+        \endfirsthead
+
+        \multicolumn{2}{c}
+        {{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+        \hline
+        \textbf{Meeting / Category} & \textbf{Details} \\
+        \hline
+        \endhead
+
+        \hline \multicolumn{2}{r}{{Continued on next page}} \\
+        \endfoot
+
+        \hline
+        \endlastfoot
+
+        \textbf{Meeting 1 – Project Selection and Initial Planning} &
+        \textit{Date:} 7 October 2025 \\
+        & \textit{Attendees:} Caleb Ram, Dr Ahmed Elzanaty \\
+        & \textbf{Discussion Points:} Project proposal presented and discussed; Scope refinement focusing on achievable objectives within timeframe; Discussion of technical challenges particularly thermal management \\
+        & \textbf{Actions:} Student: Complete literature review, order initial components, set up development environment; Supervisor: Provide feedback on project scope and recommended reading materials \\
+        \hline
+
+        \textbf{Meeting 2 – Progress Review and Technical Discussion} &
+        \textit{Date:} 17 November 2025 \\
+        & \textit{Attendees:} Caleb Ram, Dr Ahmed Elzanaty \\
+        & \textbf{Discussion Points:} Review of literature findings and technology selection rationale; Initial hardware prototyping results including thermal concerns; Discussion of firmware architecture and task priority design; HealthKit integration approach and privacy considerations; Literature review scope and key areas to investigate; Safety requirements and electrical design considerations; Mid-term report structure and expectations \\
+        & \textbf{Actions:} Student: Continue mid-term report writing; Supervisor: Write email to Laurence asking about budget and sending components needed \\
+        \hline
+
+        \textbf{Meeting 3 – Mid-Term Progress Review} &
+        \textit{Date:} 1 December 2025 \\
+        & \textit{Attendees:} Caleb Ram, Dr Ahmed Elzanaty \\
+        & \textbf{Discussion Points:} Demonstration of current prototype functionality; Review of learning algorithm preliminary results; Timeline review and risk assessment; Mid-term report draft sections submitted for review \\
+        & \textbf{Actions:} Student: Act on mid-term report feedback given over Christmas break, and continue building \ac{ESP}32 bulb; Supervisor: Provide feedback on first draft for Mid-Term Report \\
+        \hline
+
+    \end{longtable}
+
+    \newpage
+
+    \textbf{Planned Future Meetings}
+
+    Regular fortnightly meetings scheduled throughout project duration. Next meeting scheduled for 15 December 2025 to review hardware finalisation progress and discuss testing methodology for evaluation phase.
+
+    \phantomsection
+    \subsection*{Appendix D: Initial Email Correspondence}
+    \addcontentsline{toc}{subsection}{Appendix D: Initial Email Correspondence}
+
+    \setcounter{figure}{0}
+    \renewcommand{\thefigure}{D.\arabic{figure}}
+
+    \textbf{Email Correspondence from Project Proposal and Setup Phase}
+
+    The emails have communications between the author and project supervisor Dr. Ahmed Elzanaty before the project start date. Initial emails included requests for supervision and proposals of project ideas, followed by supervisor feedback and confirmation of the project title. Once the project was agreed, fortnightly meetings were scheduled to discuss progress, guidance, and next steps. The screenshot below illustrates a key email confirming the project initiation and start date.
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/Project-Proposal-Email-Confirmation.png}
+        \caption{Project Proposal Email Confirmation with Dr. Ahmed Elzanaty}
+        \label{fig:Project-Proposal-Email-Confirmation}
+    \end{figure}
+
+    \noindent
+    Figure \ref{fig:Project-Proposal-Email-Confirmation} shows the email screenshot documenting the initial project proposal and confirmation with project supervisor Dr. Ahmed Elzanaty, serving as verification of project initiation and start date.
+
+    \newpage
+
+    \subsection*{Appendix E: Component Specifications}
+    \addcontentsline{toc}{subsection}{Appendix E: Component Specifications}
+
+    \setcounter{table}{0}
+    \renewcommand{\thetable}{E.\arabic{table}}
+
+    \begin{table}[h!]
+        \caption{\href{https://docs.arduino.cc/resources/datasheets/ABX00083-datasheet.pdf}{Arduino Nano ESP32 Specifications}}
+        \centering
+        \begin{tabular}{l l}
+            \hline
+            \textbf{Specification} & \textbf{Details} \\
+            \hline
+            Module & \ac{ESP}32 Nano S3 \\
+            Processor & Dual core Xtensa LX6, 240 MHz \\
+            Memory & 520 KB \ac{SRAM}, 4 MB Flash \\
+            Wireless & Wi Fi 802.11 b g n, Bluetooth 4.2 and \ac{BLE} \\
+            \ac{GPIO} & 34 programmable pins \\
+            Peripherals & \ac{SPI}, I2C, I2S, \ac{UART}, \ac{ADC}, \ac{DAC}, \ac{PWM} \\
+            Operating Voltage & 3.0 to 3.6 V \\
+            Power Consumption & 80 mA active, 5 $\mu$A deep sleep \\
+            Product & \ac{ESP}32 Nano S3 \\
+            Documentation & \href{https://docs.arduino.cc/resources/datasheets/ABX00083-datasheet.pdf}{Arduino Nano ESP32 Datasheet} \\
+            \hline
+        \end{tabular}
+    \end{table}
+
+
+    \vspace{2em}
+
+    \begin{table}[h!]
+        \caption{BTF-LIGHTING \ac{COB} \ac{CCT} High Density FCOB \ac{LED} Strip Specifications}
+        \centering
+        \begin{tabular}{l l}
+            \hline
+            \textbf{Specification} & \textbf{Details} \\
+            \hline
+            Type & \ac{COB} \ac{CCT} Flexible High Density \ac{LED} Strip \\
+            Length & 3.3 ft (1 m) \\
+            \ac{LED} Count & 640 LEDs \\
+            Color Temperature & 3000K to 6000K (tunable) \\
+            \ac{CRI} & $>$90 \\
+            Dimmable & Yes \\
+            Form Factor & Deformable ribbon, IP30 \\
+            Input Voltage & \ac{DC} 12V \\
+            Product & BTF-LIGHTING \ac{COB} \ac{LED} Strip \\
+            \hline
+        \end{tabular}
+    \end{table}
+
+    \newpage
+
+    \begin{table}[h!]
+        \caption{\href{https://www.handsontec.com/dataspecs/sensor/BH1750\%20Light\%20Sensor.pdf}{Hailege BH1750FVI GY-30 Module Specifications}}
+        \centering
+        \begin{tabular}{l l}
+            \hline
+            \textbf{Specification} & \textbf{Details} \\
+            \hline
+            Sensor Model & BH1750FVI GY-30 \\
+            Quantity & 2 pcs \\
+            Measurement Range & 1 to 65535 lux \\
+            Interface & I2C (2-wire) \\
+            Operating Voltage & 3.3 V to 5 V \\
+            Operating Current & 0.12 mA (typical) \\
+            Resolution & 1 lux \\
+            Accuracy & ±20\% \\
+            Product & Hailege BH1750FVI GY-30 Digital Light Intensity Sensor Module \\
+            Documentation & \href{https://www.handsontec.com/dataspecs/sensor/BH1750\%20Light\%20Sensor.pdf}{BH1750FVI Datasheet} \\
+            \hline
+        \end{tabular}
+    \end{table}
+
+    \vspace{2em}
+
+    \begin{table}[h!]
+        \caption{\href{https://static.rapidonline.com/pdf/85-1321.pdf}{Aim-TTi PL-P Series Digital Bench Power Supply Specifications}}
+        \centering
+        \begin{tabular}{l l}
+            \hline
+            \textbf{Specification} & \textbf{Details} \\
+            \hline
+            Model & PL-P Series \\
+            Output Channels & 1 \\
+            Voltage Range & 0 → 30 V \\
+            Current Range & 0 → 3 A \\
+            Maximum Power & 90 W \\
+            Output Type & \ac{DC}, single output \\
+            Accuracy & RS Calibrated \\
+            Display & Digital (voltage and current) \\
+            Product & Aim-TTi PL-P Series Digital Bench Power Supply \\
+            Documentation & \href{https://static.rapidonline.com/pdf/85-1321.pdf}{Power Supply Datasheet} \\
+            \hline
+        \end{tabular}
+    \end{table}
+
+    \vspace{2em}
+
+    \begin{table}[h!]
+        \caption{Cable Matters Braided \ac{USB}-C to Micro \ac{USB} Cable Specifications}
+        \centering
+        \begin{tabular}{l l}
+            \hline
+            \textbf{Specification} & \textbf{Details} \\
+            \hline
+            Type & \ac{USB}-C to Micro \ac{USB} Cable \\
+            Length & 0.3 m \\
+            Max Current & 3 A \\
+            Max Power & 15 W \\
+            Data Transfer Rate & 480 Mbps \\
+            Compatibility & Game Controllers, Cameras, GPS, Dash Cams, and more \\
+            Cable Material & Braided \\
+            Color & Black \\
+            Product & Cable Matters Braided \ac{USB}-C to Micro \ac{USB} Cord \\
+            \hline
+        \end{tabular}
+    \end{table}
+
+    \begin{table}[h!]
+        \caption{\href{https://wiki.dfrobot.com/Gravity__MOSFET_Power_Controller_SKU__DFR0457}{DFRobot Gravity MOSFET Power Controller Module Specifications}}
+        \centering
+        \begin{tabular}{l l}
+            \hline
+            \textbf{Specification} & \textbf{Details} \\
+            \hline
+            Type & MOSFET Power Controller Module / MOSFET Relay / MOSFET Driver \\
+            Quantity & 2 pcs \\
+            Compatibility & Arduino, Raspberry Pi, and other microcontrollers \\
+            Control Method & Digital logic input \\
+            Operating Voltage & 5 V typical \\
+            Load Type & \ac{DC} loads (LEDs, motors, solenoids, etc.) \\
+            Switching Capability & High / low side switching depending on module variant \\
+            Product & DFRobot Gravity MOSFET Power Controller Module \\
+            Documentation & \href{https://wiki.dfrobot.com/Gravity__MOSFET_Power_Controller_SKU__DFR0457}{MOSFET Power Control Module} \\
+            \hline
+        \end{tabular}
+    \end{table}
+
+    \begin{table}[h!]
+        \caption{Thermal Conductive Double-Sided Adhesive Tape Specifications}
+        \centering
+        \begin{tabular}{l l}
+            \hline
+            \textbf{Specification} & \textbf{Details} \\
+            \hline
+            Type & Thermal Conductive Double-Sided Adhesive Tape \\
+            Dimensions & 10 mm width × 25 m length \\
+            Included Tool & 1.5 m measuring tape \\
+            Applications & Heatsinks, \ac{LED} lights, IC chips, CPUs, GPUs \\
+            Adhesive Type & Thermal conductive \\
+            Product & 10mm x 25m Thermal Conductive Double-Sided Adhesive Tape \\
+            \hline
+        \end{tabular}
+    \end{table}
+
+    \begin{table}[h!]
+        \caption{Integral ILPFS171 Aluminium Heat Sink Plate Specifications}
+        \centering
+        \begin{tabular}{l l}
+            \hline
+            \textbf{Specification} & \textbf{Details} \\
+            \hline
+            Model & ILPFS171 \\
+            Material & Aluminium \\
+            Length & 2 m \\
+            Type & Heat Sink Plate for \ac{LED} Tape \\
+            Applications & \ac{LED} lighting, thermal management \\
+            Product & Integral ILPFS171 Aluminium Heat Sink Plate \\\hline
+        \end{tabular}
+    \end{table}
+
+    \begin{table}[h!]
+        \caption{Pence \& Moon Collective E27 Lamp Holder Base Socket Specifications}
+        \centering
+        \begin{tabular}{l l}
+            \hline
+            \textbf{Specification} & \textbf{Details} \\
+            \hline
+            Type & E27 Lamp Holder Base Socket Converter \\
+            Mounting & Ceiling light fitting, straight socket \\
+            Energy Class & A \\
+            Compatibility & Standard E27 bulbs \\
+            Material & Typically plastic/metal (manufacturer not specified) \\
+            Product & Pence \& Moon Collective E27 Lamp Holder Base Socket \\\hline
+        \end{tabular}
+    \end{table}
+
+    \begin{table}[h!]
+        \caption{AITRIP DS18B20 Temperature Sensor Module Specifications}
+        \centering
+        \begin{tabular}{l l}
+            \hline
+            \textbf{Specification} & \textbf{Details} \\
+            \hline
+            Sensor Model & DS18B20 \\
+            Quantity & 1 pc \\
+            Waterproof & Yes, stainless steel probe \\
+            Cable Length & 100 cm \\
+            Interface & Digital (1-Wire) \\
+            Operating Voltage & 3.0 – 5.5 V \\
+            Temperature Range & -55°C to +125°C \\
+            Accuracy & ±0.5°C typical \\
+            Compatibility & Arduino, Raspberry Pi, and other microcontrollers \\
+            Product & AITRIP DS18B20 Temperature Sensor Module \\
+            \hline
+        \end{tabular}
+    \end{table}
+
+    \begin{table}[h!]
+        \caption{Grouped Bulb Hardware Specifications}
+        \centering
+        \begin{tabular}{|p{5cm}|p{3cm}|p{3cm}|p{5cm}|}
+            \hline
+            \textbf{Item} & \textbf{Quantity} & \textbf{Material / Type} & \textbf{Notes / Compatibility} \\
+            \hline
+            E27 Clear Plastic Bulb Covers String Light Diffuser Lamp Shades & 30 pcs & Clear plastic & Indoor / outdoor decorative lighting, high transparency \\
+            \hline
+            Metal Lamp Shade Reducer Ring, E27/E14 Fitting, Black & 2 pcs & Metal & Energy Class A, adapter / retainer rings for light fixture \\
+            \hline
+            E27 to E14 Lampshade Reducer Ring, 12 pcs & 12 pcs & Metal & Adapter rings for E14 socket lampshades, screw collar \\
+            \hline
+            E27 Lamp Shade Reducer Ring Converter, Plastic, Heat-Resisting, Black & 1 pc & Plastic & 210°C heat-resisting, lampshade fitting washer adapter \\
+            \hline
+            Edison Screw ES E27 Lamp Holder Light Bulb Pendant Socket, Black & 2 pcs & Plastic / Metal & Screw lampholder adapter, 10mm threaded entry, safety lock, Energy Class A \\
+            \hline
+            E26/E27 Lampshade Collar Ring, 6 pcs, Black & 6 pcs & Plastic & Lamp shade reducer rings, retaining rings for bedside / desk / floor lamps, inner diameter 38mm \\
+            \hline
+            E27 Edison Screw Lamp Holder Extra Shade Ring 48mm, Brass & 1 pc & Brass & Does NOT fit Bayonet B22/BC lamp holders \\
+            \hline
+        \end{tabular}
+    \end{table}
+
+
+    \newpage
+    \thispagestyle{empty}
+    \null
+    \newpage
+
+    \thispagestyle{empty}
+    \null
+    \newpage
+
+    \phantomsection
+    \subsection*{Appendix F: Source Code}
+    \addcontentsline{toc}{subsection}{Appendix F: Source Code}
+
+    \setcounter{table}{0}
+    \renewcommand{\thetable}{F.\arabic{table}}
+
+    This \href{https://github.com/ramc004/University}{AI Based Smart Bulb for Adaptive Home Automation App} consists of three main components: a Flask backend server in Python, an iOS and an iPadOS app in SwiftUI, and support for both real \ac{ESP}32 hardware and simulated devices. The Flask server handles user authentication with email verification via Gmail \ac{SMTP} and stores user accounts and bulb associations in a SQLite database. The iOS and iPadOS app provides registration and login flows with email verification codes, discovers nearby smart bulbs via Bluetooth Low Energy, and controls bulb settings like power, brightness, color, and effects. The system includes a simulator mode toggle in the settings that lets users test the app without physical hardware by generating fake bulbs with persistent IDs instead of scanning for real Bluetooth devices. The backend tracks whether each bulb is simulated or real and filters bulbs accordingly when the app requests them. All views communicate through UserDefaults for session management, NotificationCenter for mode switching, and \ac{HTTP} requests to the Flask \ac{API} for data persistence, while the \ac{BLE} manager handles device discovery, connection, and control with characteristic UUIDs that match the \ac{ESP}32 firmware.
+
+
+    \subsubsection*{Backend Files (Python/Flask)}
+    \addcontentsline{toc}{subsubsection}{Backend Files (Python/Flask)}
+
+    \paragraph*{\href{https://github.com/ramc004/University/blob/main/Project\%20Code/backend/app.py}{app.py}}\mbox{}\\
+    \addcontentsline{toc}{paragraph}{app.py}
+    This Flask server provides the complete backend \ac{API} for user authentication and bulb management. It handles user registration with password hashing, email verification via \ac{SMTP}, login authentication, and password reset functionality. The server manages a SQLite database storing user accounts and their associated smart bulbs, including a simulator mode flag to distinguish between real \ac{ESP}32 hardware and simulated devices for testing. It can be found under Project Code, backend, \href{https://github.com/ramc004/University/blob/main/Project\%20Code/backend/app.py}{"app.py"}.
+
+    \paragraph*{send\_verification\_email.py}\mbox{}\\
+    \addcontentsline{toc}{paragraph}{send\_verification\_email.py}
+
+    This utility module sends 6-digit verification codes to users via email during registration and password reset flows. It connects to Gmail's \ac{SMTP} server using credentials stored in hello.txt and constructs email messages with the verification code. The function returns a boolean indicating success or failure of the email delivery.
+
+    \newpage
+    \paragraph*{hello.txt}\mbox{}\\
+    \addcontentsline{toc}{paragraph}{hello.txt}
+    This file contains the Gmail app password used for \ac{SMTP} authentication when sending verification emails, but it has not been included in this report for security reasons. To create it, enable 2-factor authentication on Gmail and generate the 16-character app password. Then change the sender email to email used and update hello.txt to new password.
+
+    \newpage
+    \addtocontents{toc}{\protect\newpage}
+
+    \subsubsection*{Swift Files}
+    \addcontentsline{toc}{subsubsection}{Swift Files}
+
+    \paragraph*{\ac{OS} App entry point}
+    \addcontentsline{toc}{paragraph}{\ac{OS} App entry point}
+
+    \subparagraph*{\ac{AI}\_Based\_Smart\_Bulb\_for\_Adaptive\_Home\_AutomationApp.swift}\mbox{}\\
+    \addcontentsline{toc}{subparagraph}{\ac{AI}\_Based\_Smart\_Bulb\_for\_Adaptive\_Home\_AutomationApp.swift}
+    This is the main entry point for the iOS application using SwiftUI's App protocol. It defines the app structure and sets WelcomeView as the initial root view displayed when the app launches. This file follows the standard SwiftUI app lifecycle pattern introduced in iOS 14+.
+
+    \paragraph*{Configuration}
+    \addcontentsline{toc}{paragraph}{Configuration}
+
+    \subparagraph*{APIConfig.swift}\mbox{}\\
+    \addcontentsline{toc}{subparagraph}{APIConfig.swift}
+    This configuration file centralises the backend server \ac{URL} for all \ac{API} calls throughout the app. It uses conditional compilation to automatically select localhost (127.0.0.1) when running in the iOS Simulator or the Mac's local network IP address (192.168.1.45) when running on physical devices. This simplifies switching between development and device testing environments.
+
+    \paragraph*{Authentication Flow (in user journey order)}
+    \addcontentsline{toc}{paragraph}{Authentication Flow}
+
+    \subparagraph*{WelcomeView.swift}\mbox{}\\
+    \addcontentsline{toc}{subparagraph}{WelcomeView.swift}
+    This view presents the app's landing page with a gradient background and navigation options for registration and login. It defines the ModernButtonStyle used throughout the app, featuring rounded rectangles with shadows, opacity changes, and scale animations on press. The view serves as the entry point to the authentication flow with visually appealing buttons for Register and Login.
+
+    \subparagraph*{RegisterEmailView.swift}\mbox{}\\
+    \addcontentsline{toc}{subparagraph}{RegisterEmailView.swift}
+    This view handles the first step of user registration by collecting and validating the email address. It performs real-time validation checking for username presence, @ symbol, domain validity, and email availability by querying the backend. Once all validation rules pass, it generates a 6-digit verification code, sends it via the backend's email service, and navigates to the password creation step.
+
+    \subparagraph*{RegisterPasswordView.swift}\mbox{}\\
+    \addcontentsline{toc}{subparagraph}{RegisterPasswordView.swift}
+    This view completes the registration process by collecting the verification code and creating a secure password. It implements a countdown timer (5 minutes) for code expiration with the ability to resend expired codes. Password validation enforces rules for length (8+ characters), uppercase letters, numbers, and special characters, with real-time feedback showing which requirements are met before allowing registration.
+
+    \subparagraph*{LoginView.swift}\mbox{}\\
+    \addcontentsline{toc}{subparagraph}{LoginView.swift}
+    This view provides the login interface with email and password fields, including a show/hide password toggle. It communicates with the Flask backend to authenticate users and stores the user's email in UserDefaults upon successful login for session management. The view also includes a "Forgot Password" flow that verifies email existence and sends a reset code.
+
+    \subparagraph*{ResetPasswordView.swift}\mbox{}\\
+    \addcontentsline{toc}{subparagraph}{ResetPasswordView.swift}
+    This view allows users to reset their password by entering a 6-digit verification code and creating a new password. It includes a countdown timer for code expiration (5 minutes) with resend functionality and enforces the same password validation rules as registration. Upon successful password reset, it displays a success message in the LoginView and navigates back.
+
+    \paragraph*{Main App Views}
+    \addcontentsline{toc}{paragraph}{Main App Views}
+
+    \subparagraph*{HomeView.swift}\mbox{}\\
+    \addcontentsline{toc}{subparagraph}{HomeView.swift}
+    This is the main dashboard view displaying the user's saved smart bulbs in a scrollable list with navigation to settings, add bulb, and individual bulb control screens. It loads bulbs from the backend filtered by simulator mode (showing only simulated or only real bulbs based on the current setting) and displays appropriate empty states with guidance. The view includes a logout confirmation dialog and refreshes the bulb list when simulator mode changes via NotificationCenter.
+
+    \subparagraph*{SettingsView.swift}\mbox{}\\
+    \addcontentsline{toc}{subparagraph}{SettingsView.swift}
+    This view provides a toggle for simulator mode with detailed explanations of its purpose and usage. It persists the simulator mode preference to UserDefaults and broadcasts changes via NotificationCenter to update all \ac{BLE} managers throughout the app. The view includes helpful information about Bluetooth limitations in the iOS Simulator and displays the currently logged-in user's email.
+
+    \subparagraph*{AddBulbView.swift}\mbox{}\\
+    \addcontentsline{toc}{subparagraph}{AddBulbView.swift}
+    This view handles discovering and adding new smart bulbs through Bluetooth scanning or simulator mode. It displays a list of discovered bulbs with signal strength indicators (or simulated badges), allows users to name each bulb and assign it to a room, and saves the bulb to the backend database with the is\_simulated flag. The view responds to simulator mode changes by clearing the list and restarting the scan with the appropriate mode.
+
+    \subparagraph*{SavedBulbControlView.swift}\mbox{}\\
+    \addcontentsline{toc}{subparagraph}{SavedBulbControlView.swift}
+    This comprehensive control view manages all interactions with a single smart bulb including power toggle, brightness slider, \ac{RGB} color picker, and four effect modes (Solid, Fade, Rainbow, Pulse). It handles connection to both real \ac{BLE} devices and simulated bulbs, validates that the bulb type matches the current simulator mode setting, and provides options to edit the bulb's name/room or remove it from the user's account. The view displays appropriate connection states and error messages when hardware mode mismatches occur.
+
+    \paragraph*{Core Bluetooth Logic}
+    \addcontentsline{toc}{paragraph}{Core Bluetooth Logic}
+
+    \subparagraph*{BLEManager.swift}\mbox{}\\
+    \addcontentsline{toc}{subparagraph}{BLEManager.swift}
+    This core class manages all Bluetooth Low Energy communication and device simulation, conforming to CBCentralManagerDelegate and CBPeripheralDelegate protocols. It maintains lists of discovered bulbs, handles connections to both real \ac{ESP}32 hardware and simulated devices, and provides functions to control power, brightness, color, and effect modes. The manager reads simulator mode from UserDefaults, creates persistent simulated bulb UUIDs, and routes all control commands to either \ac{BLE} characteristics or simulated state updates depending on the current mode.
+
+    \paragraph*{\ac{UI} Components}
+    \addcontentsline{toc}{paragraph}{\ac{UI} Components}
+
+    \subparagraph*{BulbUIComponents.swift}\mbox{}\\
+    \addcontentsline{toc}{subparagraph}{BulbUIComponents.swift}
+    This file defines reusable \ac{UI} components for bulb control interfaces including BulbVisualView (animated lightbulb with color glow), QuickColorButton (preset color buttons), and EffectButton (mode selection buttons). These components accept state or configuration parameters and provide consistent styling across different views. The BulbVisualView animates smoothly between on/off states and displays the current color and brightness visually.
+
+    \subparagraph*{CircularButtonStyle.swift}\mbox{}\\
+    \addcontentsline{toc}{subparagraph}{CircularButtonStyle.swift}
+    This file defines a custom button style for circular icon buttons used throughout the app's navigation headers. It creates 44x44 circular buttons with customizable background and foreground colors, drop shadows, and press animations. The style applies opacity changes and scale effects when buttons are pressed for tactile feedback.
+
+\end{document}
