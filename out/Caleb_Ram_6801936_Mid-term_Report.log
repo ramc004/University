@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.4.30)  16 DEC 2025 15:30
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.4.30)  18 DEC 2025 18:04
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -785,7 +785,7 @@ l.127
 Package acronym Info: Label `acro:OS' newly defined as it shall be overridden
 although it is yet undefined on input line 72.
 
-Overfull \hbox (7.04881pt too wide) in paragraph at lines 73--73
+Overfull \hbox (7.38481pt too wide) in paragraph at lines 73--73
  [][] [][][][][]\OT1/phv/m/n/12 (-20) Based[]Smart[]Bulb[]for[]Adaptive[]Home[]
 AutomationApp.swift[][] []  
  []
@@ -938,7 +938,7 @@ although it is yet undefined on input line 470.
 Package acronym Info: Label `acro:PETG' newly defined as it shall be overridden
 
 although it is yet undefined on input line 501.
-<figures/EstimatedCostsPieChart.png, id=973, 363.321pt x 218.781pt>
+<figures/EstimatedCostsPieChart.png, id=971, 363.321pt x 218.781pt>
 File: figures/EstimatedCostsPieChart.png Graphic file (type png)
 <use figures/EstimatedCostsPieChart.png>
 Package pdftex.def Info: figures/EstimatedCostsPieChart.png  used on input line
@@ -947,12 +947,12 @@ Package pdftex.def Info: figures/EstimatedCostsPieChart.png  used on input line
 
 
 [23 <./figures/EstimatedCostsPieChart.png>]
-<figures/ganttchart.png, id=985, 2380.895pt x 978.65625pt>
+<figures/ganttchart.png, id=980, 2380.895pt x 978.65625pt>
 File: figures/ganttchart.png Graphic file (type png)
 <use figures/ganttchart.png>
 Package pdftex.def Info: figures/ganttchart.png  used on input line 542.
 (pdftex.def)             Requested size: 364.19667pt x 149.68912pt.
-<figures/ganttchart2.png, id=987, 1560.83125pt x 1137.24875pt>
+<figures/ganttchart2.png, id=982, 1560.83125pt x 1137.24875pt>
 File: figures/ganttchart2.png Graphic file (type png)
 <use figures/ganttchart2.png>
 Package pdftex.def Info: figures/ganttchart2.png  used on input line 552.
@@ -1093,7 +1093,7 @@ l.1037     \end{longtable}
                            [40]
 
 [41]
-<figures/Project-Proposal-Email-Confirmation.png, id=1177, 1038.88126pt x 421.5
+<figures/Project-Proposal-Email-Confirmation.png, id=1169, 1038.88126pt x 421.5
 75pt>
 File: figures/Project-Proposal-Email-Confirmation.png Graphic file (type png)
 <use figures/Project-Proposal-Email-Confirmation.png>
@@ -1282,98 +1282,31 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `Caleb_Ram_6801936_Mid-term_Report.out' ha
-s changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `Caleb_Ram_6801936_Mid-term_Report.o
-ut':
-(rerunfilecheck)             Before: AE8253B0D1D58F94FBC37387FC3D0FD7;15872
-(rerunfilecheck)             After:  D4C31F5E30258491E2882BD0FD7679B5;15873.
+Package rerunfilecheck Info: File `Caleb_Ram_6801936_Mid-term_Report.out' has n
+ot changed.
+(rerunfilecheck)             Checksum: D4C31F5E30258491E2882BD0FD7679B5;15873.
  ) 
 Here is how much of TeX's memory you used:
- 19785 strings out of 473190
- 316953 string characters out of 5715800
- 807337 words of memory out of 5000000
+ 19771 strings out of 473190
+ 316756 string characters out of 5715800
+ 807095 words of memory out of 5000000
  42209 multiletter control sequences out of 15000+600000
  596634 words of font info for 231 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,17n,117p,1367b,693s stack positions out of 10000i,1000n,20000p,200000b,200000s
-
-pdfTeX warning (dest): name{section*.74} has been referenced but does not exist
-, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{section*.66} has been referenced but does not exist
-, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{section*.67} has been referenced but does not exist
-, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{table.caption.71} has been referenced but does not 
-exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{table.caption.69} has been referenced but does not 
-exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{table.caption.64} has been referenced but does not 
-exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{table.caption.36} has been referenced but does not 
-exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{figure.caption.41} has been referenced but does not
- exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{figure.caption.40} has been referenced but does not
- exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{figure.caption.39} has been referenced but does not
- exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{section*.81} has been referenced but does not exist
-, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{figure.caption.63} has been referenced but does not
- exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{section*.44} has been referenced but does not exist
-, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{section*.43} has been referenced but does not exist
-, replaced by a fixed one
-
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><
-/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></u
-sr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></us
-r/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfss1200.pfb></usr/
-local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/t
-exlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/
-2025/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb
+></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><
+/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
+usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfss1200.pfb></us
+r/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local
+/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texliv
+e/2025/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
 Output written on "/Users/calebram/Library/CloudStorage/OneDrive-UniversityofSu
 rrey/Desktop/Year 3 Project/out/Caleb_Ram_6801936_Mid-term_Report.pdf" (53 page
-s, 1169867 bytes).
+s, 1169584 bytes).
 PDF statistics:
- 1420 PDF objects out of 1440 (max. 8388607)
- 1322 compressed objects within 14 object streams
- 301 named destinations out of 1000 (max. 500000)
+ 1402 PDF objects out of 1440 (max. 8388607)
+ 1304 compressed objects within 14 object streams
+ 287 named destinations out of 1000 (max. 500000)
  75485 words of extra memory for PDF output out of 89155 (max. 10000000)
 
