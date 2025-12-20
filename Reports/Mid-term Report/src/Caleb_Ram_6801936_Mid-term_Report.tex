@@ -1342,6 +1342,14 @@
     \addcontentsline{toc}{subparagraph}{APIConfig.swift}
     This configuration file centralises the backend server \ac{URL} for all \ac{API} calls throughout the app. It uses conditional compilation to automatically select localhost (127.0.0.1) when running in the iOS Simulator or the Mac's local network IP address (192.168.1.45) when running on physical devices. This simplifies switching between development and device testing environments.
 
+    \newpage
+
+    \subparagraph*{Network Configuration and ngrok Integration}\mbox{}\\
+    \addcontentsline{toc}{subparagraph}{Network Configuration and ngrok Integration}
+    To enable the iOS app to communicate with the Flask backend server from any network location, ngrok was integrated to expose the local development server running on port 5000 to the public internet. An ngrok account was created at \href{https://ngrok.com}{ngrok.com}, and the ngrok agent was configured to create a secure tunnel forwarding \ac{HTTP} traffic from a public \ac{URL} to localhost:5000. This eliminates the need for both the development machine and iOS device to be on the same local network, allowing for flexible testing and development from any location.
+
+    To streamline the development workflow, a custom terminal alias was created that simultaneously launches both the Flask server and the ngrok tunnel in separate terminal windows with a single command. This automation ensures that whenever the backend server is started, it is immediately accessible via a public ngrok \ac{URL}, which can then be updated in APIConfig.swift for the iOS app to connect. The ngrok dashboard provides real-time monitoring of incoming requests, including detailed inspection of \ac{HTTP} headers, request bodies, and response data, which proved invaluable during debugging and \ac{API} development. This setup enabled seamless testing of the complete authentication flow, bulb management features, and real-time device control from physical iOS devices without network configuration constraints.
+
     \paragraph*{Authentication Flow (in user journey order)}
     \addcontentsline{toc}{paragraph}{Authentication Flow}
 
