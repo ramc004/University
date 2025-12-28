@@ -39,7 +39,7 @@
 }
 
 \newdate{projectstart}{02}{10}{2025}
-\newdate{midtermdue}{02}{01}{2026}
+\newdate{midtermdue}{09}{01}{2026}
 
 \pagestyle{fancy}
 \fancypagestyle{plain}{\pagestyle{fancy}}
@@ -89,8 +89,8 @@
 \begin{document}
     \onehalfspacing
 
+    \pagenumbering{roman}
     \begin{titlepage}
-        \thispagestyle{fancy}
         \centering
         \vspace*{\fill}
         {\Huge \textbf{AI-Based Smart Bulb for Adaptive Home Automation}}\\[0.8cm]
@@ -104,11 +104,9 @@
         {\large Faculty of Engineering and Physical Sciences}\\[0.3cm]
         {\large University of Surrey}\\[0.5cm]
         \vspace*{\fill}
+        \thispagestyle{plain}
     \end{titlepage}
-
-    \clearpage
-    \pagenumbering{arabic}
-    \setcounter{page}{1}
+    \addtocounter{page}{1}
 
     \thispagestyle{fancy}
     \phantomsection
@@ -194,12 +192,11 @@
         \acro{XSS}{Cross-Site Scripting}
     \end{acronym}
 
+    \newcounter{romanpages}
+    \setcounter{romanpages}{\value{page}}
     \clearpage
-    \phantomsection
+    \pagenumbering{arabic}
 
-    \newpage
-
-    \phantomsection
     \section{Introduction}
 
     \subsection{Project Motivation}
@@ -594,6 +591,10 @@
         6: Results and Discussion & System performance summary; Learning algorithm effectiveness; User experience evaluation; Energy efficiency analysis; Comparison with existing solutions; Limitations and constraints; Success criteria assessment; Discussion of findings \\
         7: Conclusions and Future Work & Summary of achievements; Objectives fulfilment assessment; Contributions to field; Lessons learned; Future enhancements and extensions; Alternative approaches; Broader implications; Final remarks \\
     \end{longtable}
+
+    \clearpage
+    \pagenumbering{roman}
+    \setcounter{page}{\theromanpages}
 
     \newpage
 
@@ -1305,6 +1306,8 @@
     This \href{https://github.com/ramc004/University}{AI Based Smart Bulb for Adaptive Home Automation App} consists of three main components: a Flask backend server in Python, an iOS and an iPadOS app in SwiftUI, and support for both real \ac{ESP}32 hardware and simulated devices. The Flask server handles user authentication with email verification via Gmail \ac{SMTP} and stores user accounts and bulb associations in a SQLite database. The iOS and iPadOS app provides registration and login flows with email verification codes, discovers nearby smart bulbs via Bluetooth Low Energy, and controls bulb settings like power, brightness, color, and effects. The system includes a simulator mode toggle in the settings that lets users test the app without physical hardware by generating fake bulbs with persistent IDs instead of scanning for real Bluetooth devices. The backend tracks whether each bulb is simulated or real and filters bulbs accordingly when the app requests them. All views communicate through UserDefaults for session management, NotificationCenter for mode switching, and \ac{HTTP} requests to the Flask \ac{API} for data persistence, while the \ac{BLE} manager handles device discovery, connection, and control with characteristic UUIDs that match the \ac{ESP}32 firmware.
 
 
+    \newpage
+
     \subsubsection*{Backend Files (Python/Flask)}
     \addcontentsline{toc}{subsubsection}{Backend Files (Python/Flask)}
 
@@ -1317,7 +1320,6 @@
 
     This utility module sends 6-digit verification codes to users via email during registration and password reset flows. It connects to Gmail's \ac{SMTP} server using credentials stored in hello.txt and constructs email messages with the verification code. The function returns a boolean indicating success or failure of the email delivery.
 
-    \newpage
     \paragraph*{hello.txt}\mbox{}\\
     \addcontentsline{toc}{paragraph}{hello.txt}
     This file contains the Gmail app password used for \ac{SMTP} authentication when sending verification emails, but it has not been included in this report for security reasons. To create it, enable 2-factor authentication on Gmail and generate the 16-character app password. Then change the sender email to email used and update hello.txt to new password.
@@ -1332,7 +1334,7 @@
     \addcontentsline{toc}{paragraph}{\ac{OS} App entry point}
 
     \subparagraph*{\ac{AI}\_Based\_Smart\_Bulb\_for\_Adaptive\_Home\_AutomationApp.swift}\mbox{}\\
-    \addcontentsline{toc}{subparagraph}{\ac{AI}\_Based\_Smart\_Bulb\_for\_Adaptive\_Home\_AutomationApp.swift}
+    \addcontentsline{toc}{subparagraph}{\ac{AI}\_Based\_Smart\_Bulb\_for\_Adaptive\_Home\_\\AutomationApp.swift}
     This is the main entry point for the iOS application using SwiftUI's App protocol. It defines the app structure and sets WelcomeView as the initial root view displayed when the app launches. This file follows the standard SwiftUI app lifecycle pattern introduced in iOS 14+.
 
     \paragraph*{Configuration}
@@ -1342,13 +1344,11 @@
     \addcontentsline{toc}{subparagraph}{APIConfig.swift}
     This configuration file centralises the backend server \ac{URL} for all \ac{API} calls throughout the app. It uses conditional compilation to automatically select localhost (127.0.0.1) when running in the iOS Simulator or the Mac's local network IP address (192.168.1.45) when running on physical devices. This simplifies switching between development and device testing environments.
 
-    \newpage
-
     \subparagraph*{Network Configuration and ngrok Integration}\mbox{}\\
     \addcontentsline{toc}{subparagraph}{Network Configuration and ngrok Integration}
-    To enable the iOS app to communicate with the Flask backend server from any network location, ngrok was integrated to expose the local development server running on port 5000 to the public internet. An ngrok account was created at \href{https://ngrok.com}{ngrok.com}, and the ngrok agent was configured to create a secure tunnel forwarding \ac{HTTP} traffic from a public \ac{URL} to localhost:5000. This eliminates the need for both the development machine and iOS device to be on the same local network, allowing for flexible testing and development from any location.
+    To enable the iOS app to communicate with the Flask backend server from any network location, ngrok was integrated to expose the local development server running on port 5000 to the public internet. An ngrok account was created at \href{https://ngrok.com}{ngrok.com}, and the ngrok agent was configured to create a secure tunnel forwarding \ac{HTTP} traffic from a public \ac{URL} to localhost:5000. This removed the requirement for the development machine and iOS device to be on the same local network, enabling flexible testing from any location.
 
-    To streamline the development workflow, a custom terminal alias was created that simultaneously launches both the Flask server and the ngrok tunnel in separate terminal windows with a single command. This automation ensures that whenever the backend server is started, it is immediately accessible via a public ngrok \ac{URL}, which can then be updated in APIConfig.swift for the iOS app to connect. The ngrok dashboard provides real-time monitoring of incoming requests, including detailed inspection of \ac{HTTP} headers, request bodies, and response data, which proved invaluable during debugging and \ac{API} development. This setup enabled seamless testing of the complete authentication flow, bulb management features, and real-time device control from physical iOS devices without network configuration constraints.
+    To streamline the development workflow, a custom terminal alias was created to launch both the Flask server and the ngrok tunnel in separate terminal windows using a single command. This ensured the backend server was immediately accessible via a public ngrok \ac{URL}, which could then be updated in APIConfig.swift for the iOS app to connect. The ngrok dashboard provided real time monitoring and inspection of \ac{HTTP} requests and responses, which proved valuable during debugging and \ac{API} development. This setup enabled seamless testing of authentication, bulb management, and real time device control on physical iOS devices without network constraints.
 
     \paragraph*{Authentication Flow (in user journey order)}
     \addcontentsline{toc}{paragraph}{Authentication Flow}
@@ -1370,6 +1370,8 @@
     \addcontentsline{toc}{subparagraph}{LoginView.swift}
     This view provides the login interface with email and password fields, including a show/hide password toggle. It communicates with the Flask backend to authenticate users and stores the user's email in UserDefaults upon successful login for session management. The view also includes a "Forgot Password" flow that verifies email existence and sends a reset code.
 
+    \newpage
+
     \subparagraph*{ResetPasswordView.swift}\mbox{}\\
     \addcontentsline{toc}{subparagraph}{ResetPasswordView.swift}
     This view allows users to reset their password by entering a 6-digit verification code and creating a new password. It includes a countdown timer for code expiration (5 minutes) with resend functionality and enforces the same password validation rules as registration. Upon successful password reset, it displays a success message in the LoginView and navigates back.
@@ -1389,6 +1391,7 @@
     \addcontentsline{toc}{subparagraph}{AddBulbView.swift}
     This view handles discovering and adding new smart bulbs through Bluetooth scanning or simulator mode. It displays a list of discovered bulbs with signal strength indicators (or simulated badges), allows users to name each bulb and assign it to a room, and saves the bulb to the backend database with the is\_simulated flag. The view responds to simulator mode changes by clearing the list and restarting the scan with the appropriate mode.
 
+    \newpage
     \subparagraph*{SavedBulbControlView.swift}\mbox{}\\
     \addcontentsline{toc}{subparagraph}{SavedBulbControlView.swift}
     This comprehensive control view manages all interactions with a single smart bulb including power toggle, brightness slider, \ac{RGB} color picker, and four effect modes (Solid, Fade, Rainbow, Pulse). It handles connection to both real \ac{BLE} devices and simulated bulbs, validates that the bulb type matches the current simulator mode setting, and provides options to edit the bulb's name/room or remove it from the user's account. The view displays appropriate connection states and error messages when hardware mode mismatches occur.
@@ -1400,6 +1403,8 @@
     \mbox{}\\
     \addcontentsline{toc}{subparagraph}{BLEManager.swift}
     This core class manages all Bluetooth Low Energy communication and device simulation, conforming to CBCentralManagerDelegate and CBPeripheralDelegate protocols. It maintains lists of discovered bulbs, handles connections to both real \ac{ESP}32 hardware and simulated devices, and provides functions to control power, brightness, color, and effect modes. The manager reads simulator mode from UserDefaults, creates persistent simulated bulb UUIDs, and routes all control commands to either \ac{BLE} characteristics or simulated state updates depending on the current mode.
+
+    \newpage
 
     \paragraph*{\ac{UI} Components}
     \addcontentsline{toc}{paragraph}{\ac{UI} Components}
